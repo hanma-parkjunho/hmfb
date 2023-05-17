@@ -35,6 +35,7 @@ public class MonitorRealController {
 //		String aa = "";
 //		String bb = "";
 //		String cc = "";
+		String dd = "";
 		
 		if (!StringUtils.hasText(batchMonitorPageDto.getSearchTrxDt())) {
 			batchMonitorPageDto.setSearchTrxDt(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
