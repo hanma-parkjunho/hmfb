@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	
+	<springProperty name="projectName" source="project.name"/>
+	
+	<springProperty name="logPath" source="hmfb.log.logPath"/>
+	
+	<springProperty name="fileLog" source="hmfb.log.fileLog"/>
+	
+    <property name="LOG_PATH" value="${logPath}/logs"/>
+    
+    <if condition='property("fileLog").equals("Y")'>
+    	<then>
+     
+		     <appender name="PRGM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<encoder>
+					<pattern>%msg%n</pattern>
+				</encoder>
+				<prudent>true</prudent>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		      		<fileNamePattern>${LOG_PATH}/${projectName}/PRGM/PRGM.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+		      		<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		        		<maxFileSize>10MB</maxFileSize>
+		      		</timeBasedFileNamingAndTriggeringPolicy>
+		    	</rollingPolicy>
+			</appender>
+			
+			<logger name="PRGM_LOGGER" level="ERROR" additivity="false"> 
+				<appender-ref ref="PRGM" />
+			</logger>
+	    
+    	</then>
+  	</if>
+  	
+  	<appender name="WAS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+		<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOG_PATH}/${projectName}/WAS/WAS.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+      		<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<maxFileSize>10MB</maxFileSize>
+      		</timeBasedFileNamingAndTriggeringPolicy>
+    	</rollingPolicy>
+	</appender>
+	
+	<logger name="jdbc.connection" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="WAS" /> 
+	</logger>
+	
+	<logger name="jdbc.audit" additivity="false"> 
+		<level value="ERROR"/>  
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="WAS" /> 
+	</logger> 
+    
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="WAS" /> 
+	</logger>
+	
+	<logger name="jdbc.sqlonly" additivity="false"> 
+		<level value="INFO"/> 
+		<appender-ref ref="CONSOLE"/> 
+		<appender-ref ref="WAS" />
+	</logger>
+		
+	<springProfile name="local">
+		<logger name="jdbc.resultsettable" additivity="false"> 
+			<level value="INFO"/>  
+			<appender-ref ref="CONSOLE"/>
+			<appender-ref ref="WAS" /> 
+		</logger>	
+    </springProfile>
+     
+    <springProfile name="dev">
+		<logger name="jdbc.resultsettable" additivity="false"> 
+			<level value="ERROR"/>  
+			<appender-ref ref="CONSOLE"/>
+			<appender-ref ref="WAS" /> 
+		</logger>
+    </springProfile>
+    
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="WAS" /> 
+	</logger>
+	
+	<logger name="CLOGGER" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="WAS" /> 
+	</logger>
+	
+   	<root level="INFO">
+   		<appender-ref ref="CONSOLE" />
+    	<appender-ref ref="WAS" />
+   	</root>
+    
+</configuration>

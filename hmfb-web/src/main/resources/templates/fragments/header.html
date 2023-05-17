@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--HEADER FRAGMENT 선언-->
+<th:block th:fragment="headerFragment">
+
+<!-- HEADER -->
+<header class="header">
+	<div class="header-inner">
+		<h1 class="h1">
+			<a th:href="@{${defaultSuccessUrl}}"  class="btn-logo" title="홈으로 이동"></a>
+			<p>HANMA INFORMATION BANKING SYSTEM</p>
+		</h1>
+		<div class="util-group">
+			<div class="name"></div><!-- 관리자가 아닐경우 .manager 삭제 -->
+			<div class="time"></div>
+			<div ><a href="javascript:void(0);" id="logout">로그아웃</a></div>
+			<div class="button-group">
+				<button type="button" class="button-allmenu"><span class="blind">전체메뉴</span></button>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- HEADER -->
+
+<!-- HEADER 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		if([[${#authentication.principal.authDvcd}]] === 'ADMIN')
+			$('.util-group .name').first().addClass('manager');
+		$('.util-group .name').first().text([[${#authentication.principal.username}]]);
+		let lstLgnDttm = [[${#authentication.principal.lstLgnDttm}]];
+		$('.util-group .time').first().text(lstLgnDttm.substring(0, 4) + '.' + 
+									lstLgnDttm.substring(4, 6) + '.' +
+									lstLgnDttm.substring(6, 8) + ' ' +
+									lstLgnDttm.substring(8, 10) + ':' +
+									lstLgnDttm.substring(10, 12) + ':' +
+									lstLgnDttm.substring(12, 14))
+		
+		$('#logout').click((e) => {
+			e.preventDefault();
+			$.confirm('로그아웃 하시겠습니까?', () => {
+				location.href = [[${logoutUrl}]];
+			});
+			
+		});
+		
+    });
+
+/*]]>*/
+</script>
+
+</th:block>
+
+</html>

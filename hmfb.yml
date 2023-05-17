@@ -1,0 +1,41 @@
+    
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+    config:
+      activate:
+        on-profile: local
+      
+hmfb:
+  admin:
+    seqNo: 0
+    userId: ENC(LKPVVYO8ubCTp1VO+od9uA==)
+    pswd: ENC(guLym7s4TYxwO84nPbsfsguN5KpPCZgJ)
+    flnm: 관리자
+    phnNo: ENC(1/3fNZCn8Nx9Py78Vhdm89DGh1rAxf/M)
+    depart: HM cop
+    authDvcd: ADMIN
+    authDvNm: 관리자
+  log:
+    logPath: C:\hmfb\
+    fileLog : Y
+    dbLog : Y
+  socket:
+    server:
+      port-firm: 8881
+      port-virtual: 8891
+  firm:
+    id: FIRMID01
+  db:
+    dbType: mysql
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: ENC(v1NOqeyfdkGYrZOgNKMnmBS8qENFFtgJDAU73SgdgEJEcsf16WNpUJRIcCN3uH27PRPP6t2ZBtTuE5oqn0YYcYBGWCXu4KmOOfO8bBfBEgIXa3FpLur0NrbMzTqbfAcg8WxWBMYzWM+L4CuUrteYsFf4DEW9io6PyYKO5VBQNgdFbAm82eEi5RRHjhXSIBoT)
+    username: ENC(Cx+W1TRHwpJilmGKtEdtPg==)
+    password: ENC(Khp/PGi2aMyJrhoMDaG/YlqQ+AoVPkL/)
+    always-init: false
+  target:
+    server: ENC(gpWwVnfl+SHabA7KW/pUnG3lNfvo7w2h)
+    port: ENC(2jpEN13IwqVTkqUMXXlN+A==)

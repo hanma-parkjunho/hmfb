@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">가상계좌항목정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>뱅킹서비스관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>가상계좌항목정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="tabpanel-group">
+							<div class="tab-heading">
+								<ul class="tablist" role="tablist">
+									<li id="tabNav01-1" aria-controls="tabContent01-1" class="tab" role="tab" aria-selected="true">
+										<span>인터페이스목록</span>
+									</li>
+									<li id="tabNav01-2" aria-controls="tabContent01-2" class="tab" role="tab" aria-selected="false">
+										<span>입금</span>
+									</li>
+									<li id="tabNav01-3" aria-controls="tabContent01-3" class="tab" role="tab" aria-selected="false">
+										<span>입금이체</span>
+									</li>
+									<li id="tabNav01-4" aria-controls="tabContent01-4" class="tab" role="tab" aria-selected="false">
+										<span>출금</span>
+									</li>
+									<li id="tabNav01-5" aria-controls="tabContent01-5" class="tab" role="tab" aria-selected="false">
+										<span>출금이체</span>
+									</li>
+									<li id="tabNav01-6" aria-controls="tabContent01-6" class="tab" role="tab" aria-selected="false">
+										<span>수취인조회</span>
+									</li>
+									<li id="tabNav01-7" aria-controls="tabContent01-7" class="tab" role="tab" aria-selected="false">
+										<span>통신망관리</span>
+									</li>
+								</ul>
+							</div>
+							<div class="tab-body">
+								<!-- 탭내용1 -->
+								<div id="tabContent01-1" class="tabpanel" aria-labelledby="tabNav01-1" role="tabpanel" aria-expanded="true">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+    <thead>
+        <tr>
+            <th>전문명</th>
+            <th>전문코드</th>
+            <th>업무코드</th>
+            <th>전문생성</th>
+            <th></th>
+            <th>비고</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>기관</td>
+            <td>은행</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>입금</td>
+            <td>0200</td>
+            <td>1100</td>
+            <td></td>
+            <td>◀</td>
+            <td>입금자가 해당 계좌에 입금한 내역</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0210</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>입금 취소</td>
+            <td>0400</td>
+            <td></td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0410</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>출금</td>
+            <td>0200</td>
+            <td>2100</td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0210</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>출금 취소</td>
+            <td>0400</td>
+            <td></td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0410</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>입금이체</td>
+            <td>0200</td>
+            <td>3110</td>
+            <td></td>
+            <td>◀</td>
+            <td>입금자가 해당 계좌의 계좌주명을 확인함</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0210</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>입금이체 취소</td>
+            <td>0400</td>
+            <td></td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0410</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>출금이체</td>
+            <td>0200</td>
+            <td>3120</td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0210</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>출금이체 취소</td>
+            <td>0400</td>
+            <td></td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0410</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>통신망 관리</td>
+            <td>0800</td>
+            <td>1100</td>
+            <td></td>
+            <td>◀</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0810</td>
+            <td></td>
+            <td>▷</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>					
+									</div>
+								</div>
+								<!--// 탭내용1 -->
+								<!-- 탭내용2 -->
+								<div id="tabContent01-2" class="tabpanel" aria-labelledby="tabNav01-2" role="tabpanel" aria-expanded="false">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+											<colgroup>
+												<col width="7%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col width="30%">
+											</colgroup>
+    <thead>
+        <tr>
+            <th>구분</th>
+            <th>순번</th>
+            <th>속성 한글명</th>
+            <th>타입</th>
+            <th>길이</th>
+            <th>요청</th>
+            <th>응답</th>
+            <th>속성 설명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>공통부</td>
+            <td>1</td>
+            <td>LENGTH</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>시스템ID</td>
+            <td>AN</td>
+            <td>3</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;&quot;&quot;VAS&quot;&quot; 세트&quot;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>전문송수신기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문을 송수신하는 기관코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>송수신 FLAG</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>1: 기관-&gt;코어, 2: 코어-&gt;기관, 3: 채널-&gt;코어, 4: 코어-&gt;채널</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>전문구분코드(MSG TYPE)</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 종류를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>거래구분코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>거래를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>취급기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>거래일련번호</td>
+            <td>N</td>
+            <td>7</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;취급기관에서 부여하며 취급기관코드와 같이 조합하여 UNIQUE한 거래 번호가 된다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>전문전송 일시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래개시일 시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>응답코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>USER WORK AREA 1</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>USER WORK AREA 2</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>마감전후구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>호스트 시스템의 마감 전후 상태(0:마감 전    1:마감 후)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>발생구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 발생을 구분하기 위한 코드 1:자행, 2:타행, 3:제휴기관, 0:기타</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>매체구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;거래의 매체를 구분하기 위한 코드 1:창구단말, 2:CD/ATM, 3:인터넷, 4:PC(펌뱅킹), 5: 전화, 6:타행환,7:CD공동망, 8:전자금융공동망, 0:기타&quot;
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>개설기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>개설기관코드 SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취급단말정보</td>
+            <td>AN</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>현재 &#39;99999999&#39;혹은 실제 개설기관코드가 SET 되고 있음</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>응답 MESSAGE</td>
+            <td>AN</td>
+            <td>50</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>공동망 고유번호</td>
+            <td>AN</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td>공동망 고유번호 세트: 은행코드 3자리+일련번호 10자리</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>200</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>업무부</td>
+            <td>1</td>
+            <td>입금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>입금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 가상계좌번호</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>입금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>O</td>
+            <td>기관에서 응답 시 보내주는 가상계좌 수취인 명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>출금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>출금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>출금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>O</td>
+            <td>은행에서 입금 요청 시 보내지는 입금 의뢰인인 성명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>출금계좌비밀번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>-</td>
+            <td>-</td>
+            <td>*로 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>SECRET카드정보</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>거래금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래금액중현금금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>거래금액중미결제수표금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>거래후잔액부호</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>거래 후 잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>거래후잔액중미결제타점권잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>수수료금액</td>
+            <td>N</td>
+            <td>28</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>어음교환소코드</td>
+            <td>AN</td>
+            <td>6</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>참조번호</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취소사유코드</td>
+            <td>AN</td>
+            <td>4</td>
+            <td>O</td>
+            <td>-</td>
+            <td>취소 거래 시 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>계정처리정보</td>
+            <td>AN</td>
+            <td>87</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>MS TRACK DATA</td>
+            <td>AN</td>
+            <td>60</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>21</td>
+            <td>FILLER</td>
+            <td>-</td>
+            <td>5</td>
+            <td>-</td>
+            <td>-</td>
+            <td>예비 항목 (사용 안 함)</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>600</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>	
+									</div>								
+								</div>
+								<!--// 탭내용2 -->
+								<!-- 탭내용3 -->
+								<div id="tabContent01-3" class="tabpanel" aria-labelledby="tabNav01-3" role="tabpanel" aria-expanded="false">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+											<colgroup>
+												<col width="7%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col width="30%">
+											</colgroup>
+    <thead>
+        <tr>
+            <th>구분</th>
+            <th>순번</th>
+            <th>속성 한글명</th>
+            <th>타입</th>
+            <th>길이</th>
+            <th>요청</th>
+            <th>응답</th>
+            <th>속성 설명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>공통부</td>
+            <td>1</td>
+            <td>LENGTH</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>시스템ID</td>
+            <td>AN</td>
+            <td>3</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;&quot;&quot;VAS&quot;&quot; 세트&quot;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>전문송수신기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문을 송수신하는 기관코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>송수신 FLAG</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>1: 기관-&gt;코어, 2: 코어-&gt;기관, 3: 채널-&gt;코어, 4: 코어-&gt;채널</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>전문구분코드(MSG TYPE)</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 종류를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>거래구분코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>거래를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>취급기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>거래일련번호</td>
+            <td>N</td>
+            <td>7</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;취급기관에서 부여하며 취급기관코드와 같이 조합하여 UNIQUE한 거래 번호가 된다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>전문전송 일시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래개시일 시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>응답코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>USER WORK AREA 1</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>USER WORK AREA 2</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>마감전후구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>호스트 시스템의 마감 전후 상태(0:마감 전    1:마감 후)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>발생구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 발생을 구분하기 위한 코드 1:자행, 2:타행, 3:제휴기관, 0:기타</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>매체구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;거래의 매체를 구분하기 위한 코드 1:창구단말, 2:CD/ATM, 3:인터넷, 4:PC(펌뱅킹), 5: 전화, 6:타행환,7:CD공동망, 8:전자금융공동망, 0:기타&quot;
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>개설기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>개설기관코드 SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취급단말정보</td>
+            <td>AN</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>현재 &#39;99999999&#39;혹은 실제 개설기관코드가 SET 되고 있음</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>응답 MESSAGE</td>
+            <td>AN</td>
+            <td>50</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>공동망 고유번호</td>
+            <td>AN</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td>공동망 고유번호 세트: 은행코드 3자리+일련번호 10자리</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>200</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>업무부</td>
+            <td>1</td>
+            <td>입금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>-</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>입금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td>입금되는 가상계좌번호</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>입금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>O</td>
+            <td>기관에서 응답 시 보내주는 가상계좌 수취인 명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>출금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>출금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>출금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td>은행에서 입금 요청 시 보내지는 입금 의뢰인 성명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>출금계좌비밀번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>-</td>
+            <td>-</td>
+            <td>*로 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>SECRET카드정보</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>거래금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래금액중현금금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>거래금액중미결제수표금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>거래후잔액부호</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>거래 후 잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>거래후잔액중미결제타점권잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>수수료금액</td>
+            <td>N</td>
+            <td>28</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>어음교환소코드</td>
+            <td>AN</td>
+            <td>6</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>참조번호</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취소사유코드</td>
+            <td>AN</td>
+            <td>4</td>
+            <td>O</td>
+            <td>-</td>
+            <td>취소 거래 시 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>계정처리정보</td>
+            <td>AN</td>
+            <td>87</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>MS TRACK DATA</td>
+            <td>AN</td>
+            <td>60</td>
+            <td>O</td>
+            <td>-</td>
+            <td>MS 카드 거래 시</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>21</td>
+            <td>FILLER</td>
+            <td>-</td>
+            <td>5</td>
+            <td>O</td>
+            <td>-</td>
+            <td>예비 항목 (사용 안 함)</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>600</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>									
+									</div>
+								</div>
+								<!--// 탭내용3 -->
+								<!-- 탭내용4 -->
+								<div id="tabContent01-4" class="tabpanel" aria-labelledby="tabNav01-4" role="tabpanel" aria-expanded="false">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+											<colgroup>
+												<col width="7%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col width="30%">
+											</colgroup>
+    <thead>
+        <tr>
+            <th>구분</th>
+            <th>순번</th>
+            <th>속성 한글명</th>
+            <th>타입</th>
+            <th>길이</th>
+            <th>요청</th>
+            <th>응답</th>
+            <th>속성 설명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>공통부</td>
+            <td>1</td>
+            <td>LENGTH</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>시스템ID</td>
+            <td>AN</td>
+            <td>3</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;&quot;&quot;VAS&quot;&quot; 세트&quot;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>전문송수신기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문을 송수신하는 기관코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>송수신 FLAG</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>1: 기관-&gt;코어, 2: 코어-&gt;기관, 3: 채널-&gt;코어, 4: 코어-&gt;채널</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>전문구분코드(MSG TYPE)</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 종류를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>거래구분코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>거래를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>취급기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>거래일련번호</td>
+            <td>N</td>
+            <td>7</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;취급기관에서 부여하며 취급기관코드와 같이 조합하여 UNIQUE한 거래 번호가 된다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>전문전송 일시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래개시일 시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>응답코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>USER WORK AREA 1</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>USER WORK AREA 2</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>마감전후구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>호스트 시스템의 마감 전후 상태(0:마감 전    1:마감 후)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>발생구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 발생을 구분하기 위한 코드 1:자행, 2:타행, 3:제휴기관, 0:기타</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>매체구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;거래의 매체를 구분하기 위한 코드 1:창구단말, 2:CD/ATM, 3:인터넷, 4:PC(펌뱅킹), 5: 전화, 6:타행환,7:CD공동망, 8:전자금융공동망, 0:기타&quot;
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>개설기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>개설기관코드 SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취급단말정보</td>
+            <td>AN</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>현재 &#39;99999999&#39;혹은 실제 개설기관코드가 SET 되고 있음</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>응답 MESSAGE</td>
+            <td>AN</td>
+            <td>50</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>공동망 고유번호</td>
+            <td>AN</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td>공동망 고유번호 세트: 은행코드 3자리+일련번호 10자리</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>200</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>업무부</td>
+            <td>1</td>
+            <td>입금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>-</td>
+            <td>-</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>입금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>-</td>
+            <td>-</td>
+            <td>입급되는 가상계좌번호</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>입금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>-</td>
+            <td>기관에서 응답시 보내주는 가상계좌 수취인 명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>출금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>출금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>출금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>O</td>
+            <td>은행에서 입금 요청시 보내지는 입금인 성명(자행ATM제외)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>출금계좌비밀번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td>* SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>SECRET카드정보</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>거래금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래금액중현금금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>거래금액중미결제수표금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>거래후잔액부호</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>거래 후 잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>거래후잔액중미결제타점권잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>수수료금액</td>
+            <td>N</td>
+            <td>28</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>어음교환소코드</td>
+            <td>AN</td>
+            <td>6</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>참조번호</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취소사유코드</td>
+            <td>AN</td>
+            <td>4</td>
+            <td>O</td>
+            <td>-</td>
+            <td>취소 거래 시 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>계정처리정보</td>
+            <td>AN</td>
+            <td>87</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>MS TRACK DATA</td>
+            <td>AN</td>
+            <td>60</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>21</td>
+            <td>FILLER</td>
+            <td>-</td>
+            <td>5</td>
+            <td>O</td>
+            <td>-</td>
+            <td>예비 항목 (사용 안 함)</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>600</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>									
+									</div>
+								</div>
+								<!--// 탭내용5 -->
+								<!-- 탭내용6 -->
+								<div id="tabContent01-6" class="tabpanel" aria-labelledby="tabNav01-6" role="tabpanel" aria-expanded="false">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+											<colgroup>
+												<col width="7%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col width="30%">
+											</colgroup>
+    <thead>
+        <tr>
+            <th>구분</th>
+            <th>순번</th>
+            <th>속성 한글명</th>
+            <th>타입</th>
+            <th>길이</th>
+            <th>요청</th>
+            <th>응답</th>
+            <th>속성 설명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>공통부</td>
+            <td>1</td>
+            <td>LENGTH</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>시스템ID</td>
+            <td>AN</td>
+            <td>3</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;&quot;&quot;VAS&quot;&quot; 세트&quot;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>전문송수신기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문을 송수신하는 기관코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>송수신 FLAG</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>1: 기관-&gt;코어, 2: 코어-&gt;기관, 3: 채널-&gt;코어, 4: 코어-&gt;채널</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>전문구분코드(MSG TYPE)</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 종류를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>거래구분코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>거래를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>취급기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>거래일련번호</td>
+            <td>N</td>
+            <td>7</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;취급기관에서 부여하며 취급기관코드와 같이 조합하여 UNIQUE한 거래 번호가 된다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>전문전송 일시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래개시일 시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>응답코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>USER WORK AREA 1</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>USER WORK AREA 2</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>마감전후구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>호스트 시스템의 마감 전후 상태(0:마감 전    1:마감 후)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>발생구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 발생을 구분하기 위한 코드 1:자행, 2:타행, 3:제휴기관, 0:기타</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>매체구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;거래의 매체를 구분하기 위한 코드 1:창구단말, 2:CD/ATM, 3:인터넷, 4:PC(펌뱅킹), 5: 전화, 6:타행환,7:CD공동망, 8:전자금융공동망, 0:기타&quot;
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>개설기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>개설기관코드 SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취급단말정보</td>
+            <td>AN</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>현재 &#39;99999999&#39;혹은 실제 개설기관코드가 SET 되고 있음</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>응답 MESSAGE</td>
+            <td>AN</td>
+            <td>50</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>공동망 고유번호</td>
+            <td>AN</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td>공동망 고유번호 세트: 은행코드 3자리+일련번호 10자리</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>200</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>업무부</td>
+            <td>1</td>
+            <td>입금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>-</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>입금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td>입급되는 가상계좌번호</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>입금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td>기관에서 응답시 보내주는 가상계좌 수취인 명</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>출금기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>출금계좌번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>출금계좌성명</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>O</td>
+            <td>은행에서 입금 요청시 보내지는 입금인 성명(자행ATM제외)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>출금계좌비밀번호</td>
+            <td>AN</td>
+            <td>16</td>
+            <td>O</td>
+            <td>-</td>
+            <td>* SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>SECRET카드정보</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>거래금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래금액중현금금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>거래금액중미결제수표금액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>거래후잔액부호</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>거래 후 잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>거래후잔액중미결제타점권잔액</td>
+            <td>N</td>
+            <td>13</td>
+            <td>-</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>수수료금액</td>
+            <td>N</td>
+            <td>28</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>어음교환소코드</td>
+            <td>AN</td>
+            <td>6</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>참조번호</td>
+            <td>AN</td>
+            <td>20</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취소사유코드</td>
+            <td>AN</td>
+            <td>4</td>
+            <td>O</td>
+            <td>-</td>
+            <td>취소 거래 시 세트</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>계정처리정보</td>
+            <td>AN</td>
+            <td>87</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>MS TRACK DATA</td>
+            <td>AN</td>
+            <td>60</td>
+            <td>O</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>21</td>
+            <td>FILLER</td>
+            <td>-</td>
+            <td>5</td>
+            <td>O</td>
+            <td>-</td>
+            <td>예비 항목 (사용 안 함)</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>600</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>	
+									</div>									
+								</div>
+								<!--// 탭내용6 -->
+								<!-- 탭내용7 -->
+								<div id="tabContent01-7" class="tabpanel" aria-labelledby="tabNav01-7" role="tabpanel" aria-expanded="false">
+									<div class="table-group data mgt-13 scrollx">
+<table>
+											<colgroup>
+												<col width="7%">
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col width="30%">
+											</colgroup>
+    <thead>
+        <tr>
+            <th>구분</th>
+            <th>순번</th>
+            <th>속성 한글명</th>
+            <th>타입</th>
+            <th>길이</th>
+            <th>요청</th>
+            <th>응답</th>
+            <th>속성 설명</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>공통부</td>
+            <td>1</td>
+            <td>LENGTH</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>시스템ID</td>
+            <td>AN</td>
+            <td>3</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;&quot;&quot;VAS&quot;&quot; 세트&quot;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>3</td>
+            <td>전문송수신기관코드</td>
+            <td>AN</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문을 송수신하는 기관코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>송수신 FLAG</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>1: 기관-&gt;코어, 2: 코어-&gt;기관, 3: 채널-&gt;코어, 4: 코어-&gt;채널</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>전문구분코드(MSG TYPE)</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 종류를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>6</td>
+            <td>거래구분코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>O</td>
+            <td>O</td>
+            <td>거래를 구분하기 위한 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>7</td>
+            <td>취급기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>입금되는 기관의 코드</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>8</td>
+            <td>거래일련번호</td>
+            <td>N</td>
+            <td>7</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;취급기관에서 부여하며 취급기관코드와 같이 조합하여 UNIQUE한 거래 번호가 된다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>9</td>
+            <td>전문전송 일시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td>거래개시일 시</td>
+            <td>N</td>
+            <td>14</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>11</td>
+            <td>응답코드</td>
+            <td>N</td>
+            <td>4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>요구전문에는 SPACE를 넣고, 응답 시 처리 결과 코드를 넣는다. 응답코드 참조</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td>USER WORK AREA 1</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>13</td>
+            <td>USER WORK AREA 2</td>
+            <td>AN</td>
+            <td>15</td>
+            <td>-</td>
+            <td>-</td>
+            <td>취급기관에서 임의로 사용, 응답 시 COPY하여 보낸다.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14</td>
+            <td>마감전후구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>호스트 시스템의 마감 전후 상태(0:마감 전    1:마감 후)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>발생구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>전문의 발생을 구분하기 위한 코드 1:자행, 2:타행, 3:제휴기관, 0:기타</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>16</td>
+            <td>매체구분</td>
+            <td>AN</td>
+            <td>1</td>
+            <td>O</td>
+            <td>O</td>
+            <td>&quot;거래의 매체를 구분하기 위한 코드 1:창구단말, 2:CD/ATM, 3:인터넷, 4:PC(펌뱅킹), 5: 전화, 6:타행환,7:CD공동망, 8:전자금융공동망, 0:기타&quot;
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>17</td>
+            <td>개설기관코드</td>
+            <td>N</td>
+            <td>8</td>
+            <td>O</td>
+            <td>O</td>
+            <td>개설기관코드 SET</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>18</td>
+            <td>취급단말정보</td>
+            <td>AN</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>현재 &#39;99999999&#39;혹은 실제 개설기관코드가 SET 되고 있음</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>19</td>
+            <td>응답 MESSAGE</td>
+            <td>AN</td>
+            <td>50</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>20</td>
+            <td>공동망 고유번호</td>
+            <td>AN</td>
+            <td>13</td>
+            <td>-</td>
+            <td>-</td>
+            <td>공동망 고유번호 세트: 은행코드 3자리+일련번호 10자리</td>
+        </tr>
+        <tr>
+            <td>합 계</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>200</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+       <tr>
+        <td>업무부</td>
+        <td>1</td>
+        <td>거래일자</td>
+        <td>AN</td>
+        <td>8</td>
+        <td>O</td>
+        <td>O</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>2</td>
+        <td>관리정보</td>
+        <td>AN</td>
+        <td>3</td>
+        <td>O</td>
+        <td>O</td>
+        <td>&quot;001:개시   002:재 개시   003:종료예고  004:종료   005:장애      006:장애회복 007:TEST-CALL &quot;</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>3</td>
+        <td>휴일구분</td>
+        <td>N</td>
+        <td>1</td>
+        <td>O</td>
+        <td>O</td>
+        <td>0:평일, 1:휴일</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>4</td>
+        <td>SAF 건수</td>
+        <td>N</td>
+        <td>7</td>
+        <td>O</td>
+        <td>O</td>
+        <td>종료/종료 예고 시 SAF건수 SET</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>5</td>
+        <td>FILLER</td>
+        <td>AN</td>
+        <td>81</td>
+        <td>O</td>
+        <td>O</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>합 계</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>300</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>									
+									</div>									
+								</div>
+								<!--// 탭내용7 -->
+								
+							</div>
+						</div>
+						
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+		<!-- // MAIN -->
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">가상계좌항목정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="executionForm" action="/virtInfo">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+    });
+	// 이벤트 핸들러 - 이벤트 발생시 동작할 함수
+	function eventHandler(e) {
+	  var $eTarget = $(e.currentTarget);
+	  var $targetPanel = $('[aria-labelledby="' + $eTarget.attr('id') + '"]');
+	  	$targetPanel
+        .attr('aria-hidden', false)
+        .attr('aria-expanded', true)
+        .addClass('active') // 구버전 IE
+        .siblings('[role="tabpanel"]')
+        .attr('aria-hidden', true)
+        .attr('aria-expanded', false)
+        .removeClass('active'); // 구버전 IE
+        
+		$eTarget
+		.attr('aria-selected', true)
+		.attr('aria-expanded', false)
+		.addClass('active') // 구버전 IE
+		.siblings('[role="tab"]')
+		.attr('aria-selected', false)
+		.attr('aria-expanded', true)
+		.removeClass('active'); // 구버전 IE
+
+	}
+
+	// 이벤트 바인딩 - 이벤트와, 실행될 함수를 연결해줌
+	$('[role="tab"]').on('click', eventHandler);
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

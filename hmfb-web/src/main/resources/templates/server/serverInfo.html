@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+</head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">연계정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>서버별기동정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+	
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+			<div class="table-group data">
+				<table>
+					<colgroup>
+						<col style="width:20%;">
+						<col style="width:20%;">
+						<col style="width:20%;">
+						<col style="width:20%;">
+						<col style="width:20%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>서버명</th>
+							<th>인스턴스명</th>
+							<th>상태</th>
+							<th>시작</th>
+							<th>종료</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<th:block  th:if="${ not #arrays.isEmpty(serverList)}" th:each="server : ${serverList}" >
+							<tr th:if="${ server.sys != 'WEB'}">
+								<td th:text="${server.title}"></td>
+								<td th:text="${server.sys}"></td>
+								<td th:class="${server.status == '0' ? 'status-on' : 'status-off' }" th:text="${server.status == '0' ? '정상' : '종료' }" th:name="status"></td>
+								<th:block th:if="${server.status == '0'}">
+									<td>
+										<div class="flex content-center">
+											<button type="button" class="button-ui small" th:sys="${server.sys}" name="start" disabled style="cursor: not-allowed;"><span>시작</span></button>
+										</div>
+									</td>
+									<td>
+										<div class="flex content-center">
+											<button type="button" class="button-ui small darkgray" th:sys="${server.sys}" name="stop"><span>종료</span></button>
+										</div>
+									</td>
+								</th:block>
+								<th:block th:if="${server.status != '0'}">
+									<td>
+										<div class="flex content-center">
+											<button type="button" class="button-ui small" th:sys="${server.sys}" name="start"><span>시작</span></button>
+										</div>
+									</td>
+									<td>
+										<div class="flex content-center">
+											<button type="button" class="button-ui small darkgray" th:sys="${server.sys}" name="stop" disabled style="cursor: not-allowed;"><span>종료</span></button>
+										</div>
+									</td>
+								</th:block>
+							</tr>
+						</th:block>
+						<th:block  th:if="${#arrays.isEmpty(serverList)}" >
+							<tr>
+								<td colspan="5">서버 정보가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="refreshBtn" class="button-ui"><span>새로고침</span></button>
+			</div>
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">서버별기동정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="serverForm" action="/server/serverInfo">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('button[name=start]').click((e) => {
+    		e.preventDefault();
+    		$.form({ url : '/server/startServer/' + $(e.currentTarget).attr('sys') },(data) => {
+				if(data === '0') {
+					$.alert($(e.currentTarget).attr('sys') + ' 서버가 시작 되었습니다.', () => {
+						$.loading(true, () => {
+			    			document.serverForm.submit();
+			    		});	
+					});
+				} else {
+					$.alert($(e.currentTarget).attr('sys') + ' 서버 시작에 실패 하였습니다.\n' + data);
+				}
+	   		});
+    		
+    	});
+		
+		$('button[name=stop]').click((e) => {
+    		e.preventDefault();
+    		$.form({ url : '/server/stopServer/' + $(e.currentTarget).attr('sys') },(data) => {
+    			if(data === '0') {
+					$.alert($(e.currentTarget).attr('sys') + ' 서버가 종료 되었습니다.', () => {
+						$.loading(true, () => {
+			    			document.serverForm.submit();
+			    		});
+					});
+    			} else {
+    				console.log(data)
+    				$.alert($(e.currentTarget).attr('sys') + ' 서버 종료에 실패 하였습니다.\n' + data);
+    			}
+	   		});
+    	});
+		
+		$('button[name=refreshBtn]').click((e) => {
+    		e.preventDefault();
+    		$.loading(true, () => {
+    			document.serverForm.submit();
+    		});
+    	});
+		
+	});
+	
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

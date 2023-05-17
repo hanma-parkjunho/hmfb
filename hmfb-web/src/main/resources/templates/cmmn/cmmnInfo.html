@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+				<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">공통코드정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>공통코드정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+																
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+		
+			<div class="table-group search">
+				<table>
+					<colgroup>
+						<col style="width:160px;">
+						<col>
+						<col style="width:160px;">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>코드그룹</th>
+							<td>
+								<div class="input-group">
+									<input type="text" class="input-ui w200" placeholder="코드그룹입력" id="searchCodeGrp">
+								</div>
+							</td>
+							<th>코드값</th>
+							<td>
+								<div class="input-group">
+									<input type="text" class="input-ui w200" placeholder="코드값입력" id="searchCode">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>코드설명</th>
+							<td>
+								<div class="input-group">
+									<input type="text" class="input-ui w200" placeholder="코드설명입력" id="searchName">
+								</div>
+							</td>
+							<th></th>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="searchCmmnBtn" class="button-ui"><span>조회</span></button>
+			</div>
+
+			<div class="table-group data mgt-30">
+				<table>
+					<colgroup>
+						<col style="width:100px;">
+						<col style="width:150px;">
+						<col style="width:150px;">
+						<col>
+						<col style="width:100px;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>선택</th>
+							<th>코드그룹</th>
+							<th>코드값</th>
+							<th>코드설명</th>
+							<th>상세</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${ not #arrays.isEmpty(cmmnList)}" th:each="cmmn : ${cmmnList}" >
+							<tr>
+								<td>
+									<div class="check-group">
+										<input type="checkbox" name="cmmnChk" th:id="${cmmnStat.index}" th:codeGrp="${cmmn.codeGrp}" th:code="${cmmn.code}">
+										<label th:for="${cmmnStat.index}"></label>
+									</div>
+								</td>
+								<td th:text="${cmmn.codeGrp}"></td>								
+								<td th:text="${cmmn.code}"></td>
+								<td th:text="${cmmn.name}"></td>
+								<td>
+									<button type="button" class="button-ui small" aria-label="상세" name="dtlCmmnBtn">
+										<span>상세</span>
+									</button>
+									<input type="hidden" name="codeGrp" th:value="${cmmn.codeGrp}"/>
+									<input type="hidden" name="code" th:value="${cmmn.code}"/>
+									<input type="hidden" name="name" th:value="${cmmn.name}"/>
+									<input type="hidden" name="seq" th:value="${cmmn.seq}"/>
+								</td>
+							</tr>
+						</th:block>
+						<th:block  th:if="${#arrays.isEmpty(cmmnList)}" >
+							<tr>
+								<td colspan="5">조회된 데이터가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+					<tfoot></tfoot>
+				</table>
+			</div>
+			
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="addCmmnBtn" class="button-ui"><span>추가</span></button>
+				<button type="button" name="delCmmnBtn" class="button-ui"><span>삭제</span></button>
+			</div>
+			
+			<th:block th:replace="fragments/page :: pageFragment"></th:block>
+    
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	
+	<!-- POPUP : 공통코드상세 -->
+	<div class="popup-group default" id="dtlCmmn" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">공통코드상세</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<input type="hidden" name="userId">
+						<div class="label-group">
+							<label for="codeGrp" class="title">코드그룹</label>
+							<div class="input-group">
+								<input type="text" id="codeGrp" class="input-ui" placeholder="코드그룹 입력" maxlength="10">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="label-group">
+							<label for="code" class="title">코드값</label>
+							<div class="input-group">
+								<input type="text" id="code" class="input-ui" placeholder="코드값 입력" maxlength="100">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="label-group">
+							<label for="name" class="title">코드설명</label>
+							<div class="input-group">
+								<input type="text" id="name" class="input-ui" placeholder="코드설명 입력" maxlength="100">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="label-group">
+							<label for="seq" class="title">순번</label>
+							<div class="input-group">
+								<input type="text" id="seq" class="input-ui" placeholder="순번 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" name="saveCmmnBtn" class="button-ui"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 공통코드상세 -->
+	
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">공통코드정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="cmmnForm" action="/cmmn/cmmnInfo">
+		<input type="hidden" name="codeGrp">
+		<input type="hidden" name="code">
+		<input type="hidden" name="name">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('#dtlCmmn').find("input").on("input", function(e) {
+    		e.preventDefault();
+    		$('.message').each((idx, o)=>{
+    			if(!$.isEmpty($(o).text()))
+    				setErrMsg($(o), '', true);
+    		});
+    		
+    	});
+	    
+		$('#searchCodeGrp, #searchCode, #searchName').keyup((e) => {
+    		e.preventDefault();
+    		if(e.which === 13)
+    			pageClick(1);
+    			
+    	})
+		
+		$('button[name=searchCmmnBtn]').click((e)=>{
+			e.preventDefault();
+			pageClick(1);	
+		});
+		
+		$('button[name=dtlCmmnBtn]').click((e) => {
+			e.preventDefault();
+			$.popup.open(this,'#dtlCmmn', (popup)=>{
+				initPopup();
+				popup.find('#codeGrp').val($(e.currentTarget).parent().find('input[name=codeGrp]').val()).attr("readonly",true);
+				popup.find('#code').val($(e.currentTarget).parent().find('input[name=code]').val()).attr("readonly",true);
+				popup.find('#name').val($(e.currentTarget).parent().find('input[name=name]').val())
+				popup.find('#seq').val($(e.currentTarget).parent().find('input[name=seq]').val())
+			});
+		});
+		
+		$('button[name=addCmmnBtn]').click((e) => {
+			e.preventDefault();
+			$.popup.open(this,'#dtlCmmn', (popup)=>{
+				initPopup();
+			});
+		});
+		
+		$('button[name=saveCmmnBtn]').click((e) => {
+			e.preventDefault();
+			
+			popup = $('#dtlCmmn');
+			
+			if($.isEmpty(popup.find('#codeGrp').val())) {
+	   			setErrMsg(popup.find('#codeGrp').parent().next(), '코드그룹을 입력해 주세요.', false);
+	   			popup.find('#codeGrp').focus();
+	   			return;
+	   		}
+			
+			if(popup.find('#codeGrp').val().length > 10) {
+	   			setErrMsg(popup.find('#codeGrp').parent().next(), '코드그룹는 최대 10자 까지 입력 가능 합니다.', false);
+	   			popup.find('#codeGrp').focus();
+	   			return;
+	   		}
+			
+			if($.isEmpty(popup.find('#code').val())) {
+	   			setErrMsg(popup.find('#code').parent().next(), '코드값을 입력해 주세요.', false);
+	   			popup.find('#code').focus();
+	   			return;
+	   		}
+			
+			if(popup.find('#code').val().length > 100) {
+	   			setErrMsg(popup.find('#code').parent().next(), '코드값은 최대 100자 까지 입력 가능 합니다.', false);
+	   			popup.find('#code').focus();
+	   			return;
+	   		}
+			
+			if($.isEmpty(popup.find('#name').val())) {
+	   			setErrMsg(popup.find('#name').parent().next(), '코드설명을 입력해 주세요.', false);
+	   			popup.find('#name').focus();
+	   			return;
+	   		}
+			
+			if(popup.find('#name').val().length > 100) {
+	   			setErrMsg(popup.find('#name').parent().next(), '코드설명은 최대 100자 까지 입력 가능 합니다.', false);
+	   			popup.find('#name').focus();
+	   			return;
+	   		}
+			
+			if($.isEmpty(popup.find('#seq').val())) {
+	   			setErrMsg(popup.find('#seq').parent().next(), '순번을 입력해 주세요.', false);
+	   			popup.find('#seq').focus();
+	   			return;
+	   		}
+			
+			if(/[^0-9]/ig.test(popup.find('#seq').val())){
+	   			setErrMsg(popup.find('#seq').parent().next(), '순번은 숫자만 입력해 주세요.', false);
+	   			popup.find('#seq').focus();
+	   			return;	
+	   		}
+			
+			if(popup.find('#seq').val().length > 3) {
+	   			setErrMsg(popup.find('#seq').parent().next(), '순번은 최대 3자 까지 입력 가능 합니다.', false);
+	   			popup.find('#seq').focus();
+	   			return;
+	   		}
+			
+			$.confirm('공통코드를 저장 하시겠습니까?', () => {
+	   			$.form({ url : '/cmmn/saveCmmn', data : {
+	   				codeGrp : popup.find('#codeGrp').val(),
+					code : popup.find('#code').val(),
+					name : popup.find('#name').val(),
+					seq : popup.find('#seq').val()
+	   			} },(data) => {
+					$.alert('공통코드 저장이 완료 되었습니다.', () => {
+						$.popup.close(this,'#dtlCmmn', ()=>{
+							$.submit(document.cmmnForm, 1);
+						});
+						
+			   		}) 
+		   		});
+			});
+			
+		});
+		
+		$('button[name=delCmmnBtn]').click((e) => {
+			e.preventDefault();
+			
+			let delCmmns = [];
+			$('input[name=cmmnChk]').each((i, o)=>{
+				if($(o).is(':checked'))
+					delCmmns.push({ codeGrp : $(o).attr('codeGrp'), code : $(o).attr('code') })
+			});
+			
+			if(delCmmns.length > 0) {
+				$.confirm('공통코드를 삭제 하시겠습니까?', () => {
+					$.api({ url : '/cmmn/delCmmns', data : delCmmns },(data) => {
+						$.alert('선택된 공통코드가 삭제 되었습니다.', () => {
+							$.submit(document.cmmnForm, 1);
+				   		}) 
+			   		});
+				});
+			} else {
+				$.alert('선택된 공통코드가 없습니다.');
+			}
+			
+		});
+		
+		$('#searchCodeGrp').focus();
+		$('#searchCodeGrp').val([[${searchCmmnDto.codeGrp}]]);
+		$('#searchCode').val([[${searchCmmnDto.code}]]);
+		$('#searchName').val([[${searchCmmnDto.name}]]);
+		
+    });
+    
+	const pageClick = (pageIndex) => {
+		$.loading(true, () => {
+			document.cmmnForm.codeGrp.value = $('#searchCodeGrp').val();
+	    	document.cmmnForm.code.value = $('#searchCode').val();
+	    	document.cmmnForm.name.value = $('#searchName').val();
+	    	$.submit(document.cmmnForm, pageIndex)
+		});
+    }
+    
+	const initPopup = () => {
+    	popup = $('#dtlCmmn');
+    	
+    	popup.find('#codeGrp').val('').attr("readonly",false);
+    	popup.find('#code').val('').attr("readonly",false);
+    	popup.find('#name').val('');
+    	popup.find('#seq').val('');
+    	popup.find('.message').each((idx, o)=>{
+			if(!$.isEmpty($(o).text()))
+				setErrMsg($(o), '', true);
+		});
+    }
+	
+	const setErrMsg = (err, msg, isNone) => {
+		err.text(msg);
+		isNone ? err.addClass('none') : err.removeClass('none');
+	}
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

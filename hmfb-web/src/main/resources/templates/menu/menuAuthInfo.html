@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+			<!-- TITLE, HISTORY, HELP -->
+			<div class="heading-group">
+				<h2 class="h2">메뉴권한정보</h2>
+				<div class="history-group">
+					<ul>
+						<li>
+							<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+						</li>
+						<li>
+							<a href="javascript:;" class="button-history"><span>메뉴관리</span></a>
+						</li>
+						<li>
+							<a href="javascript:;" class="button-history"><span>메뉴권한정보</span></a>
+						</li>
+					</ul>
+					<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+				</div>
+			</div>
+			<!-- // TITLE, HISTORY, HELP -->
+	
+			<!-- SECTION : CONTENT -->
+			<section class="section-group seperate">
+				<div class="side-con left pdb-0">
+					<h3 class="h3">권한목록</h3>
+					<div class="box-group">
+						<select id="selAuthDvcd" class="col-5">
+							<option value="">선택</option>
+							<th:block th:each="authDvcd : ${authDvcdList}">
+								<option th:selected="${selMenuDto.authDvcd == authDvcd.code}" th:value="${authDvcd.code}" th:text="${authDvcd.name}"></option>
+							</th:block>
+						</select>
+					</div>
+				</div>
+				<div class="side-con right pdb-0">
+					<h3 class="h3">메뉴목록</h3>
+					<div class="box-group ui-scroll">
+						<ul class="menu-lists" th:if="${ not #arrays.isEmpty(menuAuthList)}">
+							<li th:if="${ menu.lvl == '1' }" th:each="menu : ${menuAuthList}">
+								<div class="check-group with-text">
+									<input type="checkbox" th:checked="${ not #strings.isEmpty(menu.authDvcd)}" th:id="${menu.seqNo}" th:seqNo="${menu.seqNo}" th:lvl="${menu.lvl}">
+									<label th:for="${menu.seqNo}" th:text="${menu.flnm}"></label>
+									<input type="hidden" name="seqNo" th:value="${menu.seqNo}">
+									<input type="hidden" name="uprnSeqNo" th:value="${menu.uprnSeqNo}">
+									<input type="hidden" name="flnm" th:value="${menu.flnm}">
+									<input type="hidden" name="url" th:value="${menu.url}">
+									<input type="hidden" name="lvl" th:value="${menu.lvl}">
+									<input type="hidden" name="odr" th:value="${menu.odr}">
+									<input type="hidden" name="uzYn" th:value="${menu.uzYn}">
+								</div>
+								<ul class="submenu-lists">
+									<li th:if="${ menu.seqNo == subMenu.uprnSeqNo }" th:each="subMenu : ${menuAuthList}" >
+										<div class="check-group with-text">
+											<input type="checkbox" th:checked="${ not #strings.isEmpty(subMenu.authDvcd)}" th:id="${subMenu.seqNo}" th:seqNo="${subMenu.seqNo}" th:uprnSeqNo="${subMenu.uprnSeqNo}" th:lvl="${subMenu.lvl}">
+											<label th:for="${subMenu.seqNo}" th:text="${subMenu.flnm}"></label>
+											<input type="hidden" name="seqNo" th:value="${subMenu.seqNo}">
+											<input type="hidden" name="uprnSeqNo" th:value="${subMenu.uprnSeqNo}">
+											<input type="hidden" name="flnm" th:value="${subMenu.flnm}">
+											<input type="hidden" name="url" th:value="${subMenu.url}">
+											<input type="hidden" name="lvl" th:value="${subMenu.lvl}">
+											<input type="hidden" name="odr" th:value="${subMenu.odr}">
+											<input type="hidden" name="uzYn" th:value="${subMenu.uzYn}">
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="saveMenuAuthsBtn" class="button-ui"><span>저장</span></button>
+			</div>
+			<!-- // SECTION : CONTENT -->
+		</div>
+	
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">메뉴권한정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="menuAuthForm" action="/menu/menuAuthInfo">
+		<input type="hidden" name="authDvcd">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+	
+    	$('#selAuthDvcd').change((e) => {
+    		e.preventDefault();
+    		document.menuAuthForm.authDvcd.value = $(e.currentTarget).val();
+    		$.submit(document.menuAuthForm, 1);
+    	});
+    	
+    	$('.menu-lists input[type=checkbox]').click((e) => {
+			if($(e.currentTarget).attr('lvl') === '1') {
+				if($(e.currentTarget).is(":checked")) {
+					$('.menu-lists input[uprnSeqNo=' + $(e.currentTarget).attr('seqNo') + ']').prop('checked', true);
+				} else {
+					$('.menu-lists input[uprnSeqNo=' + $(e.currentTarget).attr('seqNo') + ']').prop('checked', false);
+				}
+			} else {
+				if($(e.currentTarget).is(":checked")) {
+					if($('.menu-lists input[uprnSeqNo=' + $(e.currentTarget).attr('uprnSeqNo') + ']').toArray().every((o) => {
+						return $(o).is(":checked")
+					})) $('.menu-lists input[seqNo=' + $(e.currentTarget).attr('uprnSeqNo') + ']').prop('checked', true);
+				} else {
+					$('.menu-lists input[seqNo=' + $(e.currentTarget).attr('uprnSeqNo') + ']').prop('checked', false);
+				}
+			} 
+		});
+    	
+    	$('button[name=saveMenuAuthsBtn]').click((e) => {
+    		e.preventDefault();
+    		let authDvcd = $('#selAuthDvcd').val();
+    		let saveMenuAuths = [];
+    		$('.menu-lists input[type=checkbox]').each((i, o) => {
+    			if($(o).is(":checked"))
+    				saveMenuAuths.push({ menuSeqNo : $(o).attr('seqNo'), authDvcd : authDvcd })	
+    		});
+    		
+    		if(saveMenuAuths.length > 0) {
+    			$.confirm('메뉴 권한을 저장 하시겠습니까?', () => {
+					$.api({ url : '/menu/saveMenuAuths', data : {
+						authDvcd : authDvcd, saveMenuAuths : saveMenuAuths
+					} },(data) => {
+						$.alert('메뉴 권한 정보가 저장 되었습니다.', () => {
+							document.menuAuthForm.authDvcd.value = authDvcd;
+							$.submit(document.menuAuthForm, 1);
+				   		}) 
+			   		});
+				});
+    		} else {
+				$.alert('선택된 메뉴가 없습니다.');
+			}
+    		
+    	});
+    	
+    });
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

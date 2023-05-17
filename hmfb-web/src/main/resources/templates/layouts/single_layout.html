@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  	<meta charset="UTF-8" />
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+  	<title th:text="${@environment.getProperty('project.title')}"></title>
+  	<!-- common css -->
+  	<th:block th:replace="fragments/css :: cssFragment"></th:block>
+  	<!-- common script -->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</head>
+<body>
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- CONTENT FRAGMENT 사용 -->
+	<th:block layout:fragment="content"></th:block>
+	<!-- // CONTENT FRAGMENT -->
+	<!-- POPUP FRAGMENT -->
+	<th:block th:replace="fragments/popup :: popupFragment"></th:block>
+	<!-- // POPUP FRAGMENT -->
+</body>
+</html>

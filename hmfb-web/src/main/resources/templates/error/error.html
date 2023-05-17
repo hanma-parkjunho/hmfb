@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/single_layout}">
+
+<head></head>	
+		
+<th:block layout:fragment="content">
+
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper" id="wrapper">				
+		<div class="btn-group flex content-center mgt-30">
+			<h2 class="h2">처리 중 오류가 발생 했습니다.</h2>
+		</div>
+		<div class="table-group data align-left mgt-52">
+			<table>
+				<colgroup>
+					<col>
+					<col>
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>경로</th>
+						<td>[[${path}]]</td>
+					</tr>
+					<tr>
+						<th>상태</th>
+						<td>[[${status}]]</td>
+					</tr>
+					<tr>
+						<th>오류</th>
+						<td>[[${error}]]</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>[[${message}]]</td>
+					</tr>
+					<tr>
+						<th>발생 시간</th>
+						<td>[[${regDt}]] [[${regTm}]]</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" class="button-ui"><span>메인화면</span></button>
+			</div>
+		</div>
+	</div>
+	<!-- // WRAPPER -->
+
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('button').click((e)=>{
+	   		e.preventDefault();
+	   		location.href = '/'
+    	})
+		
+    });
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

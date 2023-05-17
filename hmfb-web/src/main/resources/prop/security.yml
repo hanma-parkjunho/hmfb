@@ -1,0 +1,24 @@
+security:
+  #usernameParameter: usernameParameter
+  #passwordParameter: passwordParameter
+  loginPage: /login
+  loginProcessingUrl: /loginProcess
+  defaultSuccessUrl: /
+  #failureUrl: failureUrl
+  logoutUrl: /logout
+  #logoutSuccessUrl: logoutSuccessUrl
+  #invalidSessionUrl: invalidSessionUrl
+  #maximumSessions: maximumSessions
+  #maxSessionsPreventsLogin: maxSessionsPreventsLogin
+  #expiredUrl: expiredUrl
+  antMatchers:
+    - /favicon.ico
+    - /assets/**
+    - /login
+    - /loginProcess
+    - /signUp
+    - /user/getUser
+    - /user/saveUser
+    - /error
+    - /sample/**
+    

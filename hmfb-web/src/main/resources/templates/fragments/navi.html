@@ -1,0 +1,111 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--NAVI FRAGMENT 선언-->
+<th:block th:fragment="naviFragment">
+
+<!-- NAVIGATION -->
+<nav class="navi-group"></nav>
+<!-- // NAVIGATION -->
+
+<!-- ALLMENU -->
+<div class="popup-group large all-menu default" id="allMenuPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+	<div class="dim"></div>
+	<div class="popup-content" tabindex="-1">
+		<div class="popup-cover">
+			<div class="popup-body">
+				<div class="popup-inner">
+					<h3 class="h3 allmenu-title">전체메뉴</h3>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="btn btn-close black"><span class="blind">팝업닫기</span></button>
+	</div>
+</div>
+<!-- // ALLMENU -->
+
+<form method="post" name="naviForm">
+	<input type="hidden" name="selUprnSeqNo" th:value="${selUprnSeqNo}">
+	<input type="hidden" name="selSeqNo" th:value="${selSeqNo}">
+</form>
+
+<!-- NAVI 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		if(!$.isEmpty([[${#authentication.principal.userAuthTreeMenu}]])) {
+			let menu = addMenu($('<ul>'), $('<ul>', { class : 'allmenu-lists' }), [[${#authentication.principal.userAuthTreeMenu}]].childern);
+			$('.navi-group').append(menu.l);
+			$('#allMenuPopup .popup-inner').append(menu.a);
+		}
+		
+		$(document).on('click', '.button-allmenu', function(e){
+			e.preventDefault();
+			$.popup.open(this,'#allMenuPopup');
+		});
+		
+    });
+    
+    const addMenu = ($l, $a, childern) => {
+    	
+    	childern.forEach((menu) => {
+    		if(!$.isEmpty(menu.childern)) {
+    			let addOnClass = [[${selUprnSeqNo}]] === menu.seqNo ? 'on' : '';
+    			let lli = $('<li>', { class : addOnClass }).append($('<button>', { type : 'button', class : addOnClass }).click((e) => {
+    				e.preventDefault();
+    				let button = $(e.target).closest('button')
+    				if(!button.hasClass('on')){
+    		            button.closest('.navi-group').find('button').removeClass('on');
+    		            button.closest('.navi-group').find('>ul>li').removeClass('on');
+    		            button.addClass('on');
+    		            button.closest('li').addClass('on');
+    		        }
+    			}).append($('<span>', { text : menu.flnm })));
+    			let ali = $('<li>').append($('<h4>', { class : 'h4', text : menu.flnm }));
+    			
+    			let lul = $('<ul>');
+    			let aul = $('<ul>');
+    			
+    			addMenu(lul, aul, menu.childern);
+    			
+    			lli.append(lul);
+    			ali.append(aul);
+    			
+    			$l.append(lli);
+    			$a.append(ali);
+    			
+    		} else {
+    			let addOnClass = [[${selSeqNo}]] === menu.seqNo ? 'on' : '';
+    			let lli = $('<li>').append($('<a>', { href : 'javascript:void(0);', class : addOnClass, uprnSeqNo : menu.uprnSeqNo, seqNo : menu.seqNo  }).append($('<span>', { text : menu.flnm }).click((e) => {
+    				e.preventDefault();
+    				pageMove(menu.uprnSeqNo, menu.seqNo, menu.url);
+    			})));
+    			let ali = $('<li>').append($('<a>', { href : 'javascript:void(0);', class : 'bullet dot', uprnSeqNo : menu.uprnSeqNo, seqNo : menu.seqNo }).append($('<span>', { text : menu.flnm }).click((e) => {
+    				e.preventDefault();
+    				pageMove(menu.uprnSeqNo, menu.seqNo, menu.url);
+    			})));
+    			$l.append(lli);
+    			$a.append(ali);
+    		}
+    		
+		})
+		
+		return { l : $l, a : $a };
+    }
+    
+    const pageMove = (uprnSeqNo, seqNo, url) => {
+    	$.loading(true, () => {
+	    	document.naviForm.selUprnSeqNo.value = uprnSeqNo;
+	    	document.naviForm.selSeqNo.value = seqNo;
+			document.naviForm.action = $.isEmpty(url) ? '/' : url
+			document.naviForm.submit();
+    	});
+    }
+   
+/*]]>*/
+</script>
+
+</th:block>
+
+</html>

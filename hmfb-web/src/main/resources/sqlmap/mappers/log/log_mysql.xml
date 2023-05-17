@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.web.log.LogMapper">
+    
+    <select id="getPrgmIdList" resultType="hmfb.core.dto.PrgmDto">
+        
+        SELECT PRGM_ID FROM HMFB_007 GROUP BY PRGM_ID
+		   
+    </select>
+    
+    <select id="getlogList" parameterType="hmfb.core.dto.PrgmDto" resultType="hmfb.core.dto.PrgmDto">
+        
+		SELECT
+			SYS,
+			UUID,
+			TIMESTAMP,
+			PRGM_ID,
+			PRGM_LOG
+		FROM HMFB_007
+		WHERE REG_DT BETWEEN REPLACE(#{searchStDt},'.', '') AND REPLACE(#{searchEdDt}, '.', '')
+		<if test="searchSys != null and searchSys != ''">
+		  AND SYS = #{searchSys} 
+		</if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+		  AND PRGM_LOG LIKE CONCAT('%',#{searchKeyword},'%')
+		</if>
+		  
+		<if test="searchPrgmId != null and searchPrgmId != ''">
+		  AND PRGM_ID = #{searchPrgmId} 
+		</if>
+		ORDER BY REG_DT
+		LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+		
+    </select>
+    
+    <select id="getlogTotCnt" parameterType="hmfb.core.dto.PrgmDto" resultType="int">
+        
+		SELECT
+			 COUNT(CONCAT(SYS,TIMESTAMP,UUID))
+		FROM HMFB_007
+		WHERE REG_DT BETWEEN REPLACE(#{searchStDt},'.', '') AND REPLACE(#{searchEdDt}, '.', '') 
+		<if test="searchSys != null and searchSys != ''">
+		  AND SYS = #{searchSys} 
+		</if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+		  AND PRGM_LOG LIKE CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<if test="searchPrgmId != null and searchPrgmId != ''">
+		  AND PRGM_ID = #{searchPrgmId} 
+		</if>
+		
+    </select>
+    
+</mapper>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<title>HIBS - HANMA INFORMATION BANKING SYSTEM</title>
+	<link rel="stylesheet" href="/assets/css/libs/swiper.min.css">
+	<link rel="stylesheet" href="/assets/css/ui_common.css">
+	<script type="text/javascript" src="/assets/js/libs/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/swiper-bundle.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/gsap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/EasePack.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/useragent.js"></script>
+	<!-- 개발시 아래 header_footer_guide.js 삭제 -->
+	<script type="text/javascript" src="/assets/js/header_footer_guide.js"></script>
+	<script type="text/javascript" src="/assets/js/ui_common.js"></script>
+</head>
+<body>
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper" id="wrapper">
+		<!-- HEADER -->
+		<header class="header">
+		</header>
+		<!-- HEADER -->
+
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<!-- NAVIGATION -->
+				<nav class="navi-group">
+				</nav>
+				<!-- // NAVIGATION -->
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">기관정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>기관정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group data">
+							<table>
+								<colgroup>
+									<col style="width:33.3%;">
+									<col style="width:33.3%;">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>기관명</th>
+										<th>기관코드</th>
+										<th>사업자등록번호</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui small" placeholder="기관명 입력" value="한마정보시스템">
+											</div>
+										</td>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui small" placeholder="기관코드 입력" value="HNMA">
+											</div>
+										</td>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui small" placeholder="사업자등록번호 입력" value="111122223333">
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btn-group flex content-end mgt-30">
+							<button type="button" class="button-ui"><span>수정</span></button>
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">기관정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+</body>
+
+</html>

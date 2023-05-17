@@ -1,0 +1,1 @@
+java -DinstallPath=설치경로 -jar jar파일명 

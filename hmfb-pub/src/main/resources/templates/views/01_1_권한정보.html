@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<title>HIBS - HANMA INFORMATION BANKING SYSTEM</title>
+	<link rel="stylesheet" href="/assets/css/libs/swiper.min.css">
+	<link rel="stylesheet" href="/assets/css/ui_common.css">
+	<script type="text/javascript" src="/assets/js/libs/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/swiper-bundle.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/gsap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/EasePack.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/useragent.js"></script>
+	<!-- 개발시 아래 header_footer_guide.js 삭제 -->
+	<script type="text/javascript" src="/assets/js/header_footer_guide.js"></script>
+	<script type="text/javascript" src="/assets/js/ui_common.js"></script>
+</head>
+<body>
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper" id="wrapper">
+		<!-- HEADER -->
+		<header class="header">
+		</header>
+		<!-- HEADER -->
+
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<!-- NAVIGATION -->
+				<nav class="navi-group">
+				</nav>
+				<!-- // NAVIGATION -->
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">권한정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>사용자관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>권한정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group">
+							<table>
+								<colgroup>
+									<col style="width:100px;">
+									<col style="width:200px;">
+									<col style="width:200px;">
+									<col style="width:200px;">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>선택</th>
+										<th>아이디</th>
+										<th>부서</th>
+										<th>성명</th>
+										<th>권한</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="" id="ipt0">
+												<label for="ipt0"></label>
+											</div>
+										</td>
+										<td>bbbbb</td>
+										<td>개발부</td>
+										<td>홍길동</td>
+										<td>
+											<select name="" id="" class="small">
+												<option value="">선택</option>
+												<option value="" selected>기관담당자</option>
+												<option value="">관리자</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="" id="ipt1">
+												<label for="ipt1"></label>
+											</div>
+										</td>
+										<td>cccc</td>
+										<td>회계부</td>
+										<td>김길동</td>
+										<td>
+											<select name="" id="" class="small">
+												<option value="">선택</option>
+												<option value="">기관담당자</option>
+												<option value="">관리자</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="" id="ipt2">
+												<label for="ipt2"></label>
+											</div>
+										</td>
+										<td>dddd</td>
+										<td>총괄부</td>
+										<td>이길동</td>
+										<td>
+											<select name="" id="" class="small">
+												<option value="">선택</option>
+												<option value="">기관담당자</option>
+												<option value="">관리자</option>
+											</select>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui"><span>저장</span></button>
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">권한정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+</body>
+
+</html>

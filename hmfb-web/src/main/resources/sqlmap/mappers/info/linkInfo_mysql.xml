@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="linkInfo">
+        
+    <select id="getLinkInfoTotCnt" parameterType="hmfb.core.dto.LinkDto" resultType="int">
+    	<![CDATA[
+		SELECT COUNT(*)
+		  FROM HMFB_005
+    	]]>
+    </select>
+    
+    <select id="getListLinkInfo" parameterType="hmfb.core.dto.LinkDto" resultType="hmfb.core.dto.LinkDto">
+    	<![CDATA[
+	    	SELECT /* */
+			       SEQ_NO     /* */
+				 , INST_DVCD
+				 , INST_SER_NM
+				 , INST_HOST
+				 , INST_PORT
+			     , REG_DT     /* */
+			     , REG_TM     /* */
+			     , UPD_DT     /* */
+			     , UPD_TM     /* */
+	  		FROM HMFB_005 
+		ORDER BY SEQ_NO DESC
+		LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}		  
+    	]]>
+    </select>   
+    
+	<insert id="insertLinkInfo" parameterType="hmfb.core.dto.LinkDto">
+    	<![CDATA[	
+		INSERT /* */
+		  INTO HMFB_005
+		       (
+		       SEQ_NO     /* */
+			 , INST_DVCD
+			 , INST_SER_NM
+			 , INST_HOST
+			 , INST_PORT
+		     , REG_DT     /* */
+		     , REG_TM     /* */
+		     , UPD_DT     /* */
+		     , UPD_TM     /* */
+		       )
+		VALUES (
+		       (SELECT IFNULL(MAX(A.SEQ_NO) + 1, 1) FROM HMFB_005 A)
+		     , #{instDvcd}
+		     , #{instSerNm}
+		     , #{instHost}
+		     , #{instPort}
+		     , #{regDt}
+		     , #{regTm}
+		     , #{updDt}
+		     , #{updTm}
+		       )
+    	]]>
+	</insert>
+	
+    <select id="selectLinkInfo" parameterType="string" resultType="hmfb.core.dto.LinkDto">
+    	<![CDATA[
+			SELECT /* */
+			       SEQ_NO     /* */
+			     , INST_DVCD      /* */
+			     , INST_SER_NM    /* */
+			     , INST_HOST      /* */
+			     , INST_PORT      /* */
+			     , REG_DT     /* */
+			     , REG_TM     /* */
+			     , UPD_DT     /* */
+			     , UPD_TM     /* */
+			  FROM HMFB_005 
+			 WHERE SEQ_NO      = #{seqNo}
+    	]]>
+    </select>   
+    
+    <update id="updateLinkInfo" parameterType="hmfb.core.dto.LinkDto">
+    	<![CDATA[
+			UPDATE /* */
+			       HMFB_005 
+			   SET INST_DVCD   = #{instDvcd}
+			     , INST_SER_NM = #{instSerNm}
+			     , INST_HOST   = #{instHost}
+			     , INST_PORT   = #{instPort}
+			     , UPD_DT  = #{updDt}
+			     , UPD_TM  = #{updTm}
+			 WHERE SEQ_NO      = #{seqNo}
+    	]]>    	
+    </update>
+    
+    <delete id="deleteLinkInfo" parameterType="hmfb.core.dto.LinkDto">
+    	<![CDATA[
+		DELETE FROM HMFB_005
+		 WHERE SEQ_NO      = #{seqNo}
+    	]]>  
+    </delete>
+    
+</mapper>

@@ -1,0 +1,51 @@
+project:
+  sys: WEB
+  name: hmfb-web
+  title: HMFB WEB
+
+jasypt:
+  encryptor:
+    bean: stringEncryptor
+      
+spring:
+  config:
+    import:
+    - file:${installPath}/hmfb.yml
+    - classpath:prop/security.yml
+    - classpath:prop/pagination.yml  
+    - classpath:prop/serverinfo.yml
+  thymeleaf:
+    cache: false
+  mvc:
+    converters:
+      preferred-json-mapper: gson   
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  error:
+    include-exception: true   
+  port: 8080
+   
+---
+spring:
+    config:
+      activate:
+        on-profile: local
+    devtools:
+      livereload:
+        enabled: true
+hmfb:
+  admin:
+    enable-schedule: false
+---
+spring:
+    config:
+      activate:
+        on-profile: dev
+    devtools:
+      livereload:
+        enabled: false    
+hmfb:
+  admin:
+    enable-schedule: true        

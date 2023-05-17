@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">로그정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>로그정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+		<!-- SECTION : CONTENT -->
+		<section class="section-group" th:if="${dbLog == 'Y' || fileLog == 'Y'}">
+			<div class="table-group search">
+				<table>
+					<colgroup>
+						<col style="width:160px;">
+						<col style="width:320px;">
+						<col style="width:160px;">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>인스턴스명<span class="ico-neccesory"><span class="blind">필수입력</span></span></th>
+							<td>
+								<select id="searchSys" class="w260">
+									<option value="">전체</option>
+									<th:block th:each="itm : ${sysList}">
+										<option th:selected="${itm.sys == searchPrgmDto.searchSys}" th:value="${itm.sys}" th:text="${itm.sys}"></option>
+									</th:block>
+								</select>
+							</td>
+							<th>검색어</th>
+							<td>
+								<div class="input-group">
+									<input type="text" id="searchKeyword" class="input-ui w260" placeholder="검색어 입력" th:value="${searchPrgmDto.searchKeyword}">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>조회일자<span class="ico-neccesory"><span class="blind">필수입력</span></span></th>
+							<td colspan="3">
+								<div class="calendar-group">
+									<div class="input-group w260">
+										<input type="text" class="input-ui" placeholder="YYYY.MM.DD" id="searchStDt" th:value="${searchPrgmDto.searchStDt}">
+										<button type="button" class="button-cal"
+											onclick="$('#searchStDt').datepicker('show');"><span
+												class="blind">시작날짜선택</span></button>
+									</div>
+									<span class="unit">~</span>
+									<div class="input-group w260">
+										<input type="text" class="input-ui" placeholder="YYYY.MM.DD" id="searchEdDt" th:value="${searchPrgmDto.searchEdDt}">
+										<button type="button" class="button-cal" onclick="$('#searchEdDt').datepicker('show');"><span
+												class="blind">종료날짜선택</span></button>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>로그구분</th>
+							<td colspan="3">
+								<th:block th:if="${prgmIdList != null}">
+									<select id="searchPrgmId" class="w260">
+										<option value="">전체</option>
+										<th:block th:each="itm : ${prgmIdList}">
+											<option th:selected="${itm.prgmId == searchPrgmDto.searchPrgmId}" th:value="${itm.prgmId}" th:text="${itm.prgmId}"></option>
+										</th:block>
+									</select>
+								</th:block>
+								<th:block th:if="${prgmIdList == null}">
+									<div class="input-group">
+										<input type="text" id="searchPrgmId" class="input-ui w260" placeholder="로그구분 입력" th:value="${searchPrgmDto.searchPrgmId}">
+									</div>
+								</th:block>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="searchlogsBtn" class="button-ui"><span>검색</span></button>
+			</div>
+			
+			
+			<div class="table-group data mgt-52 scrollx">
+				<table>
+					<colgroup>
+						<col width="10%">
+						<col width="36%">
+						<col width="26%">
+						<col width="16%">
+						<col width="12%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>인스턴스명</th>
+							<th>UUID</th>
+							<th>생성일자</th>
+							<th>로그구분</th>
+							<th>상세로그</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block  th:if="${ not #arrays.isEmpty(logList)}" th:each="log : ${logList}" >
+							<tr>
+								<td th:text="${log.sys}"></td>
+								<td th:text="${log.uuid}"></td>
+								<td th:text="${log.timestamp}"></td>
+								<td th:text="${log.prgmId}"></td>
+								<td>
+									<div class="flex content-center">
+										<button type="button" name="getLogInfoBtn" class="button-ui small"
+										th:sys="${log.sys}" th:uuid="${log.uuid}" th:timestamp="${log.timestamp}">
+											<span>확인</span>
+										</button>
+									</div>
+								</td>
+							</tr>
+						</th:block>
+						<th:block  th:if="${#arrays.isEmpty(logList)}" >
+							<tr>
+								<td colspan="4">조회된 데이터가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+			<th:block th:replace="fragments/page :: pageFragment"></th:block>
+		</section>
+		<section class="section-group" th:if="${dbLog != 'Y' && fileLog != 'Y'}">
+			로그 설정 후 이용가능한 화면 입니다.
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	<!-- POPUP : 상세로그 확인 -->
+	<div class="popup-group default" id=logPop role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">상세로그</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<div class="table-group data align-left">
+							<table>
+								<colgroup>
+									<col style="width:160px;">
+									<col>
+								</colgroup>
+								<tbody id="logPopTitle">
+									<tr>
+										<th>인스턴스명</th>
+										<td></td>
+									</tr>
+									<tr>
+										<th>UUID</th>
+										<td></td>
+									</tr>
+									<tr>
+										<th>생성일자</th>
+										<td></td>
+									</tr>
+									<tr>
+										<th>로그구분</th>
+										<td></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+						<div id="logPopBody" class="poplog-group mgt-26 ui-scroll">
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 상세로그 확인 -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">로그정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	
+	<form method="post" name="logForm" action="/log/logInfo">
+		<input type="hidden" name="searchSys">
+		<input type="hidden" name="searchKeyword">
+		<input type="hidden" name="searchStDt">
+		<input type="hidden" name="searchEdDt">
+		<input type="hidden" name="searchPrgmId">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+			$.datepicker.setDefaults($.datepicker.regional['ko']);
+			
+			$("#searchStDt").datepicker({
+				dateFormat: "yy.mm.dd",
+				yearSuffix: "년",
+				nextText: '다음 달',
+				prevText: '이전 달',
+				dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+				monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				showMonthAfterYear: true,
+				onClose: function (selectedDate) {
+					console.log(selectedDate)
+					$("#searchEdDt").datepicker("option", "minDate", selectedDate);
+				}
+			});
+			
+			$("#searchEdDt").datepicker({
+				dateFormat: "yy.mm.dd",
+				yearSuffix: "년",
+				nextText: '다음 달',
+				prevText: '이전 달',
+				dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+				monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				showMonthAfterYear: true,
+				onClose: function (selectedDate) {
+					$("#searchStDt").datepicker("option", "maxDate", selectedDate);
+				}
+			});
+			
+			$("#searchStDt").datepicker("option", "maxDate", $("#searchEdDt").val());
+			$("#searchEdDt").datepicker("option", "minDate", $("#searchStDt").val());
+			
+			$('button[name=searchlogsBtn]').click((e) => {
+	    		e.preventDefault();
+	    		if($.isEmpty($('#searchStDt').val()) || $.isEmpty($('#searchEdDt').val())) {
+	    			$.alert('조회일자는 필수 입력 입니다.'); 
+		   			return;
+		   		}
+	    		pageClick(1);
+	    		
+	    	});
+			
+			$('button[name=getLogInfoBtn]').click((e) => {
+	    		e.preventDefault();
+		   		let logInfo = {};
+		   		$([[${logList}]]).each((i, o) => {
+		   			if(o.sys === $(e.currentTarget).attr('sys') &&
+		   			   o.uuid === $(e.currentTarget).attr('uuid') &&		
+		   			   o.timestamp === $(e.currentTarget).attr('timestamp')) {
+		   				logInfo = o;
+		   			}
+		   		});
+		   		if(!$.isEmpty(logInfo)) {	
+		   			$('#logPopTitle tr').remove();
+	   	    		const body = $('#logPopTitle');
+	   	    		body.append($('<tr>', {}).append($('<th>', { text : '인스턴스명' })).append($('<td>', { text : logInfo.sys  })))
+	   	    		body.append($('<tr>', {}).append($('<th>', { text : 'UUID' })).append($('<td>', { text : logInfo.uuid  })))
+	   	    		body.append($('<tr>', {}).append($('<th>', { text : '로그구분' })).append($('<td>', { text : logInfo.prgmId })))
+	   	    		body.append($('<tr>', {}).append($('<th>', { text : '생성일자' })).append($('<td>', { text : logInfo.timestamp })))
+	   	    		$('#logPopBody').text(logInfo.prgmLog)
+	   	    		$.popup.open(this,'#logPop');
+		   		}
+	    	});	
+    });
+	
+	const pageClick = (pageIndex) => {
+		$.loading(true, () => {
+			document.logForm.searchSys.value = $('#searchSys').val() ?? '';
+	    	document.logForm.searchKeyword.value = $('#searchKeyword').val() ?? '';
+	    	document.logForm.searchStDt.value = $('#searchStDt').val();
+	    	document.logForm.searchEdDt.value = $('#searchEdDt').val();
+	    	document.logForm.searchPrgmId.value = $('#searchPrgmId').val() ?? '';
+	    	$.submit(document.logForm, pageIndex);
+		});
+    }
+	
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

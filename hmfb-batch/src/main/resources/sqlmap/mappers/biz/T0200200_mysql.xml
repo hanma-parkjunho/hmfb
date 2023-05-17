@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0200200">
+	
+	<select id="selectT0200200" parameterType="hmfb.core.dto.T0200200Dto" resultType="hmfb.core.dto.T0200200Dto">
+    <![CDATA[    
+		SELECT /* */
+			   REG_DATE				 AS regDate /* */
+		     , TELEMSG_NO            AS telemsgNo /* */
+		     , DEFRAY_ACNUT_NO       AS defrayAcnutNo /* */
+		     , VIRTL_ACNUT_NO        AS virtlAcnutNo /* */
+		     , REVW_SMBOL            AS revwSmbol /* */
+		     , DELNG_AMOUNT          AS delngAmount /* */
+		     , BLCE_SMBOL            AS blceSmbol /* */
+		     , BLCE                  AS blce /* */
+		     , BANK_CODE             AS bankCode /* */
+		     , ACNUT_NO              AS acnutNo /* */
+		     , IR_SAF_SE             AS irSafSe /* */
+		     , SALARY_TRANSFR_SE     AS salaryTransfrSe /* */
+		     , FEE                   AS fee /* */
+		     , CMS_CODE              AS cmsCode /* */
+		     , DEFRAY_ACNUT_PRNTXT   AS defrayAcnutPrntxt /* */
+		     , RCPMNY_ACNUT_PRNTXT   AS rcpmnyAcnutPrntxt /* */
+		     , CINET_DELNG_INNB      AS cinetDelngInnb /* */
+		     , RSPNS_CODE            AS rspnsCode /* */
+		     , RSPNS_MSSAGE          AS rspnsMssage /* */
+		     , SEND_YN				 AS sendYn /* */
+		  FROM T0200200 
+		 WHERE 1=1
+		   AND REG_DATE = #{regDate}
+		   AND SEND_YN = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0200200" parameterType="hmfb.core.dto.T0200200Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0200200
+		       (
+		       REG_DATE
+		     , TELEMSG_NO             /* */
+		     , DEFRAY_ACNUT_NO        /* */
+		     , VIRTL_ACNUT_NO         /* */
+		     , REVW_SMBOL             /* */
+		     , DELNG_AMOUNT           /* */
+		     , BLCE_SMBOL             /* */
+		     , BLCE                   /* */
+		     , BANK_CODE              /* */
+		     , ACNUT_NO               /* */
+		     , IR_SAF_SE              /* */
+		     , SALARY_TRANSFR_SE      /* */
+		     , FEE                    /* */
+		     , CMS_CODE               /* */
+		     , DEFRAY_ACNUT_PRNTXT    /* */
+		     , RCPMNY_ACNUT_PRNTXT    /* */
+		     , CINET_DELNG_INNB       /* */
+		     , RSPNS_CODE             /* */
+		     , RSPNS_MSSAGE           /* */
+		     , SEND_YN
+		       )
+		VALUES (
+		#{regDate}
+		     , #{telemsgNo}
+		     , #{defrayAcnutNo}
+		     , #{virtlAcnutNo}
+		     , #{revwSmbol}
+		     , #{delngAmount}
+		     , #{blceSmbol}
+		     , #{blce}
+		     , #{bankCode}
+		     , #{acnutNo}
+		     , #{irSafSe}
+		     , #{salaryTransfrSe}
+		     , #{fee}
+		     , #{cmsCode}
+		     , #{defrayAcnutPrntxt}
+		     , #{rcpmnyAcnutPrntxt}
+		     , #{cinetDelngInnb}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		     , #{sendYn}
+		       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0200200" parameterType="hmfb.core.dto.T0200200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0200200 
+		   SET BLCE_SMBOL          = #{blceSmbol}
+		     , BLCE                = #{blce}
+		     , FEE                 = #{fee}
+		     , CINET_DELNG_INNB    = #{cinetDelngInnb}
+		     , RSPNS_CODE          = #{rspnsCode}
+		     , RSPNS_MSSAGE        = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO          = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT0200200" parameterType="hmfb.core.dto.T0200200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0200200 
+		   SET DEFRAY_ACNUT_NO     = #{defrayAcnutNo}
+		     , VIRTL_ACNUT_NO      = #{virtlAcnutNo}
+		     , REVW_SMBOL          = #{revwSmbol}
+		     , DELNG_AMOUNT        = #{delngAmount}
+		     , BLCE_SMBOL          = #{blceSmbol}
+		     , BLCE                = #{blce}
+		     , BANK_CODE           = #{bankCode}
+		     , ACNUT_NO            = #{acnutNo}
+		     , IR_SAF_SE           = #{irSafSe}
+		     , SALARY_TRANSFR_SE   = #{salaryTransfrSe}
+		     , FEE                 = #{fee}
+		     , CMS_CODE            = #{cmsCode}
+		     , DEFRAY_ACNUT_PRNTXT = #{defrayAcnutPrntxt}
+		     , RCPMNY_ACNUT_PRNTXT = #{rcpmnyAcnutPrntxt}
+		     , CINET_DELNG_INNB    = #{cinetDelngInnb}
+		     , RSPNS_CODE          = #{rspnsCode}
+		     , RSPNS_MSSAGE        = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO          = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

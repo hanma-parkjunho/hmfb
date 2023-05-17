@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">배치기본정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>배치기본정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper"
+								onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group data">
+							<table>
+								<colgroup>
+									<col style="width:8%;">
+									<col style="width:19%;">
+									<col style="width:19%;">
+									<col style="width:18%;">
+									<col style="width:18%;">
+									<col style="width:18%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>선택</th>
+										<th>작업식별자</th>
+										<th>작업설명</th>
+										<th>작업유형</th>
+										<th>입력데이터</th>
+										<th>실행주기</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block  th:if="${ not #arrays.isEmpty(batchJobList)}" th:each="batchJob : ${batchJobList}" >
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="batchJobChk" th:id="${batchJob.jobCode}">
+												<label th:for="${batchJob.jobCode}"></label>
+											</div>					
+										</td>
+										<td th:text="${batchJob.jobCode}"></td>
+										<td th:text="${batchJob.jobDesc}"></td>
+										<td th:text="${batchJob.jobType}"></td>
+										<td th:text="${batchJob.inputDataSelector}"></td>
+										<td th:text="${batchJob.cronExpression}"></td>
+									</tr>									
+									</th:block>
+									<th:block  th:if="${#arrays.isEmpty(batchJobList)}" >
+										<tr>
+											<td colspan="7">조회된 데이터가 없습니다.</td>
+										</tr>
+									</th:block>									
+								</tbody>
+							</table>
+						</div>
+						<div class="btn-group flex content-end mgt-52">
+							<button type="button" class="button-ui" name="registerBtn"><span>등록</span></button>
+							<button type="button" class="button-ui line" name="viewDetailBtn"><span>상세조회</span></button>					
+							<button type="button" name=getListBatchJobBtn class="button-ui line"><span>목록조회</span></button>
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 상세조회 -->
+	<div class="popup-group default" id="listSearchPop" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">배치기본정보 상세조회</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<div class="label-group flex">
+							<label for="pw0" class="title">작업식별자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="작업식별자 입력" name="jobCode" id="jobCode" th:value="${batchJob?.jobCode}" readonly	>
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw1" class="title">작업설명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="작업설명 입력" name="jobDesc" id="jobDesc" th:value="${batchJob?.jobDesc}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw2" class="title">커밋건수(1~10000)</label>
+							<div class="input-group">
+								<input type="number" class="input-ui" placeholder="커밋건수 입력" name="commitCount" id="commitCount" th:value="${batchJob?.commitCount}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw3" class="title">작업유형</label>
+							<div class="input-group">
+                            	<select id="jobType" class="col-5">
+									<option value="F2D">F2D</option>
+									<option value="D2F">D2F</option>
+									<option value="D2D">D2D</option>
+									<option value="CTM">CTM</option>
+								</select>								
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw4" class="title">프로그램명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="프로그램명 입력" name="programName" id="programName" th:value="${batchJob?.programName}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw5" class="title">입력데이터지시자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력" name="inputDataSelector" id="inputDataSelector" th:value="${batchJob?.inputDataSelector}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw6" class="title">출력데이터지시자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력" name="outputDataSelector" id="outputDataSelector" th:value="${batchJob?.outputDataSelector}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw7" class="title">예외정책</label>
+							<div class="input-group">
+                            	<select id="exceptionPolicy" class="col-5">
+									<option value="N">즉시중지</option>
+									<option value="S">Skippable</option>
+								</select>										
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw8" class="title">실행주기</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="실행주기 입력" name="cronExpression" id="cronExpression" th:value="${batchJob?.cronExpression}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw9" class="title">사용여부</label>
+							<div class="input-group">
+                            	<select id="useYn" class="col-5">
+                            		<option value="N">N</option>
+									<option value="Y">Y</option>									
+								</select>	
+							</div>
+						</div>											
+
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui" name="updateBatchJobBtn"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 상세조회 -->
+
+	<!-- POPUP : 등록 -->
+	<div class="popup-group default" id="registrationPop" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">배치기본정보 등록</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<div class="label-group flex">
+							<label for="pw10" class="title">작업식별자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="작업식별자 입력" name="jobCode" id="jobCode">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw11" class="title">작업설명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="작업설명 입력" name="jobDesc" id="jobDesc">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw12" class="title">커밋건수(1~10000)</label>
+							<div class="input-group">
+								<input type="number" class="input-ui" placeholder="커밋건수 입력" name="commitCount" id="commitCount">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw13" class="title">작업유형</label>
+							<div class="input-group">
+                            	<select id="jobType" class="col-5">
+									<option value="F2D">F2D</option>
+									<option value="D2F">D2F</option>
+									<option value="D2D">D2D</option>
+									<option value="CTM">CTM</option>
+								</select>								
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw14" class="title">프로그램명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="프로그램명 입력" name="programName" id="programName">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw15" class="title">입력데이터지시자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력" name="inputDataSelector" id="inputDataSelector">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw16" class="title">출력데이터지시자</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력" name="outputDataSelector" id="outputDataSelector">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw17" class="title">예외정책</label>
+							<div class="input-group">
+                            	<select id="exceptionPolicy" class="col-5">
+									<option value="N">즉시중지</option>
+									<option value="S">Skippable</option>
+								</select>	
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw18" class="title">실행주기</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="실행주기 입력" name="cronExpression" id="cronExpression">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw19" class="title">사용여부</label>
+							<div class="input-group">
+                            	<select id="useYn" class="col-5">
+									<option value="N">N</option>
+									<option value="Y">Y</option>									
+								</select>	
+							</div>
+						</div>			
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui" name="registerBatchJobBtn"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 등록 -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">배치시간설정 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="bjListForm" action="/batchJobsInfo">
+	</form>
+
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){	
+    	console.log('');
+    	// 등록 팝업 
+		$('button[name=registerBtn]').click((e) => {
+			e.preventDefault();
+			$.popup.open(this,'#registrationPop', (popup)=>{
+			});
+		});
+    	// 등록 팝업에서 저장  
+		$('#registrationPop button[name=registerBatchJobBtn]').click((e) => {
+			
+   			if(!$.isValidLength($('#registrationPop #jobCode').val(),4,9)) {
+   				$.alert("작업식별자는 영문자,숫자 조합으로 4~9자리로 입력해 주세요.");
+   				$('#registrationPop #jobCode').focus();
+	   			return;
+   			}
+   			let commitCount = $('#registrationPop #commitCount').val();
+   			if(commitCount <= 0 || commitCount > 10000) {
+   				$.alert("커밋건수를 1~10000 범위로 입력해 주세요.");
+   				$('#registrationPop #commitCount').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#registrationPop #programName').val())) {
+   				$.alert("프로그램명을 입력해 주세요.");
+   				$('#registrationPop #programName').focus();
+	   			return;
+   			}
+   			
+			e.preventDefault();			
+			registerBatchJob();
+		});    	
+    	// 상세 조회 
+		$('button[name=viewDetailBtn]').click((e) => {
+			
+			let selectedJob = '';
+			$('input[name=batchJobChk]').each((index, obj)=>{
+				if($(obj).is(':checked'))
+					selectedJob = $(obj).attr('id');
+			});
+			
+			if(selectedJob == '') {
+				$.alert('선택된 배치 작업이 없습니다.');
+				return;
+			}
+			
+			e.preventDefault();			
+			$.popup.open(this,'#listSearchPop', (popup)=>{
+				// initPopup();
+				let jobCode = $('input[name=batchJobChk]:checked').attr('id');
+				popup.find('input[name=jobCode]').val(jobCode);
+				
+				getBatchJob(jobCode);
+			});
+		});
+    	// 상세조회 팝업에서 저장  
+		$('#listSearchPop button[name=updateBatchJobBtn]').click((e) => {
+
+   			let commitCount = $('#listSearchPop #commitCount').val();
+   			if(commitCount <= 0 || commitCount > 10000) {
+   				$.alert("커밋건수를 1~10000 범위로 입력해 주세요.");
+   				$('#listSearchPop #commitCount').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#listSearchPop #programName').val())) {
+   				$.alert("프로그램명을 입력해 주세요.");
+   				$('#listSearchPop #programName').focus();
+	   			return;
+   			}
+   			
+			e.preventDefault();			
+			modifyBatchJob();
+		});    	
+		// 단일 선택 처리 
+		$('input[name=batchJobChk]').click((e) => {
+			$('input[name=batchJobChk]').each((index,obj) => {
+				if (e.target != obj) {
+					obj.checked = false;	
+				}				
+			});			
+		});
+		
+		// 목록 조회
+    	$('button[name=getListBatchJobBtn]').click((e) => {
+    		e.preventDefault();
+        	// document.bjListForm.field1.value = $('#field1').val();
+        	$.submit(document.bjListForm);
+    	});		
+    });
+
+    const setErrMsg = (err, msg, isNone) => {
+		err.text(msg);
+		isNone ? err.addClass('none') : err.removeClass('none');
+	}
+
+    // 등록
+    this.registerBatchJob = function() {
+    	
+    	var commitCnt = $('#registrationPop #commitCount').val();
+    	if (commitCnt <1 || commitCnt > 10000) {
+    		$.alert('커밋건수는 1~10000 범위의 값이어야 합니다');
+    		return;
+    	}
+    	var reqData = {
+
+    		jobCode: 			$('#registrationPop #jobCode').val(),
+    		jobDesc:			$('#registrationPop #jobDesc').val(),
+    		commitCount:		$('#registrationPop #commitCount').val(),
+    		jobType:			$('#registrationPop #jobType').val(),
+    		programName:		$('#registrationPop #programName').val(),
+    		inputDataSelector:	$('#registrationPop #inputDataSelector').val(),
+    		outputDataSelector:	$('#registrationPop #outputDataSelector').val(),
+    		exceptionPolicy:	$('#registrationPop #exceptionPolicy').val(),
+    		cronExpression:		$('#registrationPop #cronExpression').val(),
+    		useYn:				$('#registrationPop #useYn').val()
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/batch/registerBatchJob`,
+            data:reqData
+        })
+        .done(function (result) {
+        	console.log('');
+        	$.alert('저장되었습니다');
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+            $.alert('저장이 실패했습니다');
+        })
+        .always(function(jqXHR) {
+        	console.log("jqXHR:"+jqXHR);
+        	
+        });
+    };    
+    
+    // 수정 
+    this.modifyBatchJob = function() {
+    	
+    	var commitCnt = $('#listSearchPop #commitCount').val();
+    	if (commitCnt <1 || commitCnt > 10000) {
+    		$.alert('커밋건수는 1~10000 범위의 값이어야 합니다');
+    		return;
+    	}
+    	var reqData = {
+
+    		jobCode: 			$('#listSearchPop #jobCode').val(),
+    		jobDesc:			$('#listSearchPop #jobDesc').val(),
+    		commitCount:		commitCnt,
+    		jobType:			$('#listSearchPop #jobType').val(),
+    		programName:		$('#listSearchPop #programName').val(),
+    		inputDataSelector:	$('#listSearchPop #inputDataSelector').val(),
+    		outputDataSelector:	$('#listSearchPop #outputDataSelector').val(),
+    		exceptionPolicy:	$('#listSearchPop #exceptionPolicy').val(),
+    		cronExpression:		$('#listSearchPop #cronExpression').val(),
+    		useYn:				$('#listSearchPop #useYn').val()
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/batch/modifyBatchJob`,
+            data:reqData
+        })
+        .done(function (result) {
+        	console.log('');
+        	$.alert('저장되었습니다');
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+            $.alert('저장이 실패했습니다');
+        })
+        .always(function(jqXHR) {
+        	
+        });
+    };   
+    // 상세 조회 
+    this.getBatchJob = function(reqValue) {    	
+    	var reqData = {
+    		jobCode: reqValue
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/batch/getBatchJob`,
+            data:reqData
+        })
+        .done(function (result) {
+        	//$('#listSearchPop').replaceWith(result.batchJob);
+        	$('#listSearchPop').find('input[name=jobCode]').val(result.batchJob.jobCode);
+        	$('#listSearchPop').find('input[name=jobDesc]').val(result.batchJob.jobDesc);
+        	$('#listSearchPop').find('input[name=commitCount]').val(result.batchJob.commitCount);
+        	$('#listSearchPop #jobType').val(result.batchJob.jobType).prop("selected", true);
+        	$('#listSearchPop').find('input[name=programName]').val(result.batchJob.programName);
+        	$('#listSearchPop').find('input[name=inputDataSelector]').val(result.batchJob.inputDataSelector);
+        	$('#listSearchPop').find('input[name=outputDataSelector]').val(result.batchJob.outputDataSelector);
+        	$('#listSearchPop #exceptionPolicy').val(result.batchJob.exceptionPolicy);
+        	$('#listSearchPop').find('input[name=cronExpression]').val(result.batchJob.cronExpression);
+        	$('#listSearchPop #useYn').val(result.batchJob.useYn);        	
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+        });
+
+    };
+    
+  	$.isValidLength = (str,min,max) => {
+  		return /^[A-Za-z\d]{8,12}$/.test(str);
+  	};    
+ 
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

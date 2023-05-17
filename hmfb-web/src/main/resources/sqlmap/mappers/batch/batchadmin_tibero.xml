@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="batchadmin">
+        
+    
+    <select id="getListBatchJob" parameterType="hmfb.core.dto.BatchJobDTO" resultType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[
+		SELECT JOB_CODE         AS jobCode
+		      ,JOB_DESC         AS jobDesc
+			  ,JOB_CYCLE        AS jobCycle
+			  ,CRON_EXPRESSION  AS cronExpression
+			  ,USE_YN           AS useYn
+			  ,RUN_PARAM        AS runParam
+		  FROM BATCH_JOB
+    	]]>
+    </select> 
+            
+    <select id="getBatchJobTotCnt" parameterType="hmfb.core.dto.BatchJobPageDTO" resultType="int">
+    	<![CDATA[
+		SELECT COUNT(*)
+		  FROM BATCH_JOB
+    	]]>
+    </select>
+    
+    <select id="getListBatchJobPage" parameterType="hmfb.core.dto.BatchJobPageDTO" resultType="hmfb.core.dto.BatchJobPageDTO">
+    	<![CDATA[
+    	SELECT * FROM (
+	    	SELECT page.*, ROWNUM rnum FROM (
+				SELECT JOB_CODE            AS jobCode
+				      ,JOB_DESC            AS jobDesc
+					  ,JOB_TYPE            AS jobType
+					  ,INPUT_DATA_SELECTOR AS inputDataSelector
+					  ,CRON_EXPRESSION     AS cronExpression
+					  ,USE_YN              AS useYn
+				  FROM BATCH_JOB
+				ORDER BY JOB_CODE
+			) page
+		)
+		WHERE #{firstIndex} <= rownum AND rownum < #{firstIndex} + #{recordCountPerPage}		
+    	]]>
+    </select>   
+    
+    <select id="getBatchExecutionTotCnt" parameterType="hmfb.core.dto.BatchMonitorPageDTO" resultType="int">
+    	<![CDATA[
+		SELECT COUNT(*)
+		  FROM BATCH_JOB A, BATCH_EXECUTION B
+		 WHERE A.JOB_CODE = B.JOB_CODE  
+		   AND B.START_DTM BETWEEN CONCAT(#{searchTrxDt},'000000000') AND CONCAT(#{searchTrxDt},'23595959999')
+		   AND A.JOB_DESC LIKE CONCAT(#{searchTrxName},'%')
+		 GROUP BY B.JOB_CODE
+    	]]>
+    </select>    
+
+    <select id="getBatchMonitorPage" parameterType="hmfb.core.dto.BatchMonitorPageDTO" resultType="hmfb.core.dto.BatchMonitorPageDTO">	
+    	<![CDATA[
+    	SELECT * FROM (
+	    	SELECT page.*, ROWNUM rnum FROM (    	
+				SELECT A.JOB_CODE            					AS JOB_CODE
+					  ,A.JOB_DESC  								AS trxName
+				      ,SUM(B.TOTAL_COUNT)            			AS totalCount
+					  ,SUM(B.COMPLETED_COUNT)        			AS successCount
+					  ,SUM((B.TOTAL_COUNT-B.COMPLETED_COUNT))	AS failCount
+				  FROM BATCH_JOB A, BATCH_EXECUTION B
+				 WHERE A.JOB_CODE = B.JOB_CODE  
+				   AND B.START_DTM BETWEEN #{searchTrxDt} || '000000000' AND #{searchTrxDt} || '23595959999'
+				   AND A.JOB_DESC LIKE CONCAT(#{searchTrxName},'%')
+				 GROUP BY B.JOB_CODE
+				 ORDER BY B.JOB_CODE
+			) page
+		)
+		WHERE #{firstIndex} <= rownum AND rownum < #{firstIndex} + #{recordCountPerPage}	
+    	]]>
+    </select>   
+
+	<insert id="insertBatchJob" parameterType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[	
+		INSERT INTO BATCH_JOB
+		(
+		    JOB_CODE,
+			JOB_DESC,
+			JOB_CYCLE,
+			JOB_TYPE,
+			PROGRAM_NAME,
+			COMMIT_COUNT,
+			INPUT_DATA_SELECTOR,
+			OUTPUT_DATA_SELECTOR,
+			EXCEPTION_POLICY,
+			CRON_EXPRESSION,
+			USE_YN,
+			RUN_PARAM,
+			REGISTER_DTM,
+			REGISTER_USER_ID,
+			MODIFY_DTM,
+			MODIFY_USER_ID
+		) VALUES(
+		     #{jobCode}
+			,#{jobDesc}
+			,#{jobCycle}
+			,#{jobType}
+			,#{programName}
+			,#{commitCount}
+			,#{inputDataSelector}
+			,#{outputDataSelector}
+			,#{exceptionPolicy}
+			,#{cronExpression}
+			,#{useYn}
+			,#{runParam}
+			,#{registerDtm}
+			,#{registerUserId}
+			,#{modifyDtm}
+			,#{modifyUserId}
+		)	
+    	]]>
+	</insert>
+	
+    <select id="selectBatchJob" parameterType="string" resultType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[
+		 SELECT JOB_CODE,
+				JOB_DESC,
+				JOB_CYCLE,
+				JOB_TYPE,
+				PROGRAM_NAME,
+				COMMIT_COUNT,
+				INPUT_DATA_SELECTOR,
+				OUTPUT_DATA_SELECTOR,
+				EXCEPTION_POLICY,
+				CRON_EXPRESSION,
+				USE_YN,
+				RUN_PARAM,
+				REGISTER_DTM,
+				REGISTER_USER_ID,
+				MODIFY_DTM,
+				MODIFY_USER_ID
+		   FROM BATCH_JOB
+		  WHERE JOB_CODE = #{jobCode}
+    	]]>
+    </select>   
+    
+    <update id="updateBatchJob" parameterType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[
+		UPDATE BATCH_JOB          
+		   SET JOB_DESC              = #{jobDesc}
+		      ,JOB_CYCLE             = #{jobCycle}
+		      ,JOB_TYPE              = #{jobType}
+		      ,PROGRAM_NAME          = #{programName}
+		      ,COMMIT_COUNT          = #{commitCount}
+		      ,INPUT_DATA_SELECTOR   = #{inputDataSelector}
+		      ,OUTPUT_DATA_SELECTOR  = #{outputDataSelector}
+		      ,EXCEPTION_POLICY      = #{exceptionPolicy}
+		      ,CRON_EXPRESSION       = #{cronExpression}
+		      ,USE_YN                = #{useYn}
+		      ,RUN_PARAM             = #{runParam}
+		      ,REGISTER_DTM          = #{registerDtm}
+		      ,REGISTER_USER_ID      = #{registerUserId}
+		      ,MODIFY_DTM            = #{modifyDtm}
+		      ,MODIFY_USER_ID        = #{modifyUserId}
+		WHERE JOB_CODE = #{jobCode} 
+    	]]>    	
+    </update>
+    
+    <delete id="deleteBatchJob" parameterType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[
+		DELETE FROM BATCH_JOB
+		 WHERE JOB_CODE = #{jobCode} 
+    	]]>  
+    </delete>
+    
+</mapper>

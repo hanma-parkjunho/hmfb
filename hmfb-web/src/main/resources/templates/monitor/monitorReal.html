@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}">
+<head>
+</head>
+
+<th:block layout:fragment="content">
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">실시간 모니터링</h2>
+			<div class="history-group">
+				<ul>
+					<li><a href="javascript:;" class="button-home"><span class="blind">홈</span></a></li>
+					<li><a href="javascript:;" class="button-history"><span>모니터링</span></a></li>
+					<li><a href="javascript:;" class="button-history"><span>실시간 모니터링</span></a></li>
+				</ul>
+				<button type="button" class="button-helper"
+					onclick="$.popup.open(this,'#helpPopup')">
+					<span>도움말</span>
+				</button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+			<div class="tabpanel-group">
+				<div class="tab-heading">
+					<ul class="tablist" role="tablist">
+						<li id="tabNav01-1" aria-controls="tabContent01-1" class="tab" role="tab" aria-selected="true"><span>총괄표</span></li>
+						<li id="tabNav01-2" aria-controls="tabContent01-2" class="tab" role="tab" aria-selected="false"><span>수취인조회</span></li>
+						<li id="tabNav01-3" aria-controls="tabContent01-3" class="tab" role="tab" aria-selected="false"><span>은행대리점등록</span></li>
+						<li id="tabNav01-4" aria-controls="tabContent01-4" class="tab" role="tab" aria-selected="false"><span>계좌별가상계좌요청</span></li>
+						<li id="tabNav01-5" aria-controls="tabContent01-5" class="tab" role="tab" aria-selected="false"><span>해지예상조회</span></li>
+					</ul>
+				</div>
+				
+				<div class="tab-body">
+					<!-- 탭내용1 -->
+					<div id="tabContent01-1" class="tabpanel" aria-labelledby="tabNav01-1" role="tabpanel" aria-expanded="true">
+						<div class="table-group search">
+							<table>
+								<colgroup>
+									<col style="width: 160px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>거래일자</th>
+										<td>
+											<div class="calendar-group">
+												<div class="input-group w260">
+													<input type="text" class="input-ui" placeholder="YYYYMMDD" id="searchTrxDt" th:value="${condition.searchTrxDt}">
+													<button type="button" class="button-cal" onclick="$('#searchTrxDt').datepicker('show');">
+														<span class="blind">날짜선택</span>
+													</button>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th>거래명</th>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui w260" placeholder="거래명입력" id="searchTrxName" th:value="${condition.searchTrxName}">
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui" name="searchExecutionBtn">
+								<span>조회</span>
+							</button>
+						</div>
+
+						<div class="result-total mgt-52">
+							총 <span class="num">109</span>건
+						</div>
+						<div class="table-group data mgt-13 scrollx">
+							<table>
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>거래명</th>
+										<th>총건수</th>
+										<th>성공</th>
+										<th>실패</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:if="${ not #arrays.isEmpty(executionList)}"
+										th:each="execution : ${executionList}">
+										<tr>
+											<td th:text="${execution.trxName}"></td>
+											<td th:text="${execution.totalCount}"></td>
+											<td th:text="${execution.successCount}"></td>
+											<td th:text="${execution.failCount}"></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+
+						<th:block th:replace="fragments/page :: pageFragment"></th:block>
+
+					</div>
+					<!--// 탭내용1 -->
+					<!-- 탭내용2 -->
+					<div id="tabContent01-2" class="tabpanel"
+						aria-labelledby="tabNav01-2" role="tabpanel" aria-expanded="false">
+						<div class="table-group search">
+							<table>
+								<colgroup>
+									<col style="width: 160px;">
+									<col style="width: 320px;">
+									<col style="width: 160px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>거래일자</th>
+										<td colspan="3">
+											<div class="calendar-group">
+												<div class="input-group w260">
+													<input type="text" class="input-ui" placeholder="YYYY.MM.DD" id="startDate0">
+													<button type="button" class="button-cal" onclick="$('#startDate0').datepicker('show');">
+														<span class="blind">시작날짜선택</span>
+													</button>
+												</div>
+												<span class="unit">~</span>
+												<div class="input-group w260">
+													<input type="text" class="input-ui" placeholder="YYYY.MM.DD" id="endDate0">
+													<button type="button" class="button-cal" onclick="$('#endDate0').datepicker('show');">
+														<span class="blind">종료날짜선택</span>
+													</button>
+												</div>
+											</div> 
+											<script>
+												$(document).ready(function () {
+													$.datepicker.setDefaults($.datepicker.regional['ko']);
+													$("#startDate0").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#endDate0").datepicker("option", "minDate", selectedDate);
+														}
+													});
+													$("#endDate0").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#startDate0").datepicker("option", "maxDate", selectedDate);
+														}
+													});
+												});
+											</script>
+										</td>
+									</tr>
+									<tr>
+										<th>조회계좌번호</th>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui w260" placeholder="출금모계좌 입력">
+											</div>
+										</td>
+										<th>요청결과</th>
+										<td>
+											<select name="" id="" class="w260">
+												<option value="">전체</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+											</select>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui">
+								<span>조회</span>
+							</button>
+						</div>
+
+						<div class="result-total mgt-52">
+							총 <span class="num">100</span>건
+						</div>
+						<div class="table-group data mgt-13 scrollx">
+							<table>
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>거래일자</th>
+										<th>거래시간</th>
+										<th>출금모계좌</th>
+										<th>가상계좌</th>
+										<th>거래금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="page-group mgt-42">
+							<a href="javascript:;" class="button-page first"><span class="blind">처음페이지로 이동</span></a> 
+							<a href="javascript:;" class="button-page prev"><span class="blind">이전페이지로
+									이동</span></a> <a href="javascript:;" class="button-page current"><span>1</span></a>
+							<a href="javascript:;" class="button-page"><span>2</span></a> <a
+								href="javascript:;" class="button-page"><span>3</span></a> <a
+								href="javascript:;" class="button-page"><span>4</span></a> <a
+								href="javascript:;" class="button-page"><span>5</span></a> <a
+								href="javascript:;" class="button-page next"><span
+								class="blind">다음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page last"><span class="blind">마지막페이지로
+									이동</span></a>
+						</div>
+					</div>
+					<!--// 탭내용2 -->
+					<!-- 탭내용3 -->
+					<div id="tabContent01-3" class="tabpanel"
+						aria-labelledby="tabNav01-3" role="tabpanel" aria-expanded="false">
+						<div class="table-group search">
+							<table>
+								<colgroup>
+									<col style="width: 160px;">
+									<col style="width: 320px;">
+									<col style="width: 160px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>거래일자</th>
+										<td colspan="3">
+											<div class="calendar-group">
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="startDate1">
+													<button type="button" class="button-cal"
+														onclick="$('#startDate1').datepicker('show');">
+														<span class="blind">시작날짜선택</span>
+													</button>
+												</div>
+												<span class="unit">~</span>
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="endDate1">
+													<button type="button" class="button-cal"
+														onclick="$('#endDate1').datepicker('show');">
+														<span class="blind">종료날짜선택</span>
+													</button>
+												</div>
+											</div> 
+											<script>
+												$(document).ready(function () {
+													$.datepicker.setDefaults($.datepicker.regional['ko']);
+													$("#startDate1").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#endDate1").datepicker("option", "minDate", selectedDate);
+														}
+													});
+													$("#endDate1").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#startDate1").datepicker("option", "maxDate", selectedDate);
+														}
+													});
+												});
+												
+												// 이벤트 핸들러 - 이벤트 발생시 동작할 함수
+												function eventHandler(e) {
+												  var $eTarget = $(e.currentTarget);
+												  var $targetPanel = $('[aria-labelledby="' + $eTarget.attr('id') + '"]');
+												  	$targetPanel
+											        .attr('aria-hidden', false)
+											        .attr('aria-expanded', true)
+											        .addClass('active') // 구버전 IE
+											        .siblings('[role="tabpanel"]')
+											        .attr('aria-hidden', true)
+											        .attr('aria-expanded', false)
+											        .removeClass('active'); // 구버전 IE
+											        
+													$eTarget
+													.attr('aria-selected', true)
+													.attr('aria-expanded', false)
+													.addClass('active') // 구버전 IE
+													.siblings('[role="tab"]')
+													.attr('aria-selected', false)
+													.attr('aria-expanded', true)
+													.removeClass('active'); // 구버전 IE
+
+												}
+
+												// 이벤트 바인딩 - 이벤트와, 실행될 함수를 연결해줌
+												$('[role="tab"]').on('click', eventHandler);
+												
+											</script>
+										</td>
+									</tr>
+									<tr>
+										<th>출금모계좌</th>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui w260"
+													placeholder="출금모계좌 입력">
+											</div>
+										</td>
+										<th>요청결과</th>
+										<td><select name="" id="" class="w260">
+												<option value="">전체</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+										</select></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui">
+								<span>조회</span>
+							</button>
+						</div>
+
+						<div class="result-total mgt-52">
+							총 <span class="num">100</span>건
+						</div>
+						<div class="table-group data mgt-13 scrollx">
+							<table>
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>거래일자</th>
+										<th>거래시간</th>
+										<th>출금모계좌</th>
+										<th>가상계좌</th>
+										<th>거래금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="page-group mgt-42">
+							<a href="javascript:;" class="button-page first"><span
+								class="blind">처음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page prev"><span class="blind">이전페이지로
+									이동</span></a> <a href="javascript:;" class="button-page current"><span>1</span></a>
+							<a href="javascript:;" class="button-page"><span>2</span></a> <a
+								href="javascript:;" class="button-page"><span>3</span></a> <a
+								href="javascript:;" class="button-page"><span>4</span></a> <a
+								href="javascript:;" class="button-page"><span>5</span></a> <a
+								href="javascript:;" class="button-page next"><span
+								class="blind">다음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page last"><span class="blind">마지막페이지로
+									이동</span></a>
+						</div>
+					</div>
+					<!--// 탭내용3 -->
+					
+					<!-- 탭내용4 -->
+					<div id="tabContent01-4" class="tabpanel"
+						aria-labelledby="tabNav01-4" role="tabpanel" aria-expanded="false">
+						<div class="table-group search">
+							<table>
+								<colgroup>
+									<col style="width: 160px;">
+									<col style="width: 320px;">
+									<col style="width: 160px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>거래일자</th>
+										<td colspan="3">
+											<div class="calendar-group">
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="startDate2">
+													<button type="button" class="button-cal"
+														onclick="$('#startDate2').datepicker('show');">
+														<span class="blind">시작날짜선택</span>
+													</button>
+												</div>
+												<span class="unit">~</span>
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="endDate2">
+													<button type="button" class="button-cal"
+														onclick="$('#endDate2').datepicker('show');">
+														<span class="blind">종료날짜선택</span>
+													</button>
+												</div>
+											</div> 
+											<script>
+												$(document).ready(function () {
+													$.datepicker.setDefaults($.datepicker.regional['ko']);
+													$("#startDate2").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#endDate2").datepicker("option", "minDate", selectedDate);
+														}
+													});
+													$("#endDate2").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#startDate2").datepicker("option", "maxDate", selectedDate);
+														}
+													});
+												});
+											</script>
+										</td>
+									</tr>
+									<tr>
+										<th>출금모계좌</th>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui w260" placeholder="출금모계좌 입력">
+											</div>
+										</td>
+										<th>요청결과</th>
+										<td><select name="" id="" class="w260">
+												<option value="">전체</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+										</select></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui">
+								<span>조회</span>
+							</button>
+						</div>
+
+						<div class="result-total mgt-52">
+							총 <span class="num">100</span>건
+						</div>
+						<div class="table-group data mgt-13 scrollx">
+							<table>
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>거래일자</th>
+										<th>거래시간</th>
+										<th>출금모계좌</th>
+										<th>가상계좌</th>
+										<th>거래금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="page-group mgt-42">
+							<a href="javascript:;" class="button-page first"><span
+								class="blind">처음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page prev"><span class="blind">이전페이지로
+									이동</span></a> <a href="javascript:;" class="button-page current"><span>1</span></a>
+							<a href="javascript:;" class="button-page"><span>2</span></a> <a
+								href="javascript:;" class="button-page"><span>3</span></a> <a
+								href="javascript:;" class="button-page"><span>4</span></a> <a
+								href="javascript:;" class="button-page"><span>5</span></a> <a
+								href="javascript:;" class="button-page next"><span
+								class="blind">다음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page last"><span class="blind">마지막페이지로
+									이동</span></a>
+						</div>
+					</div>
+					<!--// 탭내용4 -->
+					
+					<!-- 탭내용5 -->
+					<div id="tabContent01-5" class="tabpanel"
+						aria-labelledby="tabNav01-5" role="tabpanel" aria-expanded="false">
+						<div class="table-group search">
+							<table>
+								<colgroup>
+									<col style="width: 160px;">
+									<col style="width: 320px;">
+									<col style="width: 160px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>거래일자</th>
+										<td colspan="3">
+											<div class="calendar-group">
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="startDate3">
+													<button type="button" class="button-cal"
+														onclick="$('#startDate3').datepicker('show');">
+														<span class="blind">시작날짜선택</span>
+													</button>
+												</div>
+												<span class="unit">~</span>
+												<div class="input-group w260">
+													<input type="text" class="input-ui"
+														placeholder="YYYY.MM.DD" id="endDate3">
+													<button type="button" class="button-cal"
+														onclick="$('#endDate3').datepicker('show');">
+														<span class="blind">종료날짜선택</span>
+													</button>
+												</div>
+											</div> 
+											<script>
+												$(document).ready(function () {
+													$.datepicker.setDefaults($.datepicker.regional['ko']);
+													$("#startDate3").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#endDate3").datepicker("option", "minDate", selectedDate);
+														}
+													});
+													$("#endDate3").datepicker({
+														dateFormat: "yy.mm.dd",
+														yearSuffix: "년",
+														nextText: '다음 달',
+														prevText: '이전 달',
+														dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+														monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+														showMonthAfterYear: true,
+														onClose: function (selectedDate) {
+															$("#startDate3").datepicker("option", "maxDate", selectedDate);
+														}
+													});
+												});
+											</script>
+										</td>
+									</tr>
+									<tr>
+										<th>협약일련번호</th>
+										<td>
+											<div class="input-group">
+												<input type="text" class="input-ui w260"
+													placeholder="협약일련번호 입력">
+											</div>
+										</td>
+										<th>요청결과</th>
+										<td>
+											<select name="" id="" class="w260">
+												<option value="">전체</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+											</select>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui">
+								<span>조회</span>
+							</button>
+						</div>
+
+						<div class="result-total mgt-52">
+							총 <span class="num">100</span>건
+						</div>
+						
+						<div class="table-group data mgt-13 scrollx">
+							<table>
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>거래일자</th>
+										<th>거래시간</th>
+										<th>협약일련번호</th>
+										<th>PMS-ID</th>
+										<th>협약기관ID</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+									<tr>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+										<td>내용</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<!-- 페이징 관련 [start] -->
+						<div class="page-group mgt-42">
+							<a href="javascript:;" class="button-page first"><span
+								class="blind">처음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page prev"><span class="blind">이전페이지로
+									이동</span></a> <a href="javascript:;" class="button-page current"><span>1</span></a>
+							<a href="javascript:;" class="button-page"><span>2</span></a> <a
+								href="javascript:;" class="button-page"><span>3</span></a> <a
+								href="javascript:;" class="button-page"><span>4</span></a> <a
+								href="javascript:;" class="button-page"><span>5</span></a> <a
+								href="javascript:;" class="button-page next"><span
+								class="blind">다음페이지로 이동</span></a> <a href="javascript:;"
+								class="button-page last"><span class="blind">마지막페이지로
+									이동</span></a>
+						</div>
+						<!-- 페이징 관련 [end] -->
+					</div>
+					<!--// 탭내용5 -->
+				</div>
+			</div>
+
+			<th:block th:replace="fragments/page :: pageFragment"></th:block>
+
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	<!-- // MAIN -->
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog"
+		aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">실시간모니터링 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close">
+								<span>닫기</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close">
+				<span class="blind">팝업닫기</span>
+			</button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="executionForm" action="/monitorReal">
+		<input type="hidden" name="searchTrxDt"> <input type="hidden"
+			name="searchTrxName">
+	</form>
+	<!-- content 스크립트 추가 -->
+	<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+	    const pageClick = (pageIndex) => {
+	    	$.loading(true, () => {
+		    	document.executionForm.searchTrxDt.value = $('#searchTrxDt').val();
+		    	document.executionForm.searchTrxName.value = $('#searchTrxName').val();
+		    	$.submit(document.executionForm, pageIndex)
+	    	});
+	    }
+	    
+    	$('#searchTrxDt').keyup((e) => {
+    		e.preventDefault();
+    		if(e.which === 13)
+    			pageClick(1);	
+    	});
+    	$('#searchTrxName').keyup((e) => {
+    		e.preventDefault();
+    		if(e.which === 13)
+    			pageClick(1);	
+    	});
+    	$('button[name=searchExecutionBtn]').click((e) => {
+    		e.preventDefault();
+    		pageClick(1);
+    	});
+	    	
+		$.datepicker.setDefaults($.datepicker.regional['ko']); 
+		$("#searchTrxDt").datepicker({
+			dateFormat:"yymmdd",
+			yearSuffix: "년",
+			nextText:'다음 달',
+			prevText:'이전 달',
+			dayNamesMin:['월','화','수','목','금','토','일'],
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			showMonthAfterYear:true,
+			onClose:function(selectedDate) {
+				// $("#endDate").datepicker("option","minDate",selectedDate);
+			}   
+		});
+    });
+
+/*]]>*/
+</script>
+
+</th:block>
+
+</html>

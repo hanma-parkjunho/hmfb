@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--PAGE FRAGMENT 선언-->
+<th:block th:fragment="pageFragment">
+
+<th:block th:if="${paginationInfo != null && paginationInfo.totalRecordCount > paginationInfo.recordCountPerPage}" >
+	<div class="page-group mgt-42" id="pagination">    
+	    <a href="javascript:;" class="button-page first" th:val="1"><span class="blind">처음페이지로 이동</span></a>
+	    <a href="javascript:;" class="button-page prev" th:val="${paginationInfo.currentPageNo-1 > 1 ? paginationInfo.currentPageNo-1 : 1}">
+	    	<span class="blind">이전페이지로 이동</span>
+	    </a>
+	    <th:block th:each="pageNo : ${#numbers.sequence(paginationInfo.firstPageNoOnPageList ,paginationInfo.lastPageNoOnPageList)}">
+			<a href="javascript:;" class="button-page" th:classappend="${pageNo == paginationInfo.currentPageNo} ? 'current' : ''" th:val="${pageNo}">
+				<span th:text="${pageNo}"></span>
+			</a>
+		</th:block>
+        <a href="javascript:;" class="button-page next" th:val="${paginationInfo.currentPageNo+1 > paginationInfo.totalPageCount ? paginationInfo.totalPageCount : paginationInfo.currentPageNo+1}">
+        	<span class="blind">다음페이지로 이동</span>
+        </a>
+        <a href="javascript:;" class="button-page last" th:val="${paginationInfo.totalPageCount}">
+           	<span class="blind">마지막페이지로 이동</span>
+        </a>
+	</div>
+</th:block>
+<!-- PAGE 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('#pagination').find('.button-page').click((e) => {
+			e.preventDefault();
+			if(typeof pageClick === 'function') 
+				pageClick.call(null, $(e.currentTarget).attr('val'));
+		})
+		
+    });
+    
+    
+   
+/*]]>*/
+</script>
+
+</th:block>
+
+</html>

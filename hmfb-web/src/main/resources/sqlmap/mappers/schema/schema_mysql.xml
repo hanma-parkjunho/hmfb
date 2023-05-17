@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.web.schema.SchemaMapper">
+    
+    <select id="getSchemaInfo" parameterType="java.util.ArrayList" resultType="String">
+        
+       SELECT TABLE_NAME AS tableName FROM INFORMATION_SCHEMA.TABLES
+		WHERE TABLE_NAME IN ( 
+       <foreach collection="array" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+       )
+    	   
+    </select>
+    
+    <update id="dropIDGNR">
+    
+    	DROP TABLE IDGNR
+    
+    </update>
+    
+    <update id="createIDGNR">
+    
+    	CREATE TABLE `IDGNR` (
+		  `TABLE_NAME` VARCHAR(16) NOT NULL,
+		  `NEXT_ID` DECIMAL(30,0) NOT NULL,
+		  PRIMARY KEY (`TABLE_NAME`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    
+    </update>
+    
+    <delete id="deleteIDGNR" parameterType="hmfb.core.dto.IdgnrDto">
+    
+    	DELETE FROM IDGNR WHERE TABLE_NAME = #{tableName} AND NEXT_ID = #{nextId}
+    	
+    </delete>
+    
+    <insert id="insertIDGNR" parameterType="hmfb.core.dto.IdgnrDto">
+    
+    	INSERT INTO IDGNR(TABLE_NAME, NEXT_ID) values(#{tableName}, #{nextId})
+    	
+    </insert>
+   
+    <update id="dropHMFB_001">
+    
+    	DROP TABLE HMFB_001
+    
+    </update>
+    
+    <update id="createHMFB_001">
+    
+    	CREATE TABLE `HMFB_001` (
+		  `MENU_SEQ_NO` VARCHAR(10) NOT NULL COMMENT '메뉴일련번호',
+		  `AUTH_DVCD` VARCHAR(300) NOT NULL COMMENT '권한구분코드',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`MENU_SEQ_NO`, `AUTH_DVCD`)
+		) COMMENT='메뉴별권한'
+    
+    </update>
+    
+    <delete id="deleteHMFB_001" parameterType="hmfb.core.dto.MenuAuthDto">
+    
+    	DELETE FROM HMFB_001 WHERE MENU_SEQ_NO = #{menuSeqNo} AND AUTH_DVCD = #{authDvcd}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_001" parameterType="hmfb.core.dto.MenuAuthDto">
+    
+    	INSERT INTO HMFB_001 (
+    		MENU_SEQ_NO, 
+    		AUTH_DVCD,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{menuSeqNo}, 
+    		#{authDvcd},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_002">
+    
+    	DROP TABLE HMFB_002
+    
+    </update>
+    
+    <update id="createHMFB_002">
+
+    	CREATE TABLE `HMFB_002` (
+		  `SEQ_NO` VARCHAR(10) NOT NULL COMMENT '일련번호',
+		  `UPRN_SEQ_NO` VARCHAR(10) DEFAULT NULL COMMENT '상위일련번호',
+		  `FLNM` VARCHAR(100) NOT NULL COMMENT '이름',
+		  `URL` VARCHAR(300) DEFAULT NULL COMMENT 'url',
+		  `LVL` VARCHAR(3) NOT NULL COMMENT '레벨',
+		  `ODR` VARCHAR(3) NOT NULL COMMENT '표시순서',
+		  `UZ_YN` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '사용여부',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`SEQ_NO`)
+		) COMMENT='메뉴기본'
+    
+    </update>
+    
+    <delete id="deleteHMFB_002" parameterType="hmfb.core.dto.MenuDto">
+    
+    	DELETE FROM HMFB_002 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_002" parameterType="hmfb.core.dto.MenuDto">
+    
+    	INSERT INTO HMFB_002 (
+    		SEQ_NO, 
+    		UPRN_SEQ_NO,
+    		FLNM,
+    		URL,
+    		LVL,
+    		ODR,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{uprnSeqNo},
+    		#{flnm},
+    		#{url},
+    		#{lvl},
+    		#{odr},
+    		#{uzYn},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_003">
+    
+    	DROP TABLE HMFB_003
+    
+    </update>
+    
+    <update id="createHMFB_003">
+    
+    	CREATE TABLE `HMFB_003` (
+		  `SEQ_NO` VARCHAR(10) NOT NULL COMMENT '일련번호',
+		  `USER_ID` VARCHAR(100) NOT NULL COMMENT '아이디',
+		  `PSWD` VARCHAR(100) NOT NULL COMMENT '비밀번호',
+		  `FLNM` VARCHAR(100) NOT NULL COMMENT '이름',
+		  `PHN_NO` VARCHAR(300) NOT NULL COMMENT '휴대전화번호',
+		  `DEPART` VARCHAR(300) NOT NULL COMMENT '부서',
+		  `AUTH_DVCD` VARCHAR(300) NOT NULL COMMENT '권한구분코드',
+		  `LST_LGN_DTTM` VARCHAR(18) DEFAULT NULL COMMENT '마지막 로그인 일시',
+		  `DEL_YN` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '삭제여부',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`SEQ_NO`),
+		  UNIQUE KEY `UK_HMFB_003` (`USER_ID`)
+		) COMMENT='사용자기본'
+    
+    </update>
+    
+    <delete id="deleteHMFB_003" parameterType="hmfb.core.dto.UserDto">
+    
+    	DELETE FROM HMFB_003 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_003" parameterType="hmfb.core.dto.UserDto">
+    
+    	INSERT INTO HMFB_003 (
+    		SEQ_NO, 
+    		USER_ID,
+    		PSWD,  
+    		FLNM, 
+    		PHN_NO,
+    		DEPART,
+    		AUTH_DVCD,
+    		DEL_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{userId},
+    		#{pswd},
+    		#{flnm},
+    		#{phnNo},
+    		#{depart},
+    		#{authDvcd},
+    		'N',
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_004">
+    
+    	DROP TABLE HMFB_004
+    
+    </update>
+    
+    <update id="createHMFB_004">
+    	
+    	CREATE TABLE `HMFB_004` (
+		  `SEQ_NO` VARCHAR(10) NOT NULL COMMENT '일련번호',
+		  `INST_CD` VARCHAR(30) NOT NULL COMMENT '기관코드',
+		  `INST_NM` VARCHAR(300) NOT NULL COMMENT '기관명',
+		  `BIZR_NO` VARCHAR(10) DEFAULT NULL COMMENT '사업자등록번호',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`SEQ_NO`)
+		) COMMENT='기관기본'
+    
+    </update>
+    
+    <delete id="deleteHMFB_004" parameterType="hmfb.core.dto.InstDto">
+    
+    	DELETE FROM HMFB_004 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_004" parameterType="hmfb.core.dto.InstDto">
+    
+    	INSERT INTO HMFB_004 (
+    		SEQ_NO, 
+    		INST_CD,
+    		INST_NM,  
+    		BIZR_NO,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{instCd},
+    		#{instNm},
+    		#{bizrNo},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_005">
+    
+    	DROP TABLE HMFB_005
+    
+    </update>
+    
+    <update id="createHMFB_005">
+    	
+    	CREATE TABLE `HMFB_005` (
+		  `SEQ_NO` VARCHAR(10) NOT NULL COMMENT '일련번호',
+		  `INST_DVCD` VARCHAR(300) NOT NULL COMMENT '기관구분코드',
+		  `INST_SER_NM` VARCHAR(300) NOT NULL COMMENT '기관서버명',
+		  `INST_HOST` VARCHAR(300) NOT NULL COMMENT '기관호스트',
+		  `INST_PORT` VARCHAR(10) NOT NULL COMMENT '기관포트',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`SEQ_NO`)
+		) COMMENT='연계기본'
+    
+    </update>
+    
+    <delete id="deleteHMFB_005" parameterType="hmfb.core.dto.LinkDto">
+    
+    	DELETE FROM HMFB_005 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_005" parameterType="hmfb.core.dto.LinkDto">
+    
+    	INSERT INTO HMFB_005 (
+    		SEQ_NO, 
+    		INST_DVCD,
+    		INST_SER_NM,
+    		INST_HOST,  
+    		INST_PORT,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{instDvcd},
+    		#{instSerNm},
+    		#{instHost},
+    		#{instPort},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_006">
+    
+    	DROP TABLE HMFB_006
+    
+    </update>
+    
+    <update id="createHMFB_006">
+    
+    	CREATE TABLE `HMFB_006` (
+		  `CODE_GRP` VARCHAR(50) NOT NULL COMMENT '코드그룹',
+		  `CODE` VARCHAR(300) NOT NULL COMMENT '코드값',
+		  `NAME` VARCHAR(300) NOT NULL COMMENT '코드설명',
+		  `CODE2` VARCHAR(300) DEFAULT NULL COMMENT '코드값2',
+		  `NAME2` VARCHAR(300) DEFAULT NULL COMMENT '코드설명2',
+		  `CODE3` VARCHAR(300) DEFAULT NULL COMMENT '코드값3',
+		  `NAME3` VARCHAR(300) DEFAULT NULL COMMENT '코드설명3',
+		  `CODE4` VARCHAR(300) DEFAULT NULL COMMENT '코드값4',
+		  `NAME4` VARCHAR(300) DEFAULT NULL COMMENT '코드설명4',
+		  `CODE5` VARCHAR(300) DEFAULT NULL COMMENT '코드값5',
+		  `NAME5` VARCHAR(300) DEFAULT NULL COMMENT '코드설명5',
+		  `SEQ`   VARCHAR(3) NOT NULL COMMENT '순번',
+		  `UZ_YN` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '사용여부',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  `UPD_DT` VARCHAR(8) DEFAULT NULL COMMENT '변경일자',
+		  `UPD_TM` VARCHAR(6) DEFAULT NULL COMMENT '변경시간',
+		  PRIMARY KEY (`CODE_GRP`, `CODE`)
+		) COMMENT='공통코드'
+    
+    </update>
+    
+    <delete id="deleteHMFB_006" parameterType="hmfb.core.dto.CmmnDto">
+    
+    	DELETE FROM HMFB_006 WHERE CODE_GRP = #{codeGrp} AND CODE = #{code}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_006" parameterType="hmfb.core.dto.CmmnDto">
+    
+    	INSERT INTO HMFB_006 (
+    		CODE_GRP, 
+    		CODE,
+    		NAME,
+    		CODE2,
+    		NAME2,
+    		CODE3,
+    		NAME3,
+    		CODE4,
+    		NAME4,
+    		CODE5,
+    		NAME5,  
+    		SEQ,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{codeGrp}, 
+    		#{code},
+    		#{name},
+    		#{code2},
+    		#{name2},
+    		#{code3},
+    		#{name3},
+    		#{code4},
+    		#{name4},
+    		#{code5},
+    		#{name5},
+    		#{seq},
+    		#{uzYn},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_007">
+    
+    	DROP TABLE HMFB_007
+    
+    </update>
+    
+    <update id="createHMFB_007">
+    
+    	CREATE TABLE `HMFB_007` (
+		  `SYS` VARCHAR(3) NOT NULL COMMENT '시스템',
+		  `UUID` VARCHAR(36) NOT NULL COMMENT '고유아이디',
+		  `TIMESTAMP` VARCHAR(23) NOT NULL COMMENT 'TIMESTAMP',
+		  `PRGM_ID` VARCHAR(100) DEFAULT NULL COMMENT '프로그램ID',
+		  `PRGM_LOG` TEXT DEFAULT NULL COMMENT '프로그램로그',
+		  `REG_DT` VARCHAR(8) NOT NULL COMMENT '등록일자',
+		  `REG_TM` VARCHAR(6) NOT NULL COMMENT '등록시간',
+		  PRIMARY KEY (`SYS`,`TIMESTAMP`,`UUID`)
+		) COMMENT='프로그램로그'
+    
+    </update>
+    
+    
+    
+    
+    
+</mapper>

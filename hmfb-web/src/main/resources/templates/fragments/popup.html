@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--POPUP FRAGMENT 선언-->
+<th:block th:fragment="popupFragment">
+
+	<!-- POPUP : alert -->
+	<div class="popup-group default" id="alertPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">알림</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<pre></pre>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : alert -->
+	
+	<!-- POPUP : confirm -->
+	<div class="popup-group default" id="confirmPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">확인</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p></p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line check"><span>확인</span></button>
+							<button type="button" class="button-ui line cancle"><span>취소</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : confirm -->
+	
+	<!-- POPUP : loading -->
+	<div class="popup-group default" id="lodingPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-body">
+					<img th:src="@{/assets/images/Search.gif}"></img>
+					<span>처리 중 입니다. 잠시만 기다려 주세요.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- POPUP : loading -->
+</th:block>
+
+</html>

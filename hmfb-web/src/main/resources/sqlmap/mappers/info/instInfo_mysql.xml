@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="instInfo">
+        
+    <select id="getInstInfoTotCnt" parameterType="hmfb.core.dto.InstDto" resultType="int">
+    	<![CDATA[
+		SELECT COUNT(*)
+		  FROM HMFB_004
+    	]]>
+    </select>
+    
+    <select id="getListInstInfo" parameterType="hmfb.core.dto.InstDto" resultType="hmfb.core.dto.InstDto">
+    	<![CDATA[
+	    	SELECT /* */
+			       SEQ_NO     /* */
+			     , INST_CD    /* */
+			     , INST_NM    /* */
+			     , BIZR_NO    /* */
+			     , REG_DT     /* */
+			     , REG_TM     /* */
+			     , UPD_DT     /* */
+			     , UPD_TM     /* */
+	  		FROM HMFB_004 
+		ORDER BY SEQ_NO DESC
+		LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}		  
+    	]]>
+    </select>   
+    
+	<insert id="insertInstInfo" parameterType="hmfb.core.dto.InstDto">
+    	<![CDATA[	
+		INSERT /* */
+		  INTO HMFB_004
+		       (
+		       SEQ_NO     /* */
+		     , INST_CD    /* */
+		     , INST_NM    /* */
+		     , BIZR_NO    /* */
+		     , REG_DT     /* */
+		     , REG_TM     /* */
+		     , UPD_DT     /* */
+		     , UPD_TM     /* */
+		       )
+		VALUES (
+		       (SELECT IFNULL(MAX(A.SEQ_NO) + 1, 1) FROM HMFB_004 A)
+		     , #{instCd}
+		     , #{instNm}
+		     , #{bizrNo}
+		     , #{regDt}
+		     , #{regTm}
+		     , #{updDt}
+		     , #{updTm}
+		       )
+    	]]>
+	</insert>
+	
+    <select id="selectInstInfo" parameterType="string" resultType="hmfb.core.dto.InstDto">
+    	<![CDATA[
+			SELECT /* */
+			       SEQ_NO     /* */
+			     , INST_CD    /* */
+			     , INST_NM    /* */
+			     , BIZR_NO    /* */
+			     , REG_DT     /* */
+			     , REG_TM     /* */
+			     , UPD_DT     /* */
+			     , UPD_TM     /* */
+			  FROM HMFB_004 
+			 WHERE INST_CD = #{instCd}
+    	]]>
+    </select>   
+    
+    <update id="updateInstInfo" parameterType="hmfb.core.dto.InstDto">
+    	<![CDATA[
+			UPDATE /* */
+			       HMFB_004 
+			   SET INST_NM = #{instNm}
+			     , BIZR_NO = #{bizrNo}
+			     , UPD_DT  = #{updDt}
+			     , UPD_TM  = #{updTm}
+			 WHERE INST_CD = #{instCd}
+    	]]>    	
+    </update>
+    
+    <delete id="deleteInstInfo" parameterType="hmfb.core.dto.InstDto">
+    	<![CDATA[
+		DELETE FROM HMFB_004
+		 WHERE INST_CD = #{instCd}
+    	]]>  
+    </delete>
+    
+</mapper>

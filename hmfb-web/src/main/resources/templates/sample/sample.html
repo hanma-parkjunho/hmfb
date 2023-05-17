@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/single_layout}">
+
+<head>
+	
+	<!-- content CSS 추가 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+
+</head>	
+		
+<th:block layout:fragment="content">
+
+<div id="content" class="container-fluid overflow-hidden">
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Links</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<a th:href="@{/}">Main Page</a>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<a th:href="@{/sample/errorPage}">Error Page</a>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Api</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/api</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/Service</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/ServiceImpl</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/idGnrTable</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/idGnrUUId</button>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Error</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/errorLogService</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/runtimeErrorLogService</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/errorLogServiceImpl</button>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Transaction</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/rollbackNoService</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/rollbackYesService</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/modifySqlseesionService</button>
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/rollbackServiceImpl</button>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Menu</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/userAuthTreeMenu</button>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+  		<div class="card-body">
+    		<h5 class="card-title">Crypt</h5>
+    		<div class="card-text">
+    			<ul class="list-group">
+	  				<li class="list-group-item">
+	  					<input name="password" style="width: 100%">
+	  				</li>
+	  				<li class="list-group-item">
+	  					<button type="button" class="btn btn-primary">/sample/bCryptPasswordEncoder</button>
+	  				</li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+</div>
+
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+	
+    	$('button').click((e)=>{
+    		
+    		e.preventDefault();
+    		
+    		let url =  $(e.target).text();
+    		let data = {};
+    		
+    		if(url === '/sample/bCryptPasswordEncoder') {
+    			url += '?password=' + $('input[name=password]').val();
+    		} 
+    		
+    		console.log(url)
+    		console.log(data)
+    		
+			$.get({ url : url },(data)=>{
+    			//console.log($.isEmpty(data))
+    			console.log(data)
+    		},(err)=>{
+    			
+    		});
+    		
+    	})
+
+    });
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

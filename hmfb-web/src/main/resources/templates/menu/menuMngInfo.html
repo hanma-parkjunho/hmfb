@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">메뉴관리정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>메뉴관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>메뉴관리정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+
+		<!-- SECTION : CONTENT -->
+		<section class="section-group seperate">
+			<div class="side-con left">
+				<h3 class="h3">메뉴목록</h3>
+				<div class="box-group ui-scroll">
+					<ul class="menu-lists" th:if="${ not #arrays.isEmpty(menuList)}">
+						<li th:if="${ root.lvl == '0' }" th:each="root : ${menuList}">
+							<div class="check-group with-text">
+								<input type="checkbox" th:id="${root.seqNo}" th:seqNo="${root.seqNo}" th:lvl="${root.lvl}">
+								<label th:for="${root.seqNo}" th:text="${root.flnm}" ></label>
+								<input type="hidden" name="flnm" th:value="${root.flnm}">
+							</div>		
+							<ul class="submenu-lists">
+								<li th:if="${ menu.lvl == '1' }" th:each="menu : ${menuList}">
+									<div class="check-group with-text">
+										<input type="checkbox" th:id="${menu.seqNo}" th:seqNo="${menu.seqNo}" th:lvl="${menu.lvl}">
+										<label th:for="${menu.seqNo}" th:text="${menu.flnm}"></label>
+										<input type="hidden" name="seqNo" th:value="${menu.seqNo}">
+										<input type="hidden" name="uprnSeqNo" th:value="${menu.uprnSeqNo}">
+										<input type="hidden" name="flnm" th:value="${menu.flnm}">
+										<input type="hidden" name="url" th:value="${menu.url}">
+										<input type="hidden" name="lvl" th:value="${menu.lvl}">
+										<input type="hidden" name="odr" th:value="${menu.odr}">
+										<input type="hidden" name="uzYn" th:value="${menu.uzYn}">
+									</div>
+									<ul class="submenu-lists">
+										<li th:if="${ menu.seqNo == subMenu.uprnSeqNo }" th:each="subMenu : ${menuList}" >
+											<div class="check-group with-text">
+												<input type="checkbox" th:id="${subMenu.seqNo}" th:seqNo="${subMenu.seqNo}" th:uprnSeqNo="${subMenu.uprnSeqNo}" th:lvl="${subMenu.lvl}">
+												<label th:for="${subMenu.seqNo}" th:text="${subMenu.flnm}"></label>
+												<input type="hidden" name="seqNo" th:value="${subMenu.seqNo}">
+												<input type="hidden" name="uprnSeqNo" th:value="${subMenu.uprnSeqNo}">
+												<input type="hidden" name="flnm" th:value="${subMenu.flnm}">
+												<input type="hidden" name="url" th:value="${subMenu.url}">
+												<input type="hidden" name="lvl" th:value="${subMenu.lvl}">
+												<input type="hidden" name="odr" th:value="${subMenu.odr}">
+												<input type="hidden" name="uzYn" th:value="${subMenu.uzYn}">
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="btn-group flex content-center mgt-30">
+					<button type="button" name="addMenuBtn" class="button-ui"><span>추가</span></button>
+					<button type="button" name="delMenusBtn" class="button-ui line"><span>삭제</span></button>
+				</div>
+			</div>
+			<div class="side-con right">
+				<h3 class="h3">상세정보</h3>
+				<div class="box-group">
+					<div class="ui-dl">
+						<input type="hidden" id="seqNo">
+						<input type="hidden" id="uprnSeqNo">
+						<input type="hidden" id="lvl">
+						<input type="hidden" id="uzYn">
+						<div class="ui-dt">상위메뉴명</div>
+						<div class="ui-dd">
+							<div class="input-group">
+								<span id="uprnFlnm"></span>
+							</div>
+						</div>
+						<div class="ui-dt">메뉴명</div>
+						<div class="label-group ui-dd">
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="메뉴명 입력" id="flnm" maxlength="30">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="ui-dt">메뉴 URL</div>
+						<div class="ui-dd">
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="메뉴 URL 입력" id="url" maxlength="100">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="ui-dt">표시순서</div>
+						<div class="ui-dd">
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="표시순서 입력" id="odr" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="ui-dt">사용유무</div>
+						<div class="ui-dd flex">
+							<div class="radio-group with-text">
+								<input type="radio" name="rdo" id="uzY" checked>
+								<label for="uzY">사용</label>
+							</div>
+							<div class="radio-group with-text">
+								<input type="radio" name="rdo" id="uzN">
+								<label for="uzN">미사용</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-group flex content-center mgt-30">
+					<button type="button" name="saveMenuBtn" class="button-ui"><span>저장</span></button>
+				</div>
+			</div>
+		</section> 
+		<!-- // SECTION : CONTENT -->
+	</div>
+	
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">메뉴관리정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="menuForm" action="/menu/menuMngInfo"></form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('.menu-lists input[type=checkbox]').click((e) => {
+			if($(e.currentTarget).is(":checked")) {
+				$('.menu-lists input[type=checkbox]').each((i, o) => {
+					if($(e.currentTarget).attr('seqNo') !== $(o).attr('seqNo'))
+						$(o).prop('checked', false);
+				});
+				
+				if($(e.currentTarget).attr('seqNo') === '0000000000') {
+					initSideCon(true);
+				} else {
+					
+					initSideCon(false);
+					
+					let uprnSeqNo = $(e.currentTarget).parent().find('input[name=uprnSeqNo]').val();
+					$('#uprnFlnm').text($('.menu-lists input[id=' + uprnSeqNo + ']').parent().find('input[name=flnm]').val())
+					$('#seqNo').val($(e.currentTarget).parent().find('input[name=seqNo]').val())
+					$('#uprnSeqNo').val(uprnSeqNo)
+					$('#flnm').val($(e.currentTarget).parent().find('input[name=flnm]').val())
+					$('#url').val($(e.currentTarget).parent().find('input[name=url]').val())
+					$('#lvl').val($(e.currentTarget).parent().find('input[name=lvl]').val())
+					$('#odr').val($(e.currentTarget).parent().find('input[name=odr]').val())
+					$('#uzYn').val($(e.currentTarget).parent().find('input[name=uzYn]').val())
+					
+					if($(e.currentTarget).parent().find('input[name=uzYn]').val() === 'Y')
+						$('#uzY').prop('checked', true);
+					else
+						$('#uzN').prop('checked', true);	
+				}
+				
+			} else {
+				initSideCon(true);
+			}
+		});
+		
+		$('#uzY, #uzN').click((e) => {
+			if($(e.currentTarget).attr('id') === 'uzY')
+				$('#uzYn').val('Y');
+			else
+				$('#uzYn').val('N');
+		});
+		
+		$('button[name=addMenuBtn]').click((e) => {
+			e.preventDefault();
+			const checked = $('.menu-lists input[type=checkbox]:checked');
+			if(checked.attr('seqNo') === '0000000000') {
+				initSideCon(false);
+				$('#uprnFlnm').text($('.menu-lists input[seqNo=' + checked.attr('seqNo') + ']').parent().find('input[name=flnm]').val());
+				$('#uprnSeqNo').val(checked.attr('seqNo'));
+				$('#lvl').val('1');
+			} else if(checked.attr('lvl') === '1') {
+				initSideCon(false);
+				let seqNo = checked.parent().find('input[name=seqNo]').val();
+				$('#uprnFlnm').text($('.menu-lists input[id=' + seqNo + ']').parent().find('input[name=flnm]').val());
+				$('#uprnSeqNo').val(seqNo);
+				$('#lvl').val('2');
+			} else {
+				$.alert('상위 메뉴를 선택 하세요.');	
+			}
+		});
+		
+		$('button[name=delMenusBtn]').click((e) => {
+			e.preventDefault();
+			const checked = $('.menu-lists input[type=checkbox]:checked');
+			if(checked.length > 0) {
+				let delMenus = [];
+				delMenus.push({ seqNo : checked.attr('seqNo') })
+				if(checked.attr('lvl') === '1') {
+					$('.menu-lists input[uprnSeqNo=' + checked.attr('seqNo') + ']').each((i, o) => {
+						delMenus.push({ seqNo : $(o).attr('seqNo') })
+					});
+				}
+				if(delMenus.length > 0) {
+					$.confirm('메뉴를 삭제 하시겠습니까?', () => {
+						$.api({ url : '/menu/delMenus', data : delMenus },(data) => {
+							$.alert('선택된 메뉴가 삭제 되었습니다.', () => {
+								$.submit(document.menuForm, 1);
+					   		}) 
+				   		});
+					});
+				}
+			} else {
+				$.alert('선택된 메뉴가 없습니다.');
+			}
+		});
+		
+		$('button[name=saveMenuBtn]').click((e) => {
+			e.preventDefault();
+			if($.isEmpty($('#flnm').val())) {
+				$.alert('메뉴명을 입력해 주세요.', () => {
+					$('#flnm').focus();	
+				});
+	   			return;
+	   		}
+			if($('#flnm').val().length > 30) {
+				$.alert('메뉴명은 최대 30자 까지 입력 가능 합니다.', () => {
+					$('#flnm').focus();	
+				});
+	   			return;
+	   		}
+			if($('#url').val().length > 30) {
+				$.alert('메뉴 UR은 최대 100자 까지 입력 가능 합니다.', () => {
+					$('#url').focus();	
+				});
+	   			return;
+	   		}
+			if($.isEmpty($('#odr').val())) {
+				$.alert('표시순서를 입력해 주세요.', () => {
+					$('#odr').focus();	
+				});
+				return;
+	   		}
+			if(/[^0-9]/ig.test($('#odr').val())){
+				$.alert('표시순서는 숫자만 입력해 주세요.', () => {
+					$('#odr').focus();	
+				});
+	   			return;	
+	   		}
+			if($('#odr').val().length > 3) {
+				$.alert('표시순서는 최대 3자 까지 입력 가능 합니다.', () => {
+					$('#odr').focus();	
+				});
+	   			return;
+	   		}
+			if($.isEmpty($('#uzYn').val())) {
+				$.alert('사용여부를 선택해 주세요.');
+	   			return;
+	   		}
+			$.confirm('메뉴를 저장 하시겠습니까?', () => {
+				$.form({ url : '/menu/saveMenu', data : {
+					seqNo : $('#seqNo').val(),
+					uprnSeqNo : $('#uprnSeqNo').val(),
+					flnm : $('#flnm').val(),
+					url : $('#url').val(),
+					lvl : $('#lvl').val(),
+					odr : $('#odr').val(),
+					uzYn : $('#uzYn').val()
+				} },(data) => {
+					$.alert('선택된 메뉴가 저장 되었습니다.', () => {
+						$.submit(document.menuForm, 1);
+			   		}) 
+		   		});
+			});
+		});
+		initSideCon(true);
+    });
+    
+    const initSideCon = (disabled) => {
+    	$('#uprnFlnm').text('');
+    	$('#seqNo').val('').attr("disabled",disabled);
+		$('#uprnSeqNo').val('').attr("disabled",disabled);
+    	$('#flnm').val('').attr("disabled",disabled);
+		$('#url').val('').attr("disabled",disabled);
+		$('#lvl').val('').attr("disabled",disabled);
+		$('#odr').val('').attr("disabled",disabled);
+		$('#uzYn').val('').attr("disabled",disabled);
+		$('#uzY').prop('checked', false).attr("disabled",disabled);
+    	$('#uzN').prop('checked', false).attr("disabled",disabled);
+    	if(disabled)
+    		$('button[name=saveMenuBtn]').hide()
+    	else
+    		$('button[name=saveMenuBtn]').show()
+    }
+	
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

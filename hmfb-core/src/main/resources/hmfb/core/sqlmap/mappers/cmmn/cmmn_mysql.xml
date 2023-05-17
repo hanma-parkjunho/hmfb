@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.core.cmmn.CmmnMapper">
+    
+    <select id="getCmmn" parameterType="hmfb.core.dto.CmmnDto" resultType="hmfb.core.dto.CmmnDto">
+		
+			SELECT
+				CODE_GRP,
+				CODE, 
+				NAME, 
+				CODE2, 
+				NAME2,
+				CODE3, 
+				NAME3, 
+				CODE4, 
+				NAME4, 
+				CODE5, 
+				NAME5, 
+				SEQ,
+			 	UZ_YN
+			FROM HMFB_006
+			WHERE CODE_GRP = #{codeGrp}
+			AND UZ_YN = 'Y'
+			
+		  <if test="code != null and code != ''">
+		  	AND CODE = #{code} 
+		  </if>
+			
+			ORDER BY SEQ
+		
+		
+    </select>
+    
+    <select id="getCmmnList" parameterType="hmfb.core.dto.CmmnDto" resultType="hmfb.core.dto.CmmnDto">
+        
+		SELECT
+			CODE_GRP,
+			CODE, 
+			NAME, 
+			CODE2, 
+			NAME2,
+			CODE3, 
+			NAME3, 
+			CODE4, 
+			NAME4, 
+			CODE5, 
+			NAME5, 
+			SEQ,
+		 	UZ_YN
+		FROM HMFB_006
+		<where>
+		  AND UZ_YN = 'Y'
+		  <if test="codeGrp != null and codeGrp != ''">
+		  AND LOWER(CODE_GRP) LIKE CONCAT('%',#{codeGrp},'%') 
+		  </if>
+		  <if test="code != null and code != ''">
+		  AND LOWER(CODE) LIKE CONCAT('%',#{code},'%')
+		  </if>
+		  <if test="name != null and name != ''">
+		  AND NAME LIKE CONCAT('%',#{name},'%')
+		  </if>
+		</where>  
+		ORDER BY CODE_GRP, SEQ
+		LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+		
+    </select>
+    
+    <select id="getCmmnTotCnt" parameterType="hmfb.core.dto.CmmnDto" resultType="int">
+        
+		SELECT
+			 COUNT(CODE_GRP||CODE)
+		FROM HMFB_006
+		<where>
+		  AND UZ_YN = 'Y'	
+		  <if test="codeGrp != null and codeGrp != ''">
+		  AND LOWER(CODE_GRP) LIKE CONCAT('%',#{codeGrp},'%') 
+		  </if>
+		  <if test="code != null and code != ''">
+		  AND LOWER(CODE) LIKE CONCAT('%',#{code},'%')
+		  </if>
+		  <if test="name != null and name != ''">
+		  AND NAME LIKE CONCAT('%',#{name},'%')
+		  </if>
+		</where>  
+		
+    </select>
+    
+    <insert id="insertCmmn" parameterType="hmfb.core.dto.CmmnDto">
+    
+    	INSERT INTO HMFB_006 (
+    		CODE_GRP, 
+    		CODE,
+    		NAME,  
+    		SEQ,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{codeGrp}, 
+    		#{code},
+    		#{name},
+    		#{seq},
+    		'Y',
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="updateCmmn" parameterType="hmfb.core.dto.CmmnDto">
+    	
+    	UPDATE HMFB_006 SET
+			NAME = #{name},
+			SEQ = #{seq},
+			UPD_DT = #{updDt},
+			UPD_TM = #{updTm} 
+    	WHERE CODE_GRP = #{codeGrp}
+    	  AND CODE = #{code}
+    	
+    </update>
+    
+    <delete id="delCmmns" parameterType="hmfb.core.dto.CmmnDto">
+    	
+    	DELETE FROM HMFB_006
+    	WHERE CODE_GRP = #{codeGrp}
+    	  AND CODE = #{code}
+  
+    </delete>
+    
+</mapper>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/single_layout}">
+
+<head>
+	<script type="text/javascript" th:src="@{/assets/js/ui_common.js}"></script>
+</head>	
+		
+<th:block layout:fragment="content">
+
+	<!-- // WRAPPER -->
+	<div class="wrapper login">
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<section class="section-left">
+					<h1 class="h1">
+						<a th:href="@{${defaultSuccessUrl}}" class="btn-logo" title="홈으로 이동"></a>
+						<p>HANMA INFORMATION BANKING SYSTEM</p>
+					</h1>
+				</section>
+				<section class="section-right">
+					<header class="header-group">
+						<h2 class="h2">Welcome to <span>Login your account</span></h2>
+					</header>
+					<div class="label-group">
+						<label for="" class="title">ID</label>
+						<div class="input-group input-id">
+							<input type="text" class="input-ui" placeholder="아이디 입력" autofocus name="username" value="admin" autocomplete="off">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">PASSWORD</label>
+						<div class="input-group input-password">
+							<input type="password" class="input-ui" placeholder="패스워드입력" name="password" value="hmfb2023!">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="button-group text-right">
+						<button type="button" class="button-ui large col-12" name="login">
+							<span>로그인</span>
+						</button>
+						<a href="javascript:;" class="button-underline" onClick="location.href='signUp'"><span>회원가입</span></a>
+						<br>
+						<a th:href="@{/sample/sample}" class="button-underline">Sample Page</a>
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+			<div class="footer-inner">
+				<p class="footer-left">© 2023 hanma information system Inc. All Rights Reserved.</p>
+				<div class="footer-right">
+					<img class="image-hanma" src="/assets/images/logo_footer_hanma.png" alt="HANMA">
+					<img class="image-shhinhan" src="/assets/images/logo_footer_shinhan.png" alt="SHINHAN BANK">
+				</div>
+			</div>
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+<!-- login 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+	
+    	$('input').on('input', function(e) {
+    		e.preventDefault();
+    		$('.message').each((idx, o)=>{
+    			setErrMsg($(o), '', true)
+    		});
+    	});
+		
+		$('input[name=username], input[name=password]').on('keyup', function(e) {
+			e.preventDefault();
+			if(e.keyCode==13) {
+				login();
+	        }
+    	});
+		
+		$('button[name=login]').click((e)=>{
+	   		e.preventDefault();
+	   		login();
+    	})
+    	
+    	let setErrMsg = (err, msg, isNone) => {
+			err.text(msg);
+			isNone ? err.addClass('none') : err.removeClass('none')
+		}
+    	
+    	let login = () => {
+    		
+    		if($.isEmpty($('input[name=username]').val())) {
+	   			setErrMsg($('input[name=username]').parent().next(), '아이디를 입력해 주세요.', false);
+	   			$('input[name=username]').focus();
+	   			return;
+	   		}
+	   		
+	   		if($.isEmpty($('input[name=password]').val())) {
+	   			setErrMsg($('input[name=password]').parent().next(), '비밀번호를 입력해 주세요.', false);
+	   			$('input[name=password]').focus();
+	   			return;
+	   		}
+	   		if(!$.isPwdValid($('input[name=password]').val())) {
+				setErrMsg($('input[name=password]').parent().next(), '비밀번호 는 문자 숫자 특수문자의 조합으로 8~12자리로 입력 해주세요.', false);
+				$('input[name=password]').focus();
+				return;
+	   		}
+			
+	   		$.form({ url : [[${loginProcessingUrl}]], data : {
+   				username : $('input[name=username]').val(),
+   				password : $('input[name=password]').val()
+   			} },(data)=>{
+	   			if(data.loginSuccess)
+					location.href = [[${defaultSuccessUrl}]]
+	   		});
+	   		
+    	}
+    	
+    });
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

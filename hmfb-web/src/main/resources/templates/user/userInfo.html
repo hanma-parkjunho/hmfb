@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+				<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">사용자정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>사용자관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>사용자정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+																
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+		
+			<div class="table-group search">
+				<table>
+					<colgroup>
+						<col style="width:160px;">
+						<col>
+						<col style="width:160px;">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>성명</th>
+							<td>
+								<div class="input-group">
+									<input type="text" class="input-ui w260" placeholder="성명입력" id="searchFlnm">
+								</div>
+							</td>
+							<th>권한</th>
+							<td>
+                            	<select id="searchUserAuthDvcd" class="col-5">
+									<option value="">전체</option>
+									<th:block th:each="userAuthDvcd : ${userAuthDvcdList}">
+										<option th:selected="${searchUserDto.authDvcd == userAuthDvcd.code}" th:value="${userAuthDvcd.code}" th:text="${userAuthDvcd.name}"></option>
+									</th:block>
+								</select>
+                            </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="searchUsersBtn" class="button-ui"><span>조회</span></button>
+			</div>
+
+			<div class="table-group data mgt-30">
+				<table>
+					<colgroup>
+						<col style="width:100px;">
+						<col style="width:100px;">
+						<col style="width:100px;">
+						<col style="width:100px;">
+						<col style="width:100px;">
+						<col>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>선택</th>
+							<th>아이디</th>
+							<th>패스워드</th>
+							<th>부서</th>
+							<th>성명</th>
+							<th>휴대전화번호</th>
+							<th>권한</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block  th:if="${ not #arrays.isEmpty(userList)}" th:each="user : ${userList}" >
+							<tr th:if="${user.authDvcd == 'ADMIN'}" class="manager">
+								<td></td>
+								<td th:text="${user.userId}"></td>
+								<td></td>
+								<td th:text="${user.depart}"></td>
+								<td th:text="${user.flnm}"></td>
+								<td th:text="${user.phnNo}"></td>
+								<td th:text="${user.authDvNm}"></td>
+							</tr>
+							<tr th:if="${user.authDvcd == 'AGMNG'}">
+								<td>
+									<div class="check-group">
+										<input type="checkbox" name="userChk" th:id="${user.userId}">
+										<label th:for="${user.userId}"></label>
+									</div>
+								</td>
+								<td th:text="${user.userId}"></td>
+								<td>
+									<button type="button" class="button-ui small" aria-label="패스워드변경" name="chgPswdBtn" th:data="${user.userId}"><span>변경</span></button>
+								</td>
+								<td th:text="${user.depart}"></td>
+								<td th:text="${user.flnm}"></td>
+								<td th:text="${user.phnNo}"></td>
+								<td th:text="${user.authDvNm}"></td>
+							</tr>
+						</th:block>
+						<th:block  th:if="${#arrays.isEmpty(userList)}" >
+							<tr>
+								<td colspan="7">조회된 데이터가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+					<tfoot></tfoot>
+				</table>
+			</div>
+			
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="delUsersBtn" class="button-ui"><span>삭제</span></button>
+			</div>
+			
+			<th:block th:replace="fragments/page :: pageFragment"></th:block>
+    
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	
+	<!-- POPUP : 패스워드변경 -->
+	<div class="popup-group default" id="changePassword" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">패스워드변경</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<input type="hidden" name="userId">
+						<div class="label-group">
+							<label for="pw0" class="title">기존패스워드</label>
+							<div class="input-group">
+								<input type="password" name="oldPswd" class="input-ui" placeholder="패스워드 입력" id="pw0">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="label-group">
+							<label for="pw1" class="title">신규패스워드</label>
+							<div class="input-group">
+								<input type="password" name="newPswd" class="input-ui" placeholder="패스워드 입력" id="pw1">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+						<div class="label-group">
+							<label for="pw2" class="title">패스워드확인</label>
+							<div class="input-group">
+								<input type="password" name="newPswdRe" class="input-ui" placeholder="패스워드 입력" id="pw2">
+							</div>
+							<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+						</div>
+
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" name="chgPswdSaveBtn" class="button-ui"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 패스워드변경 -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">사용자정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="userForm" action="/user/userInfo">
+		<input type="hidden" name="flnm">
+		<input type="hidden" name="authDvcd">
+	</form>
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('button[name=chgPswdBtn]').click((e) => {
+			e.preventDefault();
+			$.popup.open(this,'#changePassword', (popup)=>{
+				initPopup();
+				popup.find('input[name=userId]').val($(e.currentTarget).attr('data'))
+			});
+		});
+		
+		$('#changePassword').find("input").on("input", function(e) {
+    		e.preventDefault();
+    		$('.message').each((idx, o)=>{
+    			if(!$.isEmpty($(o).text()))
+    				setErrMsg($(o), '', true);
+    		});
+    		
+    	});
+	    
+    	$('#searchFlnm').keyup((e) => {
+    		e.preventDefault();
+    		if(e.which === 13)
+    			pageClick(1);	
+    			
+    	})
+    	
+    	$('#searchUserAuthDvcd').change((e) => {
+    		e.preventDefault();
+    		//pageClick(1);	
+    	})
+    	
+    	$('button[name=searchUsersBtn]').click((e) => {
+    		e.preventDefault();
+    		pageClick(1);
+    	});
+    	
+		$('button[name=chgPswdSaveBtn]').click((e) => {
+			e.preventDefault();
+			
+			if($.isEmpty($('input[name=oldPswd]').val())) {
+	   			setErrMsg($('input[name=oldPswd]').parent().next(), '기존패스워드를 입력해 주세요.', false);
+	   			$('input[name=oldPswd]').focus();
+	   			return;
+	   		}
+	   		
+   			if(!$.isPwdValid($('input[name=newPswd]').val())) {
+   				setErrMsg($('input[name=newPswd]').parent().next(), '비밀번호는 영문자 숫자 특수문자의 조합으로 8~12자리로 입력해 주세요.', false);
+   				$('input[name=newPswd]').focus();
+	   			return;
+   			}
+   			
+   			if($('input[name=oldPswd]').val() === $('input[name=newPswdRe]').val()) {
+	   			setErrMsg($('input[name=newPswdRe]').parent().next(), '신규패스워드는 기존패스워드를 사용하실 수 없습니다. ', false);
+	   			$('input[name=newPswdRe]').focus();
+	   			return;
+	   		}
+   				
+	   		if($.isEmpty($('input[name=newPswdRe]').val())) {
+	   			setErrMsg($('input[name=newPswdRe]').parent().next(), '패스워드 확인을 입력해 주세요.', false);
+	   			$('input[name=newPswdRe]').focus();
+	   			return;
+	   		}
+	   		
+	   		if($('input[name=newPswd]').val() !== $('input[name=newPswdRe]').val()) {
+	   			setErrMsg($('input[name=newPswdRe]').parent().next(), '패스워드가 일치하지 않습니다.', false);
+	   			$('input[name=newPswdRe]').focus();
+	   			return;
+	   		}
+	   		
+	   		$.confirm('비밀번호를 변경 하시겠습니까?', () => {
+	   			$.form({ url : '/user/updateUserPswd', data : {
+					userId : $('input[name=userId]').val(),
+					oldPswd : $('input[name=oldPswd]').val(),
+					newPswd : $('input[name=newPswd]').val()
+	   			} },(data) => {
+					$.alert('비밀번호 변경이 완료 되었습니다.', () => {
+						$.popup.close(this,'#changePassword');
+			   		}) 
+		   		});
+			});
+	   		
+		});
+		
+		$('button[name=delUsersBtn]').click((e) => {
+			e.preventDefault();
+			
+			let delUsers = [];
+			$('input[name=userChk]').each((i, o)=>{
+				if($(o).is(':checked'))
+					delUsers.push({ userId : $(o).attr('id') })
+					
+			});
+			
+			if(delUsers.length > 0) {
+				$.confirm('사용자를 삭제 하시겠습니까?', () => {
+					$.api({ url : '/user/delUsers', data : delUsers },(data) => {
+						$.alert('선택된 사용자가 삭제 되었습니다.', () => {
+							$.submit(document.userForm, 1);
+				   		}) 
+			   		});
+				});
+			} else {
+				$.alert('선택된 사용자가 없습니다.');
+			}
+			
+		});
+		
+		$('#searchFlnm').focus();
+		$('#searchFlnm').val([[${searchUserDto.flnm}]]);
+		
+    });
+    
+    const pageClick = (pageIndex) => {
+    	$.loading(true, () => {
+	    	document.userForm.flnm.value = $('#searchFlnm').val();
+	    	document.userForm.authDvcd.value = $('#searchUserAuthDvcd').val();
+	    	$.submit(document.userForm, pageIndex)
+    	});
+    	 
+    }
+    
+    const initPopup = () => {
+    	$('input[name=userId]').val('');
+		$('input[name=oldPswd]').val('');
+		$('input[name=newPswd]').val('');
+		$('input[name=newPswdRe]').val('');
+		$('.message').each((idx, o)=>{
+			if(!$.isEmpty($(o).text()))
+				setErrMsg($(o), '', true);
+		});
+    }
+    
+    const setErrMsg = (err, msg, isNone) => {
+		err.text(msg);
+		isNone ? err.addClass('none') : err.removeClass('none');
+	}
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

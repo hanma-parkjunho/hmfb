@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.web.menu.MenuMapper">
+    
+    <select id="getMenuList" parameterType="hmfb.core.dto.MenuDto" resultType="hmfb.core.dto.MenuDto">
+        
+		SELECT
+			 SEQ_NO,
+			 UPRN_SEQ_NO,
+			 FLNM,
+			 URL,
+			 LVL,
+			 ODR,
+			 UZ_YN
+		FROM HMFB_002
+		ORDER BY CAST(ODR as SIGNED INTEGER) ASC
+		
+    </select>
+    
+    <select id="getMenuAuthList" resultType="hmfb.core.dto.MenuDto">
+        
+		WITH AUTH_MENU AS (
+			SELECT 
+				 MENU_SEQ_NO,
+	   			 AUTH_DVCD
+			FROM HMFB_001
+			WHERE AUTH_DVCD = #{authDvcd}
+		)
+		SELECT
+		     AM.AUTH_DVCD,
+			 H2.SEQ_NO,
+			 H2.UPRN_SEQ_NO,
+			 H2.FLNM,
+			 H2.URL,
+			 H2.LVL,
+			 H2.ODR,
+			 H2.UZ_YN
+		FROM HMFB_002 H2 LEFT OUTER JOIN AUTH_MENU AM
+		ON H2.SEQ_NO = AM.MENU_SEQ_NO
+		WHERE H2.UZ_YN = 'Y'
+		ORDER BY CAST(H2.ODR as SIGNED INTEGER) ASC
+		   
+    </select>
+    
+    <delete id="delMenus" parameterType="hmfb.core.dto.MenuDto">
+    	
+    	DELETE FROM HMFB_002
+    	WHERE SEQ_NO IN 	
+    	
+    	<foreach collection="list" item="item" open="(" close=")" separator=",">
+		 #{item.seqNo}
+		</foreach>
+  
+    </delete>
+    
+    <delete id="delMenuAuths" parameterType="hmfb.core.dto.MenuDto">
+    	
+    	DELETE FROM HMFB_001
+    	WHERE MENU_SEQ_NO IN 	
+    	
+    	<foreach collection="list" item="item" open="(" close=")" separator=",">
+		 #{item.seqNo}
+		</foreach>
+  
+    </delete>
+    
+    <insert id="hmfb.web.menu.MenuMapper.insertMenu" parameterType="hmfb.core.dto.MenuDto">
+    
+    	INSERT INTO HMFB_002 (
+    		SEQ_NO, 
+    		UPRN_SEQ_NO,
+    		FLNM,
+    		URL,
+    		LVL,
+    		ODR,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{uprnSeqNo},
+    		#{flnm},
+    		#{url},
+    		#{lvl},
+    		#{odr},
+    		#{uzYn},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="hmfb.web.menu.MenuMapper.updateMenu" parameterType="hmfb.core.dto.MenuDto">
+    	
+    	UPDATE HMFB_002 SET
+    		FLNM = #{flnm},
+    		URL = #{url},
+    		ODR = #{odr},
+    		UZ_YN = #{uzYn},
+    		UPD_DT = #{updDt},
+			UPD_TM = #{updTm} 
+    	WHERE SEQ_NO = #{seqNo}
+    	  AND UPRN_SEQ_NO = #{uprnSeqNo} 
+    
+    </update>
+    
+    <delete id="hmfb.web.menu.MenuMapper.delMenuAuth" parameterType="String">
+    
+    	DELETE FROM HMFB_001 WHERE AUTH_DVCD = #{authDvcd}
+    	
+    </delete>
+    
+    <insert id="hmfb.web.menu.MenuMapper.insertMenuAuth" parameterType="hmfb.core.dto.MenuAuthDto">
+    
+    	INSERT INTO HMFB_001 (
+    		MENU_SEQ_NO, 
+    		AUTH_DVCD,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{menuSeqNo}, 
+    		#{authDvcd},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+</mapper>

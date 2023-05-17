@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="framework">
+        
+    <select id="getBatchJob" parameterType="string" resultType="hmfb.core.dto.BatchJobDTO">
+    	<![CDATA[
+		SELECT JOB_CODE                AS jobCode
+		      ,JOB_DESC                AS jobDesc
+			  ,JOB_CYCLE               AS jobCycle
+			  ,JOB_TYPE                AS jobType
+			  ,PROGRAM_NAME            AS programName
+			  ,COMMIT_COUNT            AS commitCount
+			  ,INPUT_DATA_SELECTOR     AS inputDataSelector
+			  ,OUTPUT_DATA_SELECTOR    AS outputDataSelector
+			  ,EXCEPTION_POLICY        AS exceptionPolicy
+			  ,USE_YN                  AS useYn
+			  ,REGISTER_DTM            AS registerDtm
+			  ,REGISTER_USER_ID        AS registerUserId
+			  ,MODIFY_DTM              AS modifyDtm
+			  ,MODIFY_USER_ID          AS modifyUserId
+		  FROM BATCH_JOB
+    	 WHERE JOB_CODE = #{jobCode}
+    		         
+    	]]>
+    </select>
+    
+    <insert id="insertBatchExecution" parameterType="hmfb.core.dto.BatchExecutionDTO">
+		INSERT INTO BATCH_EXECUTION (
+		    JOB_UUID,
+			JOB_CODE,
+			JOB_EXECUTION_ID,
+			JOB_YMD,
+			RUN_PARAM,
+			START_DTM,
+			END_DTM,
+			PROC_STATUS,
+			EXIT_MESSAGE,
+			PROCESS_SERVER_NAME,
+			PROCESS_WAS_ID,
+			TOTAL_COUNT,
+			COMPLETED_COUNT,
+			COMMIT_COUNT,
+			INPUT_DATA_SELECTOR,
+			OUTPUT_DATA_SELECTOR,
+			EXCEPTION_POLICY,
+			REGISTER_DTM,
+			REGISTER_USER_ID,
+			MODIFY_DTM,
+			MODIFY_USER_ID
+		) VALUES(
+		     #{jobUuid}
+		    ,#{jobCode}
+		    ,#{jobExecutionId}
+		    ,#{jobYmd}
+		    ,#{runParam}
+		    ,#{startDtm}
+		    ,#{endDtm}
+		    ,#{procStatus}
+		    ,#{exitMessage}
+		    ,#{processServerName}
+		    ,#{processWasId}
+		    ,#{totalCount}
+		    ,#{completedCount}
+		    ,#{commitCount}
+		    ,#{inputDataSelector}
+		    ,#{outputDataSelector}
+		    ,#{exceptionPolicy}
+		    ,#{registerDtm}
+		    ,#{registerUserId}
+		    ,#{modifyDtm}
+		    ,#{modifyUserId}
+		)
+    </insert>
+    
+    <update id="updateBatchExecution" parameterType="hmfb.core.dto.BatchExecutionDTO">
+		UPDATE BATCH_EXECUTION
+		SET JOB_CODE                = #{jobCode},
+			JOB_EXECUTION_ID        = #{jobExecutionId},
+			JOB_YMD                 = #{jobYmd},
+			RUN_PARAM               = #{runParam},
+			END_DTM                 = #{endDtm},
+			PROC_STATUS             = #{procStatus},
+			EXIT_MESSAGE            = #{exitMessage},
+			TOTAL_COUNT             = #{totalCount},
+			COMPLETED_COUNT         = #{completedCount},
+			COMMIT_COUNT            = #{commitCount},
+			INPUT_DATA_SELECTOR     = #{inputDataSelector},
+			OUTPUT_DATA_SELECTOR    = #{outputDataSelector},
+			EXCEPTION_POLICY        = #{exceptionPolicy},	
+			MODIFY_DTM              = #{modifyDtm},
+			MODIFY_USER_ID          = #{modifyUserId}
+		WHERE JOB_UUID              = #{jobUuid}
+    </update>
+    
+    <select id="selectBatchExecution" parameterType="string" resultType="hmfb.core.dto.BatchExecutionDTO">
+		  SELECT JOB_UUID             AS jobUuid   
+				,JOB_CODE             AS jobCode
+				,JOB_EXECUTION_ID     AS jobExecutionId
+				,JOB_YMD              AS jobYmd
+				,RUN_PARAM            AS runParam
+				,START_DTM            AS startDtm
+				,END_DTM              AS endDtm
+				,PROC_STATUS          AS procStatus
+				,EXIT_MESSAGE         AS exitMessage
+				,PROCESS_SERVER_NAME  AS processServerName
+				,PROCESS_WAS_ID       AS processWasId
+				,TOTAL_COUNT          AS totalCount
+				,COMPLETED_COUNT      AS completedCount
+				,COMMIT_COUNT         AS commitCount
+				,INPUT_DATA_SELECTOR  AS inputDataSelector
+				,OUTPUT_DATA_SELECTOR AS outputDataSelector
+				,EXCEPTION_POLICY     AS exceptionPolicy
+				,REGISTER_DTM         AS registerDtm
+				,REGISTER_USER_ID     AS registerUserId
+				,MODIFY_DTM           AS modifyDtm
+				,MODIFY_USER_ID       AS modifyUserId
+		   FROM BATCH_EXECUTION
+		  WHERE JOB_UUID = #{jobUuid}
+    </select>
+    
+    <select id="selectListBatchExecution" parameterType="hmfb.core.dto.BatchExecutionDTO" resultType="hmfb.core.dto.BatchExecutionDTO">
+		  SELECT JOB_UUID             AS jobUuid   
+				,JOB_CODE             AS jobCode
+				,JOB_EXECUTION_ID     AS jobExecutionId
+				,JOB_YMD              AS jobYmd
+				,RUN_PARAM            AS runParam
+				,START_DTM            AS startDtm
+				,END_DTM              AS endDtm
+				,PROC_STATUS          AS procStatus
+				,EXIT_MESSAGE         AS exitMessage
+				,PROCESS_SERVER_NAME  AS processServerName
+				,PROCESS_WAS_ID       AS processWasId
+				,TOTAL_COUNT          AS totalCount
+				,COMPLETED_COUNT      AS completedCount
+				,COMMIT_COUNT         AS commitCount
+				,INPUT_DATA_SELECTOR  AS inputDataSelector
+				,OUTPUT_DATA_SELECTOR AS outputDataSelector
+				,EXCEPTION_POLICY     AS exceptionPolicy
+				,REGISTER_DTM         AS registerDtm
+				,REGISTER_USER_ID     AS registerUserId
+				,MODIFY_DTM           AS modifyDtm
+				,MODIFY_USER_ID       AS modifyUserId
+		   FROM BATCH_EXECUTION
+		  WHERE REGISTER_DTM BETWEEN CONCAT(#{searchDt},'000000000') AND CONCAT(#{searchDt},'235959999')
+		    AND JOB_CODE = #{jobCode}
+    </select>    
+    <!-- select id="getListScheduleJob" parameterType="scheduleConditionDTO" resultType="scheduleJobDTO">
+    	<![CDATA[
+    		SELECT job_name
+    		         , group_name
+    		         , description
+    		         , job_class_name
+    		         , trigger_name
+    		         , trigger_group_name
+    		         , cron_expression
+    		         , use_yn
+    		         , register_dtm
+    		         , register_user_id
+    		         , modify_dtm
+    		         , modify_user_id 
+    		  FROM SCHEDULE_JOB
+    		 WHERE use_yn = #{useYn}
+    	]]>
+    </select  -->
+    
+</mapper>

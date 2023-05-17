@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.web.user.UserMapper">
+    
+    <select id="getUser" parameterType="String" resultType="hmfb.core.dto.UserDto">
+        
+        SELECT
+			 H3.SEQ_NO,		
+			 H3.USER_ID,	
+			 H3.PSWD,		
+			 H3.FLNM,		
+			 H3.PHN_NO,		
+			 H3.DEPART,		
+			 H3.AUTH_DVCD,
+			 H6.NAME
+		FROM HMFB_003 H3 LEFT JOIN 
+		     HMFB_006 H6 ON H6.CODE_GRP = 'AUTH_DVCD' AND H6.UZ_YN = 'Y' AND H6.CODE = H3.AUTH_DVCD
+		WHERE USER_ID = #{userId}
+		  AND DEL_YN = 'N'
+		   
+    </select>
+    
+    <insert id="saveUser" parameterType="hmfb.core.dto.UserDto">
+    
+    	INSERT INTO HMFB_003 (
+    		SEQ_NO, 
+    		USER_ID,
+    		PSWD,  
+    		FLNM, 
+    		PHN_NO,
+    		DEPART,
+    		AUTH_DVCD,
+    		DEL_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{userId},
+    		#{pswd},
+    		#{flnm},
+    		#{phnNo},
+    		#{depart},
+    		#{authDvcd},
+    		'N',
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="updateLstLgnDttm" parameterType="hmfb.core.dto.UserDto">
+    
+    	UPDATE HMFB_003 SET
+    		LST_LGN_DTTM = #{lstLgnDttm},
+    		UPD_DT = #{updDt},
+			UPD_TM = #{updTm} 
+    	WHERE USER_ID = #{userId}
+    	
+    </update>
+    
+    <select id="getUserAuthMenuList" resultType="hmfb.core.dto.MenuDto">
+        
+		WITH AUTH_MENU AS (
+			SELECT 
+				 MENU_SEQ_NO,
+	   			 AUTH_DVCD
+			FROM HMFB_001
+			WHERE AUTH_DVCD = #{authDvcd}
+		)
+		SELECT
+		     CASE WHEN H2.LVL = '2' THEN AM.AUTH_DVCD
+		     ELSE NULL END AS AUTH_DVCD,
+			 H2.SEQ_NO,
+			 H2.UPRN_SEQ_NO,
+			 H2.FLNM,
+			 H2.URL,
+			 H2.LVL,
+			 H2.ODR,
+			 H2.UZ_YN
+		FROM HMFB_002 H2 LEFT OUTER JOIN AUTH_MENU AM
+		ON H2.SEQ_NO = AM.MENU_SEQ_NO
+		WHERE H2.UZ_YN = 'Y'
+		   
+    </select>
+    
+    <select id="getUserList" parameterType="hmfb.core.dto.UserDto" resultType="hmfb.core.dto.UserDto">
+        
+		SELECT
+			 H3.SEQ_NO,
+			 H3.USER_ID,
+			 H3.PSWD,
+			 H3.FLNM,
+			 H3.PHN_NO,
+			 H3.DEPART,
+			 H3.AUTH_DVCD,
+			 H6.NAME
+		FROM HMFB_003 H3 LEFT JOIN 
+		     HMFB_006 H6 ON H6.CODE_GRP = 'AUTH_DVCD' AND H6.UZ_YN = 'Y' AND H6.CODE = H3.AUTH_DVCD
+		WHERE DEL_YN = 'N'
+		  <if test="flnm != null and flnm != ''">
+		  AND H3.FLNM LIKE CONCAT('%',#{flnm},'%') 
+		  </if>
+		  <if test="authDvcd != null and authDvcd != ''">
+		  AND H3.AUTH_DVCD = #{authDvcd}
+		  </if>
+		ORDER BY H3.REG_DT
+		LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+		
+    </select>
+    
+    <select id="getUserTotCnt" parameterType="hmfb.core.dto.UserDto" resultType="int">
+        
+		SELECT
+			 COUNT(SEQ_NO)
+		FROM HMFB_003
+		WHERE DEL_YN = 'N'
+		<if test="flnm != null and flnm != ''">
+		  AND FLNM LIKE CONCAT('%',#{flnm},'%') 
+		</if>
+		<if test="authDvcd != null and authDvcd != ''">
+		  AND AUTH_DVCD = #{authDvcd}
+		</if>
+		
+    </select>
+    
+    <update id="updateUserPswd" parameterType="hmfb.core.dto.UserDto">
+    	
+    	UPDATE HMFB_003 SET
+    		PSWD = #{pswd},
+    		UPD_DT = #{updDt},
+			UPD_TM = #{updTm} 
+    	WHERE USER_ID = #{userId} 
+    	  AND DEL_YN = 'N'	
+    
+    </update>
+    
+    <delete id="deleteUser" parameterType="hmfb.core.dto.UserDto">
+    	
+    	DELETE FROM HMFB_003  
+    	WHERE USER_ID = #{userId} 	
+  
+    </delete>
+    
+    <update id="saveAuthDvcds" parameterType="hmfb.core.dto.UserDto">
+    	
+    	UPDATE HMFB_003 SET
+    		AUTH_DVCD = #{authDvcd},
+    		UPD_DT = #{updDt},
+			UPD_TM = #{updTm} 
+    	WHERE USER_ID = #{userId}
+  
+    </update>
+    
+</mapper>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+	<title>HIBS - HTML LIST</title>
+	<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+	<link rel="stylesheet" href="../../assets/css/Leesub.datepicker.min.css">
+	<link rel="stylesheet" href="../../assets/css/common.css">
+	<script src="../../assets/js/jquery-3.5.1.min.js"></script>
+	<script src="../../assets/js/Leesub.datepicker.min.js"></script>
+	<script src="../../assets/js/useragent.js"></script>
+	<script src="../../assets/js/ui_common.js"></script>
+<style>
+/* stylelint-disable */
+/* Basic Style START (dohoons, 200803, 200908, 201011, 201106, 201305, 201607, 201802, 201908) */
+html, body { height:100%; -webkit-text-size-adjust:none; font-family:dotum,"돋움",Arial,Sans-serif; font-size:12px; }
+body, input, select, button, textarea, h1, h2, h3, h4, h5, h6, table { line-height:1.5; font:inherit; color:inherit; }
+html, body, div, form, input, select, button, textarea, legend, fieldset, figure, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, blockquote, address, p, th, td, caption { margin:0; padding:0; }
+ol, ul, li { list-style:none; }
+img, fieldset { vertical-align:middle; border:0 none; }
+input, select, textarea { vertical-align:middle; resize:none; }
+input[type=text], input[type=password], input[type=submit], input[type=tel], input[type=number], input[type=email], input[type=url], input[type=search], textarea { -webkit-appearance:none; border-radius:0; }
+button { border:0 none; background:transparent; cursor:pointer; }
+hr { display:none; }
+legend, .hide { position:absolute; left:-9999px; }
+table caption { width:0; height:0; visibility:hidden; text-indent:-9999px; font-size:0; line-height:0; }
+table { border-collapse:collapse; border-spacing:0; }
+header, footer, section, article, aside, nav, hgroup, details, menu, figure, figcaption { display:block; }
+
+a { color:inherit; text-decoration:none; }
+a:active, a:hover, a:focus { text-decoration:underline; }  
+/* Basic Style END */
+
+a:link, a:visited { color:#2d7fe0; }
+a:active, a:hover, a:focus { background:#eee; }
+html, body { font-family: 'Malgun Gothic',sans-serif; }
+body { min-width:1700px; color:#666; overflow: scroll; overflow-x: auto; }
+header { position: relative; }
+.group-filter { line-height: 1.8; margin: 10px 15px 0; font-size: 11px; }
+.group-filter input { margin-left: 10px; }
+.group-filter label { color: #2d7fe0; }
+.filter-input { box-sizing: border-box; width: 180px; height: 30px; margin-top: -15px; padding: 0 15px; background: transparent; border: 1px solid #ccc; box-shadow: inset 2px 2px 5px rgba(0,0,0,.2); position: absolute; top: 50%; right: 20px; }
+h1 { padding:10px 20px; font-weight:bold; font-size:16px; color:#999; background: -webkit-gradient(linear, left top, left bottom, from(#ffffff),color-stop(50%, #f3f3f3),color-stop(51%, #ededed),to(#ffffff));background: -webkit-linear-gradient(top, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);background: linear-gradient(to bottom, #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); border-bottom:1px solid #eee; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+h2 { padding:0 0 10px; font-size:14px; }
+.container { box-sizing:border-box; padding:20px; overflow:hidden; }
+table { width:100%; font-size:12px; color:#333; table-layout:fixed; border-collapse:collapse; border-spacing:0; border-right:1px solid #ccc; border-bottom:1px solid #ccc; }
+table thead th { padding:5px; background:#f5f5f5; border-left:1px solid #ccc; border-top:1px solid #ccc; }
+table tbody td { padding:5px 10px; word-wrap:break-word; border-left:1px solid #ccc; border-top:1px solid #ccc; }
+table .center { text-align:center; }
+table .group:not(:first-child) td { border-top:10px solid #ccc; }
+table tr:last-child td {border-bottom:1px solid #ccc;}
+table .sub-group td { border-top:3px double #bbb; }
+table span, table .up { color:#2d7fe0; }
+a.cms:before { content: '['; display: inline; }
+a.cms:after { content: ']'; display: inline; }
+.color-primary { color: #f2630f !important; }
+.line-th {text-decoration:line-through; color:#bbb;}
+</style>
+<script>
+// 모든 링크 새창으로 변경
+function linkTargetChange() {
+	var aar = document.querySelectorAll('a');
+	for(var i=aar.length; i--; ) {
+		aar[i].target = "_blank";
+	}
+}
+// 링크 URL 자동
+function setLink() {
+	var aar = document.querySelectorAll('a.path');
+	for(var i=aar.length; i--; ) {
+		aar[i].href = './' + aar[i].innerHTML;
+	}
+}
+// 미리보기 URL 설정
+function previewLink() {
+	var aar = document.querySelectorAll('a.preview');
+	var path = location.href.split('/');
+	path.length = path.length - 1;
+	path = path.join('/');
+	for(var i=aar.length; i--; ) {
+		aar[i].href = '//troy.labs.daum.net/?url='
+			+ encodeURIComponent(path + '/' + aar[i].parentNode.parentNode.querySelector('a.path').getAttribute('href'))
+			+ '&device=A1429;N950;A1549;A1522'; // 갤럭시S8,아이폰6,아이폰6+
+	}
+}
+// 팝업 미리보기 URL 설정
+function popupLink() {
+	var aar = document.querySelectorAll('a.popup');
+	for(var i=aar.length; i--; ) {
+		aar[i].href = './popup-viewer.html?url='
+				+ aar[i].parentNode.parentNode.querySelector('a.path').getAttribute('href')
+				+ '&width=' + aar[i].dataset.width
+				+ '&height=' + aar[i].dataset.height;
+	}
+}
+// 리스트 검색 필터
+function listFilter() {
+	var input, filter, table, tr, len, td, i;
+	var searchIndex = 2; // 검색 대상 td index 설정
+	var input = document.getElementById("filterInput");
+	var filter = input.value.toUpperCase();
+	var table = document.getElementById("mainTable");
+	var tr = table.querySelector('tbody').getElementsByTagName("tr");
+	var textArr = Array.prototype.map.call(tr, function(row) {
+		const td = row.getElementsByTagName('td');
+		return td[0].innerText + td[1].innerText + td[2].innerText + td[3].innerText + td[4].innerText;
+	});
+	var len = tr.length;
+
+	for(var i = 0; i < len; i++) {
+		td = tr[i].getElementsByTagName("td")[searchIndex];
+		if(td) {
+			if(textArr[i].toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+	}
+}
+function setRowFilter() {
+	var tr = document.querySelectorAll('#mainTable tbody tr');
+	var len = tr.length;
+	var groupNames = [];
+	var groupIndex = -1;
+	var groupFilter = document.querySelector('.group-filter');
+	for(var i = 0; i < len; i++) {
+		var className = tr[i].className;
+		if(className === 'group') {
+			groupNames.push(tr[i].querySelectorAll("td")[0].innerText);
+			groupIndex++;
+		}
+		tr[i].classList.add('seq'+groupIndex);
+		tr[i].setAttribute('id', 'seq' + groupIndex);
+	}
+	groupFilter.innerHTML = groupNames.reduce(function(acc, v, i) {
+		return acc + '<input type="radio" name="groupFilter" value="' + i + '"> <a href="#seq' + i + '"><strong>' + v + '↓</strong></a>';
+	}, '<label><input type="radio" name="groupFilter" value="-1" checked> <strong>전체</strong></label>');
+	Array.prototype.forEach.call(groupFilter.querySelectorAll('input'), function(el) {
+		el.addEventListener('change', function(e) {
+			var checked = groupFilter.querySelector('input:checked').value;
+			for(var i = 0; i < len; i++) {
+				if(checked === '-1') {
+					tr[i].style.display = 'table-row';
+				} else if (checked === tr[i].className.split('seq')[1]) {
+					tr[i].style.display = 'table-row';
+				} else {
+					tr[i].style.display = 'none';
+				}
+			}
+		});
+	});
+}
+window.onload = function() {
+	linkTargetChange();
+	setLink();
+	previewLink();
+	popupLink();
+	// setRowFilter();
+};
+</script>
+</head>
+<body>
+	<header>
+		<h1>HIBS - HTML LIST</h1>
+		<input type="text" id="filterInput" class="filter-input" onkeyup="listFilter()" placeholder="메뉴명/화면ID 검색.." title="검색">
+	</header>
+	<div class="group-filter"></div>
+	<div class="container">
+		<table id="mainTable">
+			<colgroup>
+				<col style="width:100px;">
+				<col style="width:150px;">
+				<col style="width:150px;">
+				<col style="width:150px;">
+				<col style="width:150px;">
+				<col style="width:100px;">
+				<col style="width:150px;">
+				<col style="width:150px;">
+				<col style="width:300px;">
+				<col style="width:90px;">
+				<col>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>구분</th>
+					<th>1 Depth</th>
+					<th>2 Depth</th>
+					<th>3 Depth</th>
+					<th>4 Depth</th>
+					<th>팝업/탭</th>
+					<th>화면ID</th>
+					<th>설계서(확인용) 화면ID</th>
+					<th>경로</th>
+					<th>상태</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 공통 -->
+				<tr class="group">
+					<td class="assortment">공통</td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3"></td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link">
+						<a href="#auto" class="path"></a>
+					</td>
+					<td class="status center"></td>
+					<td class="memo"></td>
+				</tr>
+				<!-- // 공통 -->
+
+				<!-- 메인 -->
+				<tr class="group">
+					<td class="assortment">PC</td>
+					<td class="depth1"></td>
+					<td class="depth2">로그인</td>
+					<td class="depth3"></td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/index.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<!-- //메인 -->
+
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">회원가입</td>
+					<td class="depth3"></td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/join.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">메인</td>
+					<td class="depth3"></td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/00_main.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">사용자관리</td>
+					<td class="depth3">사용자정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/01_0_사용자정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">권한정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/01_1_권한정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">메뉴관리</td>
+					<td class="depth3">메뉴관리정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/02_0_메뉴관리정보_new.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo">2023.03.15 수정</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">메뉴권한정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/02_1_메뉴권한정보_new.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo">2023.03.15 수정</td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">연계환경관리</td>
+					<td class="depth3">기관정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/03_0_기관정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">연계정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/03_1_연계정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">서버별기동정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/03_2_서버별기동정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">로그정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/03_3_로그정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo"></td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">배치기본정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/03_4_배치기본정보.html</a></td>
+					<td class="status center">완료</td>
+					<td class="memo">2023.03.15 수정</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">공통코드정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">스토리보드 내용 없음</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">I/F사용유무정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">스토리보드 내용 없음</td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">뱅킹서비스관리</td>
+					<td class="depth3">펌뱅킹항목정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">스토리보드 내용 없음</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">가상계좌항목정보</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">스토리보드 내용 없음</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">펌뱅킹개발테스트</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">스토리보드 내용 없음</td>
+				</tr>
+				<tr class="group">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2">모니터링</td>
+					<td class="depth3">실시간모니터링</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/05_0_실시간모니터링.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">완료</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">배치모니터링</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/05_1_배치모니터링.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">완료</td>
+				</tr>
+				<tr class="">
+					<td class="assortment"></td>
+					<td class="depth1"></td>
+					<td class="depth2"></td>
+					<td class="depth3">온라인모니터링</td>
+					<td class="depth4"></td>
+					<td class="pop-tab"></td>
+					<td class="screen-id"></td>
+					<td class="dev-id"></td>
+					<td class="link"><a href="#auto" class="path">../views/05_2_온라인모니터링.html</a></td>
+					<td class="status center"></td>
+					<td class="memo">완료</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</body>
+	</html>

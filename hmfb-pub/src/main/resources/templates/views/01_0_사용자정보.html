@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<title>HIBS - HANMA INFORMATION BANKING SYSTEM</title>
+	<link rel="stylesheet" href="/assets/css/libs/swiper.min.css">
+	<link rel="stylesheet" href="/assets/css/ui_common.css">
+	<script type="text/javascript" src="/assets/js/libs/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/swiper-bundle.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/gsap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/EasePack.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/useragent.js"></script>
+	<!-- 개발시 아래 header_footer_guide.js 삭제 -->
+	<script type="text/javascript" src="/assets/js/header_footer_guide.js"></script>
+	<script type="text/javascript" src="/assets/js/ui_common.js"></script>
+</head>
+<body>
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper" id="wrapper">
+		<!-- HEADER -->
+		<header class="header">
+		</header>
+		<!-- HEADER -->
+
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<!-- NAVIGATION -->
+				<nav class="navi-group">
+				</nav>
+				<!-- // NAVIGATION -->
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">사용자정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>사용자관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>사용자정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group">
+							<table>
+								<colgroup>
+									<col style="width:100px;">
+									<col style="width:200px;">
+									<col style="width:150px;">
+									<col style="width:150px;">
+									<col style="width:150px;">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>선택</th>
+										<th>아이디</th>
+										<th>부서</th>
+										<th>성명</th>
+										<th>대선번호</th>
+										<th>권한</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="manager">
+										<td></td>
+										<td>aaaaa</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>관리자</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="" id="ipt0">
+												<label for="ipt0"></label>
+											</div>
+										</td>
+										<td>bbbbb</td>
+										<td>개발부</td>
+										<td>홍길동</td>
+										<td>02-111-2222</td>
+										<td>기관담당자</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="check-group">
+												<input type="checkbox" name="" id="ipt1">
+												<label for="ipt1"></label>
+											</div>
+										</td>
+										<td>cccc</td>
+										<td>회계부</td>
+										<td>김길동</td>
+										<td>02-111-2222</td>
+										<td>기관담당자</td>
+									</tr>
+								</tbody>
+								<tfoot></tfoot>
+							</table>
+						</div>
+						<div class="btn-group flex content-center mgt-30">
+							<button type="button" class="button-ui"><span>삭제</span></button>
+						</div>
+
+						<div class="table-group data align-left mgt-52">
+							<table>
+								<colgroup>
+									<col style="width:226px;">
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>아이디</th>
+										<td>aaa</td>
+									</tr>
+									<tr>
+										<th>패스워드</th>
+										<td>
+											<button type="button" class="button-ui small" aria-label="팝업열기" onclick="hibs.popup.open(this,'#changePassword')"><span>변경</span></button>
+										</td>
+									</tr>
+									<tr>
+										<th>부서</th>
+										<td>개발부</td>
+									</tr>
+									<tr>
+										<th>성명</th>
+										<td>홍길동</td>
+									</tr>
+									<tr>
+										<th>권한</th>
+										<td>관리자</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 패스워드변경 -->
+	<div class="popup-group default" id="changePassword" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">패스워드변경</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<div class="label-group">
+							<label for="pw0" class="title">기존패스워드</label>
+							<div class="input-group">
+								<input type="password" class="input-ui" placeholder="패스워드 입력" id="pw0">
+							</div>
+						</div>
+						<div class="label-group">
+							<label for="pw1" class="title">신규패스워드</label>
+							<div class="input-group">
+								<input type="password" class="input-ui" placeholder="패스워드 입력" id="pw1">
+							</div>
+						</div>
+						<div class="label-group">
+							<label for="pw2" class="title">패스워드확인</label>
+							<div class="input-group">
+								<input type="password" class="input-ui" placeholder="패스워드 입력" id="pw2">
+							</div>
+						</div>
+
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 패스워드변경 -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">사용자정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>사용자정보에 대한 설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+</body>
+
+</html>

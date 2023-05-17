@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/single_layout}">
+
+<head>
+	<script type="text/javascript" th:src="@{/assets/js/ui_common.js}"></script>
+</head>	
+		
+<th:block layout:fragment="content">
+
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper join">
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<section class="section-left">
+					<h1 class="h1">
+						<a th:href="@{${loginPage}}" class="btn-logo" title="홈으로 이동"></a>
+						<p>HANMA INFORMATION BANKING SYSTEM</p>
+					</h1>
+				</section>
+				<section class="section-right">
+					<header class="header-group">
+						<h2 class="h2">회원가입</h2>
+					</header>
+					<div class="label-group">
+						<label for="" class="title">아이디</label>
+						<div class="input-group">
+							<input type="text" class="input-ui" placeholder="아이디 입력" autofocus name="userId" maxlength="30">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">패스워드</label>
+						<div class="input-group">							
+							<input type="text" class="input-ui" placeholder="패스워드 입력" name="pswd" maxlength="12" style="-webkit-text-security: disc;text-security: disc;">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">패스워드 확인</label>
+						<div class="input-group">
+							<input type="text" class="input-ui" placeholder="패스워드 확인 입력" name="pswdRe" maxlength="12" style="-webkit-text-security: disc;text-security: disc;">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">부서</label>
+						<div class="input-group">
+							<input type="text" class="input-ui" placeholder="부서 입력" name="depart" maxlength="100">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">성명</label>
+						<div class="input-group">
+							<input type="text" class="input-ui" placeholder="성명 입력" name="flnm" maxlength="30">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="label-group">
+						<label for="" class="title">전화번호</label>
+						<div class="input-group">
+							<input type="text" class="input-ui" placeholder="-없이 입력" name="phnNo"  maxlength="30">
+						</div>
+						<p class="message warning none"></p><!-- 오류시 .none클래스 삭제 -->
+					</div>
+					<div class="button-group text-right">
+						<button type="button" class="button-ui large col-12" name="signUp">
+							<span>저장</span>
+						</button>
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+			<div class="footer-inner">
+				<p class="footer-left">© 2023 hanma information system Inc. All Rights Reserved.</p>
+				<div class="footer-right">
+					<img class="image-hanma" src="/assets/images/logo_footer_hanma.png" alt="HANMA">
+					<img class="image-shhinhan" src="/assets/images/logo_footer_shinhan.png" alt="SHINHAN BANK">
+				</div>
+			</div>
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+	
+<!-- signUp 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+    	$("input").on("input", function(e) {
+    		e.preventDefault();
+    		$('.message').each((idx, o)=>{
+    			if(!$.isEmpty($(o).text()))
+    				setErrMsg($(o), '', true);
+    		});
+    		
+    	});
+	    
+    	let setErrMsg = (err, msg, isNone) => {
+			err.text(msg);
+			isNone ? err.addClass('none') : err.removeClass('none');
+		}
+		
+    	let getUser = (callback) => {
+			$.form({ url : '/user/getUser', data : {
+				userId : $('input[name=userId]').val()
+   			} },(data)=>{
+	   			if($.isEmpty(data.userId) && typeof callback === 'function') {
+	   				callback.call(this, {});
+	   			} else {
+	   				$('input[name=userId]').val('');
+	   				setErrMsg($('input[name=userId]').parent().next(), '중복된 아이디 입니다.', false);
+	   			}
+	   		},()=>{
+	   			$('input[name=userId]').val('');
+	   		});
+		}
+		
+    	let validChk = (callback) => {
+			
+			if($.isEmpty($('input[name=userId]').val())) {
+				setErrMsg($('input[name=userId]').parent().next(), '아이디를 입력해 주세요.', false);
+				$('input[name=userId]').focus();
+	   			return;
+	   		}
+	   		
+	   		if(/[^A-Za-z0-9]/ig.test($('input[name=userId]').val())){
+	   			setErrMsg($('input[name=userId]').parent().next(), '아이디는 영문자 숫자 조합으로 입력해 주세요.', false);
+	   			$('input[name=userId]').focus();
+	   			return;	
+	   		}
+	   		
+	   		if($('input[name=userId]').val().length > 30) {
+	   			setErrMsg($('input[name=userId]').parent().next(), '아이디는 최대 30자 까지 입력 가능 합니다.', false);
+	   			$('input[name=userId]').focus();
+	   			return;
+	   		}
+	   		
+	   		getUser(()=>{
+	   			
+	   			if($.isEmpty($('input[name=pswd]').val())) {
+		   			setErrMsg($('input[name=pswd]').parent().next(), '패스워드를 입력해 주세요.', false);
+		   			$('input[name=pswd]').focus();
+		   			return;
+		   		}
+		   		
+	   			if(!$.isPwdValid($('input[name=pswd]').val())) {
+	   				setErrMsg($('input[name=pswd]').parent().next(), '비밀번호는 영문자 숫자 특수문자의 조합으로 8~12자리로 입력해 주세요.', false);
+	   				$('input[name=pswd]').focus();
+		   			return;
+	   			}
+	   				
+		   		if($.isEmpty($('input[name=pswdRe]').val())) {
+		   			setErrMsg($('input[name=pswdRe]').parent().next(), '패스워드 확인을 입력해 주세요.', false);
+		   			$('input[name=pswdRe]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($('input[name=pswdRe]').val() !== $('input[name=pswd]').val()) {
+		   			setErrMsg($('input[name=pswdRe]').parent().next(), '패스워드가 일치하지 않습니다.', false);
+		   			$('input[name=pswdRe]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($.isEmpty($('input[name=depart]').val())) {
+		   			setErrMsg($('input[name=depart]').parent().next(), '부서를 입력해 주세요.', false);
+		   			$('input[name=depart]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($('input[name=depart]').val().length > 100) {
+		   			setErrMsg($('input[name=depart]').parent().next(), '부서는 최대 100자 까지 입력 가능 합니다.', false);
+		   			$('input[name=depart]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($.isEmpty($('input[name=flnm]').val())) {
+		   			setErrMsg($('input[name=flnm]').parent().next(), '성명을 입력해 주세요.', false);
+		   			$('input[name=flnm]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($('input[name=flnm]').val().length > 30) {
+		   			setErrMsg($('input[name=flnm]').parent().next(), '성명은 최대 30자 까지 입력 가능 합니다.', false);
+		   			$('input[name=flnm]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($.isEmpty($('input[name=phnNo]').val())) {
+		   			setErrMsg($('input[name=phnNo]').parent().next(), '전화번호를 입력해 주세요.', false);
+		   			$('input[name=phnNo]').focus();
+		   			return;
+		   		}
+	   			
+		   		if(/[^0-9]/ig.test($('input[name=phnNo]').val())) {
+		   			setErrMsg($('input[name=phnNo]').parent().next(), '전화번호는 숫자만 입력해 주세요.', false);
+		   			$('input[name=phnNo]').focus();
+		   			return;
+		   		}
+		   		
+		   		if($('input[name=phnNo]').val().length > 30) {
+		   			setErrMsg($('input[name=phnNo]').parent().next(), '전화번호는 최대 30자 까지 입력 가능 합니다.', false);
+		   			$('input[name=phnNo]').focus();
+		   			return;
+		   		}
+		   		
+		   		if(typeof callback === 'function')
+		   			callback.call(this, {});
+		   		
+	   		})
+			
+		}
+		
+    	let saveUser = () => {
+			
+			$.form({ url : '/user/saveUser', data : {
+				userId : $('input[name=userId]').val(),
+				pswd : $('input[name=pswd]').val(),
+				depart : $('input[name=depart]').val(),
+				flnm : $('input[name=flnm]').val(),
+				phnNo : $('input[name=phnNo]').val()
+   			} },(data)=>{
+	   			if(!$.isEmpty(data.seqNo)){
+	   				$.alert('회원가입이 완료 되었습니다.', () => {
+	   					location.href = [[${loginPage}]];
+	   		   		})
+	   			} 
+	   		});
+			
+		}
+		
+		$('button[name=signUp]').click((e)=>{
+	   		
+			e.preventDefault();
+	   		
+			validChk(() => {
+				saveUser();
+			});
+	   		
+	   		
+    	})
+		
+    });
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

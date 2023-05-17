@@ -1,0 +1,23 @@
+project:
+  sys: API
+  name: hmfb-api
+  title: HMFB API
+
+jasypt:
+  encryptor:
+    bean: stringEncryptor
+    
+spring:
+  config:
+    import:
+    - file:${installPath}/hmfb.yml
+  devtools:
+      livereload:
+        enabled: false
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  error:
+    include-exception: true
+  port: 8050

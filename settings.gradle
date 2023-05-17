@@ -1,0 +1,8 @@
+rootProject.name = 'hmfb'
+include 'hmfb-core'
+include 'hmfb-web'
+include 'hmfb-api'
+include 'hmfb-tcp'
+include 'hmfb-batch'
+include 'hmfb-enc'
+include 'hmfb-pub'

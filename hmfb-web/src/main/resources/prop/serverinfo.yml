@@ -1,0 +1,30 @@
+hmfb-servers:
+  serverInfoList:
+    - sys: API
+      name: hmfb-api
+      title: HMFB API 서버
+      bootJarPath: ${installPath}/hmfb-api-0.0.1-SNAPSHOT.jar
+      ip: http://127.0.0.1
+      port: 8050
+      remote: Y
+    - sys: BAT
+      name: hmfb-batch
+      title: HMFB BATCH 서버
+      bootJarPath: ${installPath}/hmfb-batch-0.0.1-SNAPSHOT.jar
+      ip: http://127.0.0.1
+      port: 8060
+      remote: Y
+    - sys: TCP
+      name: hmfb-tcp
+      title: HMFB TCP 서버
+      bootJarPath: ${installPath}/hmfb-tcp-0.0.1-SNAPSHOT.jar
+      ip: http://127.0.0.1
+      port: 8070
+      remote: Y  
+    - sys: WEB
+      name: hmfb-web
+      title: HMFB WEB 서버
+      bootJarPath: 
+      ip: http://127.0.0.1
+      port: 8080
+      remote: N     

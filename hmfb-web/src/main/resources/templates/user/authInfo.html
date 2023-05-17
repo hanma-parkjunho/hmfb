@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">권한정보</h2>
+			<div class="history-group">
+				<ul>
+					<li>
+						<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>사용자관리</span></a>
+					</li>
+					<li>
+						<a href="javascript:;" class="button-history"><span>권한정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+			</div>
+		</div>
+		<!-- // TITLE, HISTORY, HELP -->
+	
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+			
+			<div class="table-group search">
+				<table>
+					<colgroup>
+						<col style="width:160px;">
+						<col>
+						<col style="width:160px;">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>성명</th>
+							<td>
+								<div class="input-group">
+									<input type="text" class="input-ui w260" placeholder="성명입력" id="searchFlnm">
+								</div>
+							</td>
+							<th>권한</th>
+							<td>
+                            	<select id="searchUserAuthDvcd" class="col-5">
+									<option value="">전체</option>
+									<th:block th:each="userAuthDvcd : ${userAuthDvcdList}">
+										<option th:selected="${searchUserDto.authDvcd == userAuthDvcd.code}" th:value="${userAuthDvcd.code}" th:text="${userAuthDvcd.name}"></option>
+									</th:block>
+								</select>
+                            </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="searchUsersBtn" class="button-ui"><span>조회</span></button>
+			</div>
+			
+			<div class="table-group data mgt-30">
+				<table>
+					<colgroup>
+						<col style="width:200px;">
+						<col style="width:200px;">
+						<col style="width:200px;">
+						<col>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>아이디</th>
+							<th>부서</th>
+							<th>성명</th>
+							<th>권한</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${ not #arrays.isEmpty(userList)}" th:each="user : ${userList}" >
+							<tr>
+								<td th:text="${user.userId}"></td>								
+								<td th:text="${user.depart}"></td>
+								<td th:text="${user.flnm}"></td>
+								<td>
+									<select name="userAuthDvcds" class="small" th:userId="${user.userId}" th:originVal="${user.authDvcd}">
+										<th:block th:each="userAuthDvcd : ${userAuthDvcdList}">
+											<option th:selected="${user.authDvcd == userAuthDvcd.code}" th:value="${userAuthDvcd.code}" th:text="${userAuthDvcd.name}"></option>
+										</th:block>
+									</select>
+								</td>
+							</tr>
+						</th:block>
+						<th:block  th:if="${#arrays.isEmpty(userList)}" >
+							<tr>
+								<td colspan="7">조회된 데이터가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="btn-group flex content-center mgt-30">
+				<button type="button" name="saveAuthDvcdBtn" class="button-ui"><span>저장</span></button>
+			</div>
+			
+			<th:block th:replace="fragments/page :: pageFragment"></th:block>
+			
+		</section>
+		<!-- // SECTION : CONTENT -->
+	</div>
+	
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">권한정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	
+	<form method="post" name="authForm" action="/user/authInfo">
+		<input type="hidden" name="flnm">
+		<input type="hidden" name="authDvcd">
+	</form>
+	
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){
+		
+		$('#searchFlnm').keyup((e) => {
+    		e.preventDefault();
+    		if(e.which === 13)
+    			pageClick(1);	
+    			
+    	})
+    	
+    	$('#searchUserAuthDvcd').change((e) => {
+    		e.preventDefault();
+    		//pageClick(1);	
+    	})
+    	
+    	$('button[name=searchUsersBtn]').click((e) => {
+    		e.preventDefault();
+    		pageClick(1);
+    	});
+		
+		$('button[name=saveAuthDvcdBtn]').click((e) => {
+			e.preventDefault();
+			
+			let saveAuthDvcds = [];
+			$('select[name=userAuthDvcds]').each((i, o) => {
+				if($(o).attr('originVal') !== $(o).val())
+					saveAuthDvcds.push({ userId : $(o).attr('userId'), authDvcd : $(o).val() });	
+			});
+			
+			if(saveAuthDvcds.length > 0) {
+				$.confirm('사용자 권한을 변경 하시겠습니까?', () => {
+					$.api({ url : '/user/saveAuthDvcds', 
+						data : saveAuthDvcds
+					},(data) => {
+						$.alert('사용자 권한이 변경 되었습니다.', () => {
+							$.submit(document.authForm, 1);
+				   		}) 
+			   		});
+				});
+			} else {
+				$.alert('변경된 사용자 권한이 없습니다.');
+			}
+			
+		});
+		
+		$('#searchFlnm').focus();
+		$('#searchFlnm').val([[${searchUserDto.flnm}]]);
+		
+    });
+    
+    const pageClick = (pageIndex) => {
+    	$.loading(true, () => {
+	    	document.authForm.flnm.value = $('#searchFlnm').val();
+	    	document.authForm.authDvcd.value = $('#searchUserAuthDvcd').val();
+	    	$.submit(document.authForm, pageIndex)
+    	});
+    	 
+    }
+    
+
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

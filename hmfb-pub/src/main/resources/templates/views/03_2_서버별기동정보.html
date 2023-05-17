@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+	<title>HIBS - HANMA INFORMATION BANKING SYSTEM</title>
+	<link rel="stylesheet" href="/assets/css/libs/swiper.min.css">
+	<link rel="stylesheet" href="/assets/css/ui_common.css">
+	<script type="text/javascript" src="/assets/js/libs/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/swiper-bundle.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/gsap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/EasePack.min.js"></script>
+	<script type="text/javascript" src="/assets/js/libs/useragent.js"></script>
+	<!-- 개발시 아래 header_footer_guide.js 삭제 -->
+	<script type="text/javascript" src="/assets/js/header_footer_guide.js"></script>
+	<script type="text/javascript" src="/assets/js/ui_common.js"></script>
+</head>
+<body>
+	<div class="skip-menu">
+		<a href="#container">본문바로가기</a>
+	</div>
+	<!-- // WRAPPER -->
+	<div class="wrapper" id="wrapper">
+		<!-- HEADER -->
+		<header class="header">
+		</header>
+		<!-- HEADER -->
+
+		<!-- MAIN -->
+		<div class="container" role="main" id="container">
+			<div class="contents">
+				<!-- NAVIGATION -->
+				<nav class="navi-group">
+				</nav>
+				<!-- // NAVIGATION -->
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">연계정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>서버별기동정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group data">
+							<table>
+								<colgroup>
+									<col style="width:20%;">
+									<col style="width:20%;">
+									<col style="width:20%;">
+									<col style="width:20%;">
+									<col style="width:20%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>서버명</th>
+										<th>인스턴스명</th>
+										<th>상태</th>
+										<th>시작</th>
+										<th>종료</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>운영서버1</td>
+										<td>실시간</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small " disabled><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>운영서버1</td>
+										<td>배치</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>운영서버1</td>
+										<td>온라인</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>운영서버2</td>
+										<td>실시간</td>
+										<td class="status-off">종료</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>운영서버2</td>
+										<td>배치</td>
+										<td class="status-off">종료</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>운영서버2</td>
+										<td>온라인</td>
+										<td class="status-off">종료</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>개발서버</td>
+										<td>실시간</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>개발서버</td>
+										<td>배치</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>개발서버</td>
+										<td>온라인</td>
+										<td class="status-on">정상</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small "><span>시작</span></button>
+											</div>
+										</td>
+										<td>
+											<div class="flex content-center">
+												<button type="button" class="button-ui small darkgray"><span>종료</span></button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+			</div>
+		</div>
+		<!-- // MAIN -->
+
+		<!-- FOOTER -->
+		<footer class="footer">
+		</footer>
+		<!-- // FOOTER -->
+	</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog" aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">서버별기동정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+</body>
+
+</html>

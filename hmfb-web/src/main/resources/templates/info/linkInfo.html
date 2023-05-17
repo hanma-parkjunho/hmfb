@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<head></head>
+
+<th:block layout:fragment="content">
+
+				<div class="contents-inner">
+					<!-- TITLE, HISTORY, HELP -->
+					<div class="heading-group">
+						<h2 class="h2">연계정보</h2>
+						<div class="history-group">
+							<ul>
+								<li>
+									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+								</li>
+								<li>
+									<a href="javascript:;" class="button-history"><span>연계정보</span></a>
+								</li>
+							</ul>
+							<button type="button" class="button-helper" onclick="$.popup.open(this,'#helpPopup')"><span>도움말</span></button>
+						</div>
+					</div>
+					<!-- // TITLE, HISTORY, HELP -->
+
+					<!-- SECTION : CONTENT -->
+					<section class="section-group">
+						<div class="table-group data">
+							<table>
+								<colgroup>
+									<!-- <col style="width:8%;"> -->
+									<col style="width:19%;">
+									<col style="width:19%;">
+									<col style="width:18%;">
+									<col style="width:18%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<!-- <th>선택</th> -->
+										<th>기관구분명</th>
+										<th>기관서버명</th>
+										<th>기관호스트</th>
+										<th>기관포트</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block  th:if="${ not #arrays.isEmpty(linkInfoList)}" th:each="link : ${linkInfoList}" >
+									<tr>
+										<!-- <td>
+											<div class="check-group">
+												<input type="checkbox" name="linkChk" th:id="${link.seqNo}">
+												<label th:for="${link.seqNo}"></label>
+											</div>					
+										</td> -->
+										<td>
+											<button type="button" name="detailBtn"><span th:seqNo="${link.seqNo}" th:text="${link.instDvcd}"></span></button>
+										</td>
+										<td th:text="${link.instSerNm}"></td>
+										<td th:text="${link.instHost}"></td>
+										<td th:text="${link.instPort}"></td>
+									</tr>									
+									</th:block>
+									<th:block  th:if="${#arrays.isEmpty(linkInfoList)}" >
+										<tr>
+											<td colspan="7">조회된 데이터가 없습니다.</td>
+										</tr>
+									</th:block>									
+								</tbody>
+							</table>
+						</div>
+						<th:block th:replace="fragments/page :: pageFragment"></th:block>
+						<div class="btn-group flex content-end mgt-52">
+							<button type="button" class="button-ui" name="registerBtn"><span>등록</span></button>
+							<!-- <button type="button" class="button-ui line" name="viewDetailBtn"><span>상세조회</span></button> -->					
+							<!-- <button type="button" name=getListBtn class="button-ui line"><span>목록조회</span></button> -->
+						</div>
+					</section>
+					<!-- // SECTION : CONTENT -->
+				</div>
+	<!-- // WRAPPER -->
+
+	<!-- POPUP : 상세조회 -->
+	<div class="popup-group default" id="listSearchPop" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">연계정보 상세조회</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<input type="hidden" name="seqNo" id="seqNo" th:value="${link?.seqNo}">					
+						<div class="label-group flex">
+							<label for="pw0" class="title">기관구분명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관구분명 입력" maxlength="100" name="instDvcd" id="instDvcd" th:value="${link?.instDvcd}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw1" class="title">기관서버명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관서버명 입력" maxlength="100" name="instSerNm" id="instSerNm" th:value="${link?.instSerNm}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw2" class="title">기관호스트</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관호스트 입력" maxlength="100" name="instHost" id="instHost" th:value="${link?.instHost}">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw2" class="title">기관포트</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관포트 입력" maxlength="10" name="instPort" id="instPort" th:value="${link?.instPort}">
+							</div>
+						</div>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui" name="updateBtn"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 상세조회 -->
+
+	<!-- POPUP : 등록 -->
+	<div class="popup-group default" id="registrationPop" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">연계정보 등록</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<div class="label-group flex">
+							<label for="pw10" class="title">기관구분명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관구분명 입력" maxlength="100" name="instDvcd" id="instDvcd">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw11" class="title">기관서버명</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관서버명 입력" maxlength="100" name="instSerNm" id="instSerNm">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw12" class="title">기관호스트</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관호스트 입력" maxlength="100" name="instHost" id="instHost">
+							</div>
+						</div>
+						<div class="label-group flex">
+							<label for="pw12" class="title">기관포트</label>
+							<div class="input-group">
+								<input type="text" class="input-ui" placeholder="기관포트 입력" maxlength="10" name="instPort" id="instPort">
+							</div>
+						</div>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui" name="registerBtn"><span>저장</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- // POPUP : 등록 -->
+
+	<!-- POPUP : 도움말 -->
+	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog"
+		aria-describedby="desc-txt">
+		<div class="dim"></div>
+		<div class="popup-content" tabindex="-1">
+			<div class="popup-cover">
+				<div class="popup-heading">
+					<h3 class="popup-title" id="title-dialog">연계정보 도움말</h3>
+				</div>
+				<div class="popup-body">
+					<div class="popup-inner">
+						<p>설명이 있습니다.</p>
+						<div class="btn-group flex content-center mgt-26">
+							<button type="button" class="button-ui line close"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+		</div>
+	</div>
+	<!-- POPUP : 도움말 -->
+	<form method="post" name="linkInfoListForm" action="/linkInfo">
+	</form>
+
+<!-- content 스크립트 추가 -->
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	$(document).ready(function(){	
+    	console.log('');
+    	// 등록 팝업 
+		$('button[name=registerBtn]').click((e) => {
+			e.preventDefault();
+			$.popup.open(this,'#registrationPop', (popup)=>{
+			});
+		});
+    	// 등록 팝업에서 저장  
+		$('#registrationPop button[name=registerBtn]').click((e) => {
+			
+   			if($.isEmpty($('#registrationPop #instDvcd').val())) {
+   				$.alert("기관구분명를 입력해 주세요.");
+   				$('#registrationPop #instDvcd').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#registrationPop #instSerNm').val())) {
+   				$.alert("기관서버명을 입력해 주세요.");
+   				$('#registrationPop #instSerNm').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#registrationPop #instHost').val())) {
+   				$.alert("기관호스트를 입력해 주세요.");
+   				$('#registrationPop #instHost').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#registrationPop #instPort').val())) {
+   				$.alert("기관포트를 입력해 주세요.");
+   				$('#registrationPop #instPort').focus();
+	   			return;
+   			}
+   			
+			e.preventDefault();			
+			register();
+		});    	
+    	// 상세 조회 
+    	$('button[name=detailBtn]').click((e) => {
+			e.preventDefault();			
+			$.popup.open(this,'#listSearchPop', (popup)=>{
+				get($(e.currentTarget).children().attr('seqNo'));
+			});
+    	});
+		/* $('button[name=viewDetailBtn]').click((e) => {
+			
+			let selectedInfo = '';
+			$('input[name=linkChk]').each((index, obj)=>{
+				if($(obj).is(':checked'))
+					selectedInfo = $(obj).attr('id');
+			});
+			
+			if(selectedInfo == '') {
+				$.alert('선택된 기관이 없습니다.');
+				return;
+			}
+			
+			e.preventDefault();			
+			$.popup.open(this,'#listSearchPop', (popup)=>{
+				// initPopup();
+				let seqNo = $('input[name=linkChk]:checked').attr('id');
+				//popup.find('input[name=instDvcd]').val(instDvcd);
+				
+				get(seqNo);
+			});
+		}); */
+    	// 상세조회 팝업에서 저장  
+		$('#listSearchPop button[name=updateBtn]').click((e) => {
+
+   			if($.isEmpty($('#listSearchPop #instDvcd').val())) {
+   				$.alert("기관구분명를 입력해 주세요.");
+   				$('#listSearchPop #instDvcd').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#listSearchPop #instSerNm').val())) {
+   				$.alert("기관서버명을 입력해 주세요.");
+   				$('#listSearchPop #instSerNm').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#listSearchPop #instHost').val())) {
+   				$.alert("기관호스트를 입력해 주세요.");
+   				$('#listSearchPop #instHost').focus();
+	   			return;
+   			}
+   			if($.isEmpty($('#listSearchPop #instPort').val())) {
+   				$.alert("기관포트를 입력해 주세요.");
+   				$('#listSearchPop #instPort').focus();
+	   			return;
+   			}
+   			
+			e.preventDefault();			
+			modify();
+		});    	
+		// 단일 선택 처리 
+		$('input[name=linkChk]').click((e) => {
+			$('input[name=linkChk]').each((index,obj) => {
+				if (e.target != obj) {
+					obj.checked = false;	
+				}				
+			});			
+		});
+		
+		// 목록 조회
+    	$('button[name=getListBtn]').click((e) => {
+    		e.preventDefault();
+        	$.submit(document.linkInfoListForm);
+    	});		
+    });
+
+    const setErrMsg = (err, msg, isNone) => {
+		err.text(msg);
+		isNone ? err.addClass('none') : err.removeClass('none');
+	}
+
+    // 등록
+    this.register = function() {
+    	
+    	var reqData = {
+
+    		instDvcd: 			$('#registrationPop #instDvcd').val(),
+    		instSerNm:			$('#registrationPop #instSerNm').val(),
+    		instHost:		$('#registrationPop #instHost').val(),
+    		instPort:		$('#registrationPop #instPort').val()
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/link/registerLinkInfo`,
+            data:reqData
+        })
+        .done(function (result) {
+        	console.log('');
+        	$.alert('저장되었습니다', () => {
+				$.submit(document.linkInfoListForm, 1);
+	   		}) 
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+            $.alert('저장이 실패했습니다');
+        })
+        .always(function(jqXHR) {
+        	console.log("jqXHR:"+jqXHR);
+        	
+        });
+    };    
+    
+    // 수정 
+    this.modify = function() {
+    	
+    	var reqData = {
+    			seqNo: 			$('#listSearchPop #seqNo').val(),
+    		instDvcd: 			$('#listSearchPop #instDvcd').val(),
+    		instSerNm:			$('#listSearchPop #instSerNm').val(),
+    		instHost:		$('#listSearchPop #instHost').val(),
+    		instPort:		$('#listSearchPop #instPort').val()
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/link/modifyLinkInfo`,
+            data:reqData
+        })
+        .done(function (result) {
+        	console.log('');
+        	$.alert('저장되었습니다', () => {
+				$.submit(document.linkInfoListForm, 1);
+	   		}) 
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+            $.alert('저장이 실패했습니다');
+        })
+        .always(function(jqXHR) {
+        	
+        });
+    };   
+    // 상세 조회 
+    this.get = function(reqValue) {    	
+    	var reqData = {
+    			seqNo: reqValue
+    	};
+    	
+        $.ajax({
+            type: 'POST',
+            url: `/link/getLinkInfo`,
+            data:reqData
+        })
+        .done(function (result) {
+        	//$('#listSearchPop').replaceWith(result.link);
+        	$('#listSearchPop').find('input[name=seqNo]').val(result.linkInfo.seqNo);
+        	$('#listSearchPop').find('input[name=instDvcd]').val(result.linkInfo.instDvcd);
+        	$('#listSearchPop').find('input[name=instSerNm]').val(result.linkInfo.instSerNm);
+        	$('#listSearchPop').find('input[name=instHost]').val(result.linkInfo.instHost);
+        	$('#listSearchPop').find('input[name=instPort]').val(result.linkInfo.instPort);
+        })
+       .fail(function(jqXHR) {
+            console.log(jqXHR);
+        });
+
+    };
+    
+	const pageClick = (pageIndex) => {
+		$.loading(true, () => {
+	    	$.submit(document.linkInfoListForm, pageIndex);
+		});
+    }
+/*]]>*/
+</script>
+	  	
+</th:block>
+
+</html>

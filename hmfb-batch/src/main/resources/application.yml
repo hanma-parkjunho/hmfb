@@ -1,0 +1,30 @@
+project:
+  sys: BAT
+  name: hmfb-batch
+  title: HMFB BATCH
+
+jasypt:
+  encryptor:
+    bean: stringEncryptor
+    
+spring:
+  config:
+    import:
+    - file:${installPath}/hmfb.yml
+  devtools:
+    livereload:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+    
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  error:
+    include-exception: true
+  port: 8060 
+
+hmfb:
+  batch:
+    input-root-dir: C:/hmfb/data/files/batch/input
+    output-root-dir: C:/hmfb/data/files/batch/output
