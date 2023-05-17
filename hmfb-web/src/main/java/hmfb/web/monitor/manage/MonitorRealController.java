@@ -32,9 +32,9 @@ public class MonitorRealController {
 	public String monitorReal(@ModelAttribute("batchMonitorPageDto") BatchMonitorPageDTO batchMonitorPageDto, Model model) throws HmfbException {		
 //		날짜 검색 조건이 비어있으면 오늘 날짜로 설정 
 		
-		String aa = "";
-		String bb = "";
-		String cc = "";
+//		String aa = "";
+//		String bb = "";
+//		String cc = "";
 		
 		if (!StringUtils.hasText(batchMonitorPageDto.getSearchTrxDt())) {
 			batchMonitorPageDto.setSearchTrxDt(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
