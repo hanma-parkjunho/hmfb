@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import hmfb.core.dto.MonitorPageDTO;
+import hmfb.core.dto.BatchMonitorPageDTO;
 import hmfb.core.exception.HmfbException;
 import hmfb.core.pagination.PaginationInfo;
 
@@ -28,7 +28,7 @@ public class RealMonitorController {
 //	MonitorAdminService monitorAdminService;
 	
 	@RequestMapping("monitorReal")
-	public String monitorReal(@ModelAttribute("MonitorPageDTO") MonitorPageDTO batchMonitorPageDto, Model model) throws HmfbException {		
+	public String monitorBatchJobs(@ModelAttribute("batchMonitorPageDto") BatchMonitorPageDTO batchMonitorPageDto, Model model) throws HmfbException {		
 		//	날짜 검색 조건이 비어있으면 오늘 날짜로 설정 
 		if (!StringUtils.hasText(batchMonitorPageDto.getSearchTrxDt())) {
 			batchMonitorPageDto.setSearchTrxDt(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
