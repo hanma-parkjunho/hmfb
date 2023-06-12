@@ -6,6 +6,7 @@
     	<![CDATA[
 		SELECT COUNT(*)
 		  FROM HMFB_004
+		  
     	]]>
     </select>
     
