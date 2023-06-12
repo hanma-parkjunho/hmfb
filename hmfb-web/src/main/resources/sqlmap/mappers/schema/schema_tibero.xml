@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hmfb.web.schema.SchemaMapper">
+    
+    <select id="getSchemaInfo" parameterType="java.util.ArrayList" resultType="String">
+        
+       SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE = 'TABLE'
+		AND OBJECT_NAME IN ( 
+       <foreach collection="array" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+       )
+    	  
+    </select>
+    
+    <update id="dropIDGNR">
+    
+    	DROP TABLE IDGNR
+    
+    </update>
+    
+    <update id="createIDGNR">
+    
+    	CREATE TABLE IDGNR (
+		  TABLE_NAME VARCHAR2(16) NOT NULL,
+		  NEXT_ID NUMBER(30,0) NOT NULL,
+		  CONSTRAINT IDGNR_PK  PRIMARY KEY (TABLE_NAME)
+		)
+    
+    </update>
+    
+    <delete id="deleteIDGNR" parameterType="hmfb.core.dto.IdgnrDto">
+    
+    	DELETE FROM IDGNR WHERE TABLE_NAME = #{tableName} AND NEXT_ID = #{nextId}
+    	
+    </delete>
+    
+    <insert id="insertIDGNR" parameterType="hmfb.core.dto.IdgnrDto">
+    
+    	INSERT INTO IDGNR(TABLE_NAME, NEXT_ID) values(#{tableName}, #{nextId})
+    	
+    </insert>
+   
+    <update id="dropHMFB_001">
+    
+    	DROP TABLE HMFB_001
+    
+    </update>
+    
+    <update id="createHMFB_001">
+    
+    	CREATE TABLE HMFB_001 (
+		  MENU_SEQ_NO VARCHAR2(10) NOT NULL,
+		  AUTH_DVCD VARCHAR2(300) NOT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_001_PK PRIMARY KEY (MENU_SEQ_NO, AUTH_DVCD)
+		)
+    
+    </update>
+    
+    <delete id="deleteHMFB_001" parameterType="hmfb.core.dto.MenuAuthDto">
+    
+    	DELETE FROM HMFB_001 WHERE MENU_SEQ_NO = #{menuSeqNo} AND AUTH_DVCD = #{authDvcd}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_001" parameterType="hmfb.core.dto.MenuAuthDto">
+    
+    	INSERT INTO HMFB_001 (
+    		MENU_SEQ_NO, 
+    		AUTH_DVCD,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES (
+    		#{menuSeqNo}, 
+    		#{authDvcd},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_002">
+    
+    	DROP TABLE HMFB_002
+    
+    </update>
+    
+    <update id="createHMFB_002">
+
+    	CREATE TABLE HMFB_002 (
+		  SEQ_NO VARCHAR2(10) NOT NULL,
+		  UPRN_SEQ_NO VARCHAR2(10) DEFAULT NULL,
+		  FLNM VARCHAR2(100) NOT NULL,
+		  URL VARCHAR2(300) DEFAULT NULL,
+		  LVL VARCHAR2(3) NOT NULL,
+		  ODR VARCHAR2(3) NOT NULL,
+		  UZ_YN VARCHAR2(1)  DEFAULT 'Y' NOT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_002_PK PRIMARY KEY (SEQ_NO)
+		)
+    
+    </update>
+    
+    <delete id="deleteHMFB_002" parameterType="hmfb.core.dto.MenuDto">
+    
+    	DELETE FROM HMFB_002 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_002" parameterType="hmfb.core.dto.MenuDto">
+    
+    	INSERT INTO HMFB_002 (
+    		SEQ_NO, 
+    		UPRN_SEQ_NO,
+    		FLNM,
+    		URL,
+    		LVL,
+    		ODR,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES (
+    		#{seqNo}, 
+    		#{uprnSeqNo},
+    		#{flnm},
+    		#{url},
+    		#{lvl},
+    		#{odr},
+    		#{uzYn},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_003">
+    
+    	DROP TABLE HMFB_003
+    
+    </update>
+    
+    <update id="createHMFB_003">
+    
+    	CREATE TABLE HMFB_003 (
+		  SEQ_NO VARCHAR2(10) NOT NULL,
+		  USER_ID VARCHAR2(100) NOT NULL,
+		  PSWD VARCHAR2(100) NOT NULL,
+		  FLNM VARCHAR2(100) NOT NULL,
+		  PHN_NO VARCHAR2(300) NOT NULL,
+		  DEPART VARCHAR2(300) NOT NULL,
+		  AUTH_DVCD VARCHAR2(300) NOT NULL,
+		  LST_LGN_DTTM VARCHAR2(18) DEFAULT NULL,
+		  DEL_YN VARCHAR2(1)  DEFAULT 'N' NOT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_003_PK PRIMARY KEY (SEQ_NO)
+		)
+		
+    
+    </update>
+    
+    <delete id="deleteHMFB_003" parameterType="hmfb.core.dto.UserDto">
+    
+    	DELETE FROM HMFB_003 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_003" parameterType="hmfb.core.dto.UserDto">
+    
+    	INSERT INTO HMFB_003 (
+    		SEQ_NO, 
+    		USER_ID,
+    		PSWD,  
+    		FLNM, 
+    		PHN_NO,
+    		DEPART,
+    		AUTH_DVCD,
+    		DEL_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{userId},
+    		#{pswd},
+    		#{flnm},
+    		#{phnNo},
+    		#{depart},
+    		#{authDvcd},
+    		'N',
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_004">
+    
+    	DROP TABLE HMFB_004
+    
+    </update>
+    
+    <update id="createHMFB_004">
+    	
+    	CREATE TABLE HMFB_004 (
+		  SEQ_NO VARCHAR2(10) NOT NULL,
+		  INST_CD VARCHAR2(30) NOT NULL,
+		  INST_NM VARCHAR2(300) NOT NULL,
+		  BIZR_NO VARCHAR2(10) DEFAULT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_004_PK PRIMARY KEY (SEQ_NO)
+		)
+    
+    </update>
+    
+    <delete id="deleteHMFB_004" parameterType="hmfb.core.dto.InstDto">
+    
+    	DELETE FROM HMFB_004 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_004" parameterType="hmfb.core.dto.InstDto">
+    
+    	INSERT INTO HMFB_004 (
+    		SEQ_NO, 
+    		INST_CD,
+    		INST_NM,  
+    		BIZR_NO,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{instCd},
+    		#{instNm},
+    		#{bizrNo},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_005">
+    
+    	DROP TABLE HMFB_005
+    
+    </update>
+    
+    <update id="createHMFB_005">
+    	
+    	CREATE TABLE HMFB_005 (
+		  SEQ_NO VARCHAR2(10) NOT NULL,
+		  INST_DVCD VARCHAR2(300) NOT NULL,
+		  INST_SER_NM VARCHAR2(300) NOT NULL,
+		  INST_HOST VARCHAR2(300) NOT NULL,
+		  INST_PORT VARCHAR2(10) NOT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_005_PK PRIMARY KEY (SEQ_NO)
+		)
+    
+    </update>
+    
+    <delete id="deleteHMFB_005" parameterType="hmfb.core.dto.LinkDto">
+    
+    	DELETE FROM HMFB_005 WHERE SEQ_NO = #{seqNo}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_005" parameterType="hmfb.core.dto.LinkDto">
+    
+    	INSERT INTO HMFB_005 (
+    		SEQ_NO, 
+    		INST_DVCD,
+    		INST_SER_NM,
+    		INST_HOST,  
+    		INST_PORT,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{seqNo}, 
+    		#{instDvcd},
+    		#{instSerNm},
+    		#{instHost},
+    		#{instPort},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_006">
+    
+    	DROP TABLE HMFB_006
+    
+    </update>
+    
+    <update id="createHMFB_006">
+    
+    	CREATE TABLE HMFB_006 (
+		  CODE_GRP VARCHAR2(50) NOT NULL,
+		  CODE VARCHAR2(300) NOT NULL,
+		  NAME VARCHAR2(300) NOT NULL,
+		  CODE2 VARCHAR2(300) DEFAULT NULL,
+		  NAME2 VARCHAR2(300) DEFAULT NULL,
+		  CODE3 VARCHAR2(300) DEFAULT NULL,
+		  NAME3 VARCHAR2(300) DEFAULT NULL,
+		  CODE4 VARCHAR2(300) DEFAULT NULL,
+		  NAME4 VARCHAR2(300) DEFAULT NULL,
+		  CODE5 VARCHAR2(300) DEFAULT NULL,
+		  NAME5 VARCHAR2(300) DEFAULT NULL,
+		  SEQ   VARCHAR2(3) NOT NULL,
+		  UZ_YN VARCHAR2(1) DEFAULT 'Y' NOT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  UPD_DT VARCHAR2(8) DEFAULT NULL,
+		  UPD_TM VARCHAR2(6) DEFAULT NULL,
+		  CONSTRAINT HMFB_006_PK PRIMARY KEY (CODE_GRP, CODE)
+		)
+    
+    </update>
+    
+    <delete id="deleteHMFB_006" parameterType="hmfb.core.dto.CmmnDto">
+    
+    	DELETE FROM HMFB_006 WHERE CODE_GRP = #{codeGrp} AND CODE = #{code}
+    	
+    </delete>
+    
+    <insert id="insertHMFB_006" parameterType="hmfb.core.dto.CmmnDto">
+    
+    	INSERT INTO HMFB_006 (
+    		CODE_GRP, 
+    		CODE,
+    		NAME,
+    		CODE2,
+    		NAME2,
+    		CODE3,
+    		NAME3,
+    		CODE4,
+    		NAME4,
+    		CODE5,
+    		NAME5,  
+    		SEQ,
+    		UZ_YN,
+    		REG_DT, 
+    		REG_TM
+    	) VALUES(
+    		#{codeGrp}, 
+    		#{code},
+    		#{name},
+    		#{code2},
+    		#{name2},
+    		#{code3},
+    		#{name3},
+    		#{code4},
+    		#{name4},
+    		#{code5},
+    		#{name5},
+    		#{seq},
+    		#{uzYn},
+    		#{regDt},
+    		#{regTm}
+    	)
+    
+    </insert>
+    
+    <update id="dropHMFB_007">
+    
+    	DROP TABLE HMFB_007
+    
+    </update>
+    
+    <update id="createHMFB_007">
+    
+    	CREATE TABLE HMFB_007 (
+		  SYS VARCHAR2(3) NOT NULL,
+		  UUID VARCHAR2(36) NOT NULL,
+		  TIMESTAMP VARCHAR2(23) NOT NULL,
+		  PRGM_ID VARCHAR2(100) DEFAULT NULL,
+		  PRGM_LOG CLOB DEFAULT NULL,
+		  REG_DT VARCHAR2(8) NOT NULL,
+		  REG_TM VARCHAR2(6) NOT NULL,
+		  CONSTRAINT HMFB_007_PK  PRIMARY KEY (SYS,TIMESTAMP,UUID)
+		)
+    
+    </update>
+</mapper>
