@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0200400">
+	
+	<select id="selectT0200400" parameterType="hmfb.core.dto.T0200400Dto" resultType="hmfb.core.dto.T0200400Dto">
+    <![CDATA[    
+		SELECT /* */
+		REG_DATE				 AS regDate /* */
+		     , TELEMSG_NO                   AS telemsgNo /* */
+		     , DEFRAY_ACNUT_NO              AS defrayAcnutNo /* */
+		     , VIRTL_ACNUT_NO               AS virtlAcnutNo /* */
+		     , REVW_SMBOL                   AS revwSmbol /* */
+		     , DELNG_AMOUNT                 AS delngAmount /* */
+		     , BLCE_SMBOL                   AS blceSmbol /* */
+		     , BLCE                         AS blce /* */
+		     , THRGH_ACNUT_NO1              AS thrghAcnutNo1 /* */
+		     , THRGH_ACNUT_NO2              AS thrghAcnutNo2 /* */
+		     , BANK_CODE                    AS bankCode /* */
+		     , ACNUT_NO                     AS acnutNo /* */
+		     , IR_SAF_SE                    AS irSafSe /* */
+		     , FEE                          AS fee /* */
+		     , CMS_CODE                     AS cmsCode /* */
+		     , DEFRAY_ACNUT_PRNTXT          AS defrayAcnutPrntxt /* */
+		     , THRGH_ACNUT1_RCPMNY_PRNTXT   AS thrghAcnut1RcpmnyPrntxt /* */
+		     , THRGH_ACNUT1_DEFRAY_PRNTXT   AS thrghAcnut1DefrayPrntxt /* */
+		     , THRGH_ACNUT2_RCPMNY_PRNTXT   AS thrghAcnut2RcpmnyPrntxt /* */
+		     , THRGH_ACNUT2_DEFRAY_PRNTXT   AS thrghAcnut2DefrayPrntxt /* */
+		     , RCPMNY_ACNUT_PRNTXT          AS rcpmnyAcnutPrntxt /* */
+		     , CINET_DELNG_INNB             AS cinetDelngInnb /* */
+		     , AGREM_SN                     AS agremSn /* */
+		     , PMS_ID                       AS pmsId /* */
+		     , AGREM_INSTT_ID               AS agremInsttId /* */
+		     , RSPNS_CODE                   AS rspnsCode /* */
+		     , RSPNS_MSSAGE                 AS rspnsMssage /* */
+		     , SEND_YN				 AS sendYn /* */
+		  FROM T0200400 
+		 WHERE 1=1
+		   AND REG_DATE = #{regDate}
+		   AND SEND_YN = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0200400" parameterType="hmfb.core.dto.T0200400Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0200400
+		       (
+		       REG_DATE
+		     , TELEMSG_NO                    /* */
+		     , DEFRAY_ACNUT_NO               /* */
+		     , VIRTL_ACNUT_NO                /* */
+		     , REVW_SMBOL                    /* */
+		     , DELNG_AMOUNT                  /* */
+		     , BLCE_SMBOL                    /* */
+		     , BLCE                          /* */
+		     , THRGH_ACNUT_NO1               /* */
+		     , THRGH_ACNUT_NO2               /* */
+		     , BANK_CODE                     /* */
+		     , ACNUT_NO                      /* */
+		     , IR_SAF_SE                     /* */
+		     , FEE                           /* */
+		     , CMS_CODE                      /* */
+		     , DEFRAY_ACNUT_PRNTXT           /* */
+		     , THRGH_ACNUT1_RCPMNY_PRNTXT    /* */
+		     , THRGH_ACNUT1_DEFRAY_PRNTXT    /* */
+		     , THRGH_ACNUT2_RCPMNY_PRNTXT    /* */
+		     , THRGH_ACNUT2_DEFRAY_PRNTXT    /* */
+		     , RCPMNY_ACNUT_PRNTXT           /* */
+		     , CINET_DELNG_INNB              /* */
+		     , AGREM_SN                      /* */
+		     , PMS_ID                        /* */
+		     , AGREM_INSTT_ID                /* */
+		     , RSPNS_CODE                    /* */
+		     , RSPNS_MSSAGE                  /* */
+		     , SEND_YN
+		       )
+		VALUES (
+		#{regDate}
+		     , #{telemsgNo}
+		     , #{defrayAcnutNo}
+		     , #{virtlAcnutNo}
+		     , #{revwSmbol}
+		     , #{delngAmount}
+		     , #{blceSmbol}
+		     , #{blce}
+		     , #{thrghAcnutNo1}
+		     , #{thrghAcnutNo2}
+		     , #{bankCode}
+		     , #{acnutNo}
+		     , #{irSafSe}
+		     , #{fee}
+		     , #{cmsCode}
+		     , #{defrayAcnutPrntxt}
+		     , #{thrghAcnut1RcpmnyPrntxt}
+		     , #{thrghAcnut1DefrayPrntxt}
+		     , #{thrghAcnut2RcpmnyPrntxt}
+		     , #{thrghAcnut2DefrayPrntxt}
+		     , #{rcpmnyAcnutPrntxt}
+		     , #{cinetDelngInnb}
+		     , #{agremSn}
+		     , #{pmsId}
+		     , #{agremInsttId}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		     , #{sendYn}
+		       )
+		        
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0200400" parameterType="hmfb.core.dto.T0200400Dto">
+    <![CDATA[    
+	    UPDATE /* */
+	       T0200400 
+		   SET BLCE_SMBOL          = #{blceSmbol}
+		     , BLCE                = #{blce}
+		     , FEE                 = #{fee}
+		     , CINET_DELNG_INNB    = #{cinetDelngInnb}
+		     , RSPNS_CODE          = #{rspnsCode}
+		     , RSPNS_MSSAGE        = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO          = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT0200400" parameterType="hmfb.core.dto.T0200400Dto">
+    <![CDATA[    
+	    UPDATE /* */
+	       T0200400 
+	   SET DEFRAY_ACNUT_NO            = #{defrayAcnutNo}
+	     , VIRTL_ACNUT_NO             = #{virtlAcnutNo}
+	     , REVW_SMBOL                 = #{revwSmbol}
+	     , DELNG_AMOUNT               = #{delngAmount}
+	     , BLCE_SMBOL                 = #{blceSmbol}
+	     , BLCE                       = #{blce}
+	     , THRGH_ACNUT_NO1            = #{thrghAcnutNo1}
+	     , THRGH_ACNUT_NO2            = #{thrghAcnutNo2}
+	     , BANK_CODE                  = #{bankCode}
+	     , ACNUT_NO                   = #{acnutNo}
+	     , IR_SAF_SE                  = #{irSafSe}
+	     , FEE                        = #{fee}
+	     , CMS_CODE                   = #{cmsCode}
+	     , DEFRAY_ACNUT_PRNTXT        = #{defrayAcnutPrntxt}
+	     , THRGH_ACNUT1_RCPMNY_PRNTXT = #{thrghAcnut1RcpmnyPrntxt}
+	     , THRGH_ACNUT1_DEFRAY_PRNTXT = #{thrghAcnut1DefrayPrntxt}
+	     , THRGH_ACNUT2_RCPMNY_PRNTXT = #{thrghAcnut2RcpmnyPrntxt}
+	     , THRGH_ACNUT2_DEFRAY_PRNTXT = #{thrghAcnut2DefrayPrntxt}
+	     , RCPMNY_ACNUT_PRNTXT        = #{rcpmnyAcnutPrntxt}
+	     , CINET_DELNG_INNB           = #{cinetDelngInnb}
+	     , AGREM_SN                   = #{agremSn}
+	     , PMS_ID                     = #{pmsId}
+	     , AGREM_INSTT_ID             = #{agremInsttId}
+	     , RSPNS_CODE                 = #{rspnsCode}
+	     , RSPNS_MSSAGE               = #{rspnsMssage}
+	     , SEND_YN = #{sendYn}
+	 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO                 = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

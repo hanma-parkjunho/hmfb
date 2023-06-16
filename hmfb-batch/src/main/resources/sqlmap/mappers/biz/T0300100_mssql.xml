@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0300100">
+	
+	<select id="selectT0300100" parameterType="hmfb.core.dto.T0300100Dto" resultType="hmfb.core.dto.T0300100Dto">
+    <![CDATA[    
+		SELECT /* */
+		       REG_DATE                  /* */
+		     , TELEMSG_NO                /* */
+		     , AGREM_SN                  /* */
+		     , PMS_ID                    /* */
+		     , AGREM_INSTT_ID            /* */
+		     , WCT_ACNUTNO               /* */
+		     , WCT_ACNUT1_BANK_CODE      /* */
+		     , WCT_ACNUT1_NO             /* */
+		     , WCT_ACNUT2_BANK_CODE      /* */
+		     , WCT_ACNUT2_NO             /* */
+		     , SPCLTY_INSTT_BIZRNO       /* */
+		     , SPCLTY_INSTT_NM           /* */
+		     , AGREM_INSTT1_BIZRNO       /* */
+		     , AGREM_INSTT1_NM           /* */
+		     , AGREM_INSTT2_BIZRNO       /* */
+		     , AGREM_INSTT2_NM           /* */
+		     , GVRN_DNT_AMOUNT           /* */
+		     , LOCGOV_BND_CASH_AMOUNT    /* */
+		     , PRVATE_BND_CASH_AMOUNT    /* */
+		     , AGREM_LMT_AMOUNT          /* */
+		     , GVRN_DNT_RCPMNY_DE        /* */
+		     , LOCGOV_BND_RCPMNY_DE      /* */
+		     , PRVATE_BND_RCPMNY_DE      /* */
+		     , TASK_ID                   /* */
+		     , TASK_NM                   /* */
+		     , BSNS_CL_CODE              /* */
+		     , BSNS_CL_NM                /* */
+		     , SEND_YN                   /* */
+		     , RSPNS_CODE                /* */
+		     , RSPNS_MSSAGE              /* */
+		  FROM T0300100
+		  WHERE 1=1
+			AND REG_DATE               = #{regDate}
+			AND SEND_YN                = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0300100" parameterType="hmfb.core.dto.T0300100Dto">
+    <![CDATA[
+		INSERT /* */
+		  INTO T0300100
+		       (
+		       REG_DATE                  /* */
+		     , TELEMSG_NO                /* */
+		     , AGREM_SN                  /* */
+		     , PMS_ID                    /* */
+		     , AGREM_INSTT_ID            /* */
+		     , WCT_ACNUTNO               /* */
+		     , WCT_ACNUT1_BANK_CODE      /* */
+		     , WCT_ACNUT1_NO             /* */
+		     , WCT_ACNUT2_BANK_CODE      /* */
+		     , WCT_ACNUT2_NO             /* */
+		     , SPCLTY_INSTT_BIZRNO       /* */
+		     , SPCLTY_INSTT_NM           /* */
+		     , AGREM_INSTT1_BIZRNO       /* */
+		     , AGREM_INSTT1_NM           /* */
+		     , AGREM_INSTT2_BIZRNO       /* */
+		     , AGREM_INSTT2_NM           /* */
+		     , GVRN_DNT_AMOUNT           /* */
+		     , LOCGOV_BND_CASH_AMOUNT    /* */
+		     , PRVATE_BND_CASH_AMOUNT    /* */
+		     , AGREM_LMT_AMOUNT          /* */
+		     , GVRN_DNT_RCPMNY_DE        /* */
+		     , LOCGOV_BND_RCPMNY_DE      /* */
+		     , PRVATE_BND_RCPMNY_DE      /* */
+		     , TASK_ID                   /* */
+		     , TASK_NM                   /* */
+		     , BSNS_CL_CODE              /* */
+		     , BSNS_CL_NM                /* */
+		     , SEND_YN                   /* */
+		     , RSPNS_CODE                /* */
+		     , RSPNS_MSSAGE              /* */
+		       )
+		VALUES (
+		       #{regDate}
+		     , #{telemsgNo}
+		     , #{agremSn}
+		     , #{pmsId}
+		     , #{agremInsttId}
+		     , #{wctAcnutno}
+		     , #{wctAcnut1BankCode}
+		     , #{wctAcnut1No}
+		     , #{wctAcnut2BankCode}
+		     , #{wctAcnut2No}
+		     , #{spcltyInsttBizrno}
+		     , #{spcltyInsttNm}
+		     , #{agremInstt1Bizrno}
+		     , #{agremInstt1Nm}
+		     , #{agremInstt2Bizrno}
+		     , #{agremInstt2Nm}
+		     , #{gvrnDntAmount}
+		     , #{locgovBndCashAmount}
+		     , #{prvateBndCashAmount}
+		     , #{agremLmtAmount}
+		     , #{gvrnDntRcpmnyDe}
+		     , #{locgovBndRcpmnyDe}
+		     , #{prvateBndRcpmnyDe}
+		     , #{taskId}
+		     , #{taskNm}
+		     , #{bsnsClCode}
+		     , #{bsnsClNm}
+		     , #{sendYn}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0300100" parameterType="hmfb.core.dto.T0300100Dto">
+    <![CDATA[    
+         UPDATE /* */
+		      T0300100 
+		  SET SEND_YN                = #{sendYn}
+		    , RSPNS_CODE             = #{rspnsCode}
+		    , RSPNS_MSSAGE           = #{rspnsMssage}
+		WHERE REG_DATE               = #{regDate}
+		  AND TELEMSG_NO             = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT0300100" parameterType="hmfb.core.dto.T0300100Dto">
+    <![CDATA[    
+         UPDATE /* */
+		      T0300100 
+		  SET AGREM_SN               = #{agremSn}
+		    , PMS_ID                 = #{pmsId}
+		    , AGREM_INSTT_ID         = #{agremInsttId}
+		    , WCT_ACNUTNO            = #{wctAcnutno}
+		    , WCT_ACNUT1_BANK_CODE   = #{wctAcnut1BankCode}
+		    , WCT_ACNUT1_NO          = #{wctAcnut1No}
+		    , WCT_ACNUT2_BANK_CODE   = #{wctAcnut2BankCode}
+		    , WCT_ACNUT2_NO          = #{wctAcnut2No}
+		    , SPCLTY_INSTT_BIZRNO    = #{spcltyInsttBizrno}
+		    , SPCLTY_INSTT_NM        = #{spcltyInsttNm}
+		    , AGREM_INSTT1_BIZRNO    = #{agremInstt1Bizrno}
+		    , AGREM_INSTT1_NM        = #{agremInstt1Nm}
+		    , AGREM_INSTT2_BIZRNO    = #{agremInstt2Bizrno}
+		    , AGREM_INSTT2_NM        = #{agremInstt2Nm}
+		    , GVRN_DNT_AMOUNT        = #{gvrnDntAmount}
+		    , LOCGOV_BND_CASH_AMOUNT = #{locgovBndCashAmount}
+		    , PRVATE_BND_CASH_AMOUNT = #{prvateBndCashAmount}
+		    , AGREM_LMT_AMOUNT       = #{agremLmtAmount}
+		    , GVRN_DNT_RCPMNY_DE     = #{gvrnDntRcpmnyDe}
+		    , LOCGOV_BND_RCPMNY_DE   = #{locgovBndRcpmnyDe}
+		    , PRVATE_BND_RCPMNY_DE   = #{prvateBndRcpmnyDe}
+		    , TASK_ID                = #{taskId}
+		    , TASK_NM                = #{taskNm}
+		    , BSNS_CL_CODE           = #{bsnsClCode}
+		    , BSNS_CL_NM             = #{bsnsClNm}
+		    , SEND_YN                = #{sendYn}
+		    , RSPNS_CODE             = #{rspnsCode}
+		    , RSPNS_MSSAGE           = #{rspnsMssage}
+		WHERE REG_DATE               = #{regDate}
+		  AND TELEMSG_NO             = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

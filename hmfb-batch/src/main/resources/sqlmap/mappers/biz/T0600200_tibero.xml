@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0600200">
+	
+	<select id="selectT0600200" parameterType="hmfb.core.dto.T0600200Dto" resultType="hmfb.core.dto.T0600200Dto">
+    <![CDATA[    
+		SELECT /* */
+		REG_DATE				 AS regDate /* */
+		     , TELEMSG_NO        AS telemsgNo /* */
+		     , DELNG_DE          AS delngDe /* */
+		     , DELNG_SN          AS delngSn /* */
+		     , ACNUT_NO          AS acnutNo /* */
+		     , SE_CODE           AS seCode /* */
+		     , DELNG_AMOUNT      AS delngAmount /* */
+		     , BLCE_SMBOL        AS blceSmbol /* */
+		     , BLCE              AS blce /* */
+		     , DELNG_SUMRY       AS delngSumry /* */
+		     , DELNG_TIME        AS delngTime /* */
+		     , BANK_CODE         AS bankCode /* */
+		     , DELNG_BHF_CODE    AS delngBhfCode /* */
+		     , CMS_CODE          AS cmsCode /* */
+		     , CHECK_BIL_NO      AS checkBilNo /* */
+		     , CSRCC_AMOUNT      AS csrccAmount /* */
+		     , PRSNLCHK_AMOUNT   AS prsnlchkAmount /* */
+		     , GENCHK_AMOUNT     AS genchkAmount /* */
+		     , DELNG_MEDIA_TY    AS delngMediaTy /* */
+		     , RSPNS_CODE        AS rspnsCode /* */
+		     , RSPNS_MSSAGE      AS rspnsMssage /* */
+		     , SEND_YN				 AS sendYn /* */
+		  FROM T0600200 
+		 WHERE 1=1
+		   AND REG_DATE = #{regDate}
+		   AND SEND_YN = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0600200" parameterType="hmfb.core.dto.T0600200Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0600200
+		       (
+		       REG_DATE
+		     , TELEMSG_NO         /* */
+		     , DELNG_DE           /* */
+		     , DELNG_SN           /* */
+		     , ACNUT_NO           /* */
+		     , SE_CODE            /* */
+		     , DELNG_AMOUNT       /* */
+		     , BLCE_SMBOL         /* */
+		     , BLCE               /* */
+		     , DELNG_SUMRY        /* */
+		     , DELNG_TIME         /* */
+		     , BANK_CODE          /* */
+		     , DELNG_BHF_CODE     /* */
+		     , CMS_CODE           /* */
+		     , CHECK_BIL_NO       /* */
+		     , CSRCC_AMOUNT       /* */
+		     , PRSNLCHK_AMOUNT    /* */
+		     , GENCHK_AMOUNT      /* */
+		     , DELNG_MEDIA_TY     /* */
+		     , RSPNS_CODE         /* */
+		     , RSPNS_MSSAGE       /* */
+		     , SEND_YN
+		       )
+		VALUES (
+		       #{regDate}
+		     , #{telemsgNo}
+		     , #{delngDe}
+		     , #{delngSn}
+		     , #{acnutNo}
+		     , #{seCode}
+		     , #{delngAmount}
+		     , #{blceSmbol}
+		     , #{blce}
+		     , #{delngSumry}
+		     , #{delngTime}
+		     , #{bankCode}
+		     , #{delngBhfCode}
+		     , #{cmsCode}
+		     , #{checkBilNo}
+		     , #{csrccAmount}
+		     , #{prsnlchkAmount}
+		     , #{genchkAmount}
+		     , #{delngMediaTy}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		     , #{sendYn}
+		       )
+	]]>    	 
+    </insert>
+    
+	<update id="updateT0600200" parameterType="hmfb.core.dto.T0600200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0600200 
+		   SET ACNUT_NO        = #{acnutNo}
+		     , SE_CODE         = #{seCode}
+		     , DELNG_AMOUNT    = #{delngAmount}
+		     , BLCE_SMBOL      = #{blceSmbol}
+		     , BLCE            = #{blce}
+		     , DELNG_SUMRY     = #{delngSumry}
+		     , DELNG_TIME      = #{delngTime}
+		     , BANK_CODE       = #{bankCode}
+		     , DELNG_BHF_CODE  = #{delngBhfCode}
+		     , CMS_CODE        = #{cmsCode}
+		     , CHECK_BIL_NO    = #{checkBilNo}
+		     , CSRCC_AMOUNT    = #{csrccAmount}
+		     , PRSNLCHK_AMOUNT = #{prsnlchkAmount}
+		     , GENCHK_AMOUNT   = #{genchkAmount}
+		     , DELNG_MEDIA_TY  = #{delngMediaTy}
+		     , RSPNS_CODE      = #{rspnsCode}
+		     , RSPNS_MSSAGE    = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO      = #{telemsgNo}
+	]]>
+    </update>
+    
+<!--     <update id="updateT0600200" parameterType="hmfb.core.dto.T0600200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0600200 
+		   SET DELNG_DE        = #{delngDe}
+		     , DELNG_SN        = #{delngSn}
+		     , ACNUT_NO        = #{acnutNo}
+		     , SE_CODE         = #{seCode}
+		     , DELNG_AMOUNT    = #{delngAmount}
+		     , BLCE_SMBOL      = #{blceSmbol}
+		     , BLCE            = #{blce}
+		     , DELNG_SUMRY     = #{delngSumry}
+		     , DELNG_TIME      = #{delngTime}
+		     , BANK_CODE       = #{bankCode}
+		     , DELNG_BHF_CODE  = #{delngBhfCode}
+		     , CMS_CODE        = #{cmsCode}
+		     , CHECK_BIL_NO    = #{checkBilNo}
+		     , CSRCC_AMOUNT    = #{csrccAmount}
+		     , PRSNLCHK_AMOUNT = #{prsnlchkAmount}
+		     , GENCHK_AMOUNT   = #{genchkAmount}
+		     , DELNG_MEDIA_TY  = #{delngMediaTy}
+		     , RSPNS_CODE      = #{rspnsCode}
+		     , RSPNS_MSSAGE    = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO      = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

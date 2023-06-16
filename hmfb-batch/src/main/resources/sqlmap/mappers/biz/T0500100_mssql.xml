@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0500100">
+	
+	<select id="selectT0500100" parameterType="hmfb.core.dto.T0500100Dto" resultType="hmfb.core.dto.T0500100Dto">
+    <![CDATA[    
+		SELECT /* */
+		REG_DATE				 AS regDate /* */
+		     , TELEMSG_NO            AS telemsgNo /* */
+		     , PRTSACNUT_NO          AS prtsacnutNo /* */
+		     , VIRTL_ACNUT_NO        AS virtlAcnutNo /* */
+		     , BLCE_SMBOL            AS blceSmbol /* */
+		     , BLCE                  AS blce /* */
+		     , DEFRAY_POSBL_AMOUNT   AS defrayPosblAmount /* */
+		     , RSPNS_CODE            AS rspnsCode /* */
+		     , RSPNS_MSSAGE          AS rspnsMssage /* */
+		     , SEND_YN				 AS sendYn /* */
+		  FROM T0500100 
+		 WHERE 1=1
+		   AND REG_DATE = #{regDate}
+		   AND SEND_YN = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0500100" parameterType="hmfb.core.dto.T0500100Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0500100
+		       (
+		       REG_DATE
+		     , TELEMSG_NO             /* */
+		     , PRTSACNUT_NO           /* */
+		     , VIRTL_ACNUT_NO         /* */
+		     , BLCE_SMBOL             /* */
+		     , BLCE                   /* */
+		     , DEFRAY_POSBL_AMOUNT    /* */
+		     , RSPNS_CODE             /* */
+		     , RSPNS_MSSAGE           /* */
+		     , SEND_YN
+		       )
+		VALUES (
+		#{regDate}
+		     , #{telemsgNo}
+		     , #{prtsacnutNo}
+		     , #{virtlAcnutNo}
+		     , #{blceSmbol}
+		     , #{blce}
+		     , #{defrayPosblAmount}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		     , #{sendYn}
+		       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0500100" parameterType="hmfb.core.dto.T0500100Dto">
+    <![CDATA[    
+    	UPDATE /* */
+		       T0500100 
+		   SET BLCE_SMBOL          = #{blceSmbol}
+		     , BLCE                = #{blce}
+		     , DEFRAY_POSBL_AMOUNT = #{defrayPosblAmount}
+		     , RSPNS_CODE          = #{rspnsCode}
+		     , RSPNS_MSSAGE        = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO          = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT0500100" parameterType="hmfb.core.dto.T0500100Dto">
+    <![CDATA[    
+    	UPDATE /* */
+		       T0500100 
+		   SET PRTSACNUT_NO        = #{prtsacnutNo}
+		     , VIRTL_ACNUT_NO      = #{virtlAcnutNo}
+		     , BLCE_SMBOL          = #{blceSmbol}
+		     , BLCE                = #{blce}
+		     , DEFRAY_POSBL_AMOUNT = #{defrayPosblAmount}
+		     , RSPNS_CODE          = #{rspnsCode}
+		     , RSPNS_MSSAGE        = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO          = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

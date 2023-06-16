@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0300200">
+	
+	<select id="selectT0300200" parameterType="hmfb.core.dto.T0300200Dto" resultType="hmfb.core.dto.T0300200Dto">
+    <![CDATA[    
+		SELECT /* */
+		       REG_DATE          /* */
+		     , TELEMSG_NO        /* */
+		     , AGREM_SN          /* */
+		     , PMS_ID            /* */
+		     , AGREM_INSTT_ID    /* */
+		     , TRMNAT_SE         /* */
+		     , SEND_YN           /* */
+		     , RSPNS_CODE        /* */
+		     , RSPNS_MSSAGE      /* */
+		  FROM T0300200
+		 WHERE REG_DATE       = #{regDate}
+		   AND SEND_YN        = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0300200" parameterType="hmfb.core.dto.T0300200Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0300200
+		       (
+		       REG_DATE          /* */
+		     , TELEMSG_NO        /* */
+		     , AGREM_SN          /* */
+		     , PMS_ID            /* */
+		     , AGREM_INSTT_ID    /* */
+		     , TRMNAT_SE         /* */
+		     , SEND_YN           /* */
+		     , RSPNS_CODE        /* */
+		     , RSPNS_MSSAGE      /* */
+		       )
+		VALUES (
+		       #{regDate}
+		     , #{telemsgNo}
+		     , #{agremSn}
+		     , #{pmsId}
+		     , #{agremInsttId}
+		     , #{trmnatSe}
+		     , #{sendYn}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0300200" parameterType="hmfb.core.dto.T0300200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+	       T0300200
+	   SET SEND_YN        = #{sendYn}
+	     , RSPNS_CODE     = #{rspnsCode}
+	     , RSPNS_MSSAGE   = #{rspnsMssage}
+		WHERE 1=1
+		AND REG_DATE       = #{regDate}
+		AND TELEMSG_NO     = #{telemsgNo}
+	]]>
+    </update>
+    
+<!--     <update id="updateT0300200" parameterType="hmfb.core.dto.T0300200Dto">
+    <![CDATA[    
+	    UPDATE /* */
+	       T0300200
+	   SET AGREM_SN       = #{agremSn}
+	     , PMS_ID         = #{pmsId}
+	     , AGREM_INSTT_ID = #{agremInsttId}
+	     , TRMNAT_SE      = #{trmnatSe}
+	     , SEND_YN        = #{sendYn}
+	     , RSPNS_CODE     = #{rspnsCode}
+	     , RSPNS_MSSAGE   = #{rspnsMssage}
+	 WHERE REG_DATE       = #{regDate}
+	   AND TELEMSG_NO     = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

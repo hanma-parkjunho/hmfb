@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T0500300">
+	
+	<select id="selectT0500300" parameterType="hmfb.core.dto.T0500300Dto" resultType="hmfb.core.dto.T0500300Dto">
+    <![CDATA[    
+		SELECT /* */
+		REG_DATE				 AS regDate /* */
+		     , TELEMSG_NO        AS telemsgNo /* */
+		     , REQUST_DE         AS requstDe /* */
+		     , VIRTL_ACNUTNO     AS virtlAcnutno /* */
+		     , BIZRNO            AS bizrno /* */
+		     , STDR_DE           AS stdrDe /* */
+		     , NEW_DE            AS newDe /* */
+		     , GOODS_CODE        AS goodsCode /* */
+		     , ACNUT_BLCE        AS acnutBlce /* */
+		     , TRMNAT_BLCE       AS trmnatBlce /* */
+		     , BFRX_INTR         AS bfrxIntr /* */
+		     , AFTTX_INTR        AS afttxIntr /* */
+		     , CRRX              AS crrx /* */
+		     , INCMTAX           AS incmtax /* */
+		     , IHNTS             AS ihnts /* */
+		     , AGSPT             AS agspt /* */
+		     , FEE               AS fee /* */
+		     , DELNG_STDR_DE     AS delngStdrDe /* */
+		     , DELNG_SE_CN       AS delngSeCn /* */
+		     , GOODS_NM          AS goodsNm /* */
+		     , APPLC_TASK_NM     AS applcTaskNm /* */
+		     , INCOME_BEGIN_DE   AS incomeBeginDe /* */
+		     , INCOME_END_DE     AS incomeEndDe /* */
+		     , RSPNS_CODE        AS rspnsCode /* */
+		     , RSPNS_MSSAGE      AS rspnsMssage /* */
+		     , SEND_YN				 AS sendYn /* */
+		  FROM T0500300 
+		 WHERE 1=1
+		   AND REG_DATE = #{regDate}
+		   AND SEND_YN = #{sendYn}
+	]]>    	 
+    </select>
+    
+	<insert id="insertT0500300" parameterType="hmfb.core.dto.T0500300Dto">
+    <![CDATA[
+        INSERT /* */
+		  INTO T0500300
+		       (
+		       REG_DATE
+		     , TELEMSG_NO         /* */
+		     , REQUST_DE          /* */
+		     , VIRTL_ACNUTNO      /* */
+		     , BIZRNO             /* */
+		     , STDR_DE            /* */
+		     , NEW_DE             /* */
+		     , GOODS_CODE         /* */
+		     , ACNUT_BLCE         /* */
+		     , TRMNAT_BLCE        /* */
+		     , BFRX_INTR          /* */
+		     , AFTTX_INTR         /* */
+		     , CRRX               /* */
+		     , INCMTAX            /* */
+		     , IHNTS              /* */
+		     , AGSPT              /* */
+		     , FEE                /* */
+		     , DELNG_STDR_DE      /* */
+		     , DELNG_SE_CN        /* */
+		     , GOODS_NM           /* */
+		     , APPLC_TASK_NM      /* */
+		     , INCOME_BEGIN_DE    /* */
+		     , INCOME_END_DE      /* */
+		     , RSPNS_CODE         /* */
+		     , RSPNS_MSSAGE       /* */
+		     , SEND_YN
+		       )
+		VALUES (
+		#{regDate}
+		     , #{telemsgNo}
+		     , #{requstDe}
+		     , #{virtlAcnutno}
+		     , #{bizrno}
+		     , #{stdrDe}
+		     , #{newDe}
+		     , #{goodsCode}
+		     , #{acnutBlce}
+		     , #{trmnatBlce}
+		     , #{bfrxIntr}
+		     , #{afttxIntr}
+		     , #{crrx}
+		     , #{incmtax}
+		     , #{ihnts}
+		     , #{agspt}
+		     , #{fee}
+		     , #{delngStdrDe}
+		     , #{delngSeCn}
+		     , #{goodsNm}
+		     , #{applcTaskNm}
+		     , #{incomeBeginDe}
+		     , #{incomeEndDe}
+		     , #{rspnsCode}
+		     , #{rspnsMssage}
+		     , #{sendYn}
+		       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT0500300" parameterType="hmfb.core.dto.T0500300Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0500300 
+		   SET NEW_DE          = #{newDe}
+		     , GOODS_CODE      = #{goodsCode}
+		     , ACNUT_BLCE      = #{acnutBlce}
+		     , TRMNAT_BLCE     = #{trmnatBlce}
+		     , BFRX_INTR       = #{bfrxIntr}
+		     , AFTTX_INTR      = #{afttxIntr}
+		     , CRRX            = #{crrx}
+		     , INCMTAX         = #{incmtax}
+		     , IHNTS           = #{ihnts}
+		     , AGSPT           = #{agspt}
+		     , FEE             = #{fee}
+		     , DELNG_STDR_DE   = #{delngStdrDe}
+		     , DELNG_SE_CN     = #{delngSeCn}
+		     , GOODS_NM        = #{goodsNm}
+		     , APPLC_TASK_NM   = #{applcTaskNm}
+		     , INCOME_BEGIN_DE = #{incomeBeginDe}
+		     , INCOME_END_DE   = #{incomeEndDe}
+		     , RSPNS_CODE      = #{rspnsCode}
+		     , RSPNS_MSSAGE    = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO      = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT0500300" parameterType="hmfb.core.dto.T0500300Dto">
+    <![CDATA[    
+	    UPDATE /* */
+		       T0500300 
+		   SET REQUST_DE       = #{requstDe}
+		     , VIRTL_ACNUTNO   = #{virtlAcnutno}
+		     , BIZRNO          = #{bizrno}
+		     , STDR_DE         = #{stdrDe}
+		     , NEW_DE          = #{newDe}
+		     , GOODS_CODE      = #{goodsCode}
+		     , ACNUT_BLCE      = #{acnutBlce}
+		     , TRMNAT_BLCE     = #{trmnatBlce}
+		     , BFRX_INTR       = #{bfrxIntr}
+		     , AFTTX_INTR      = #{afttxIntr}
+		     , CRRX            = #{crrx}
+		     , INCMTAX         = #{incmtax}
+		     , IHNTS           = #{ihnts}
+		     , AGSPT           = #{agspt}
+		     , FEE             = #{fee}
+		     , DELNG_STDR_DE   = #{delngStdrDe}
+		     , DELNG_SE_CN     = #{delngSeCn}
+		     , GOODS_NM        = #{goodsNm}
+		     , APPLC_TASK_NM   = #{applcTaskNm}
+		     , INCOME_BEGIN_DE = #{incomeBeginDe}
+		     , INCOME_END_DE   = #{incomeEndDe}
+		     , RSPNS_CODE      = #{rspnsCode}
+		     , RSPNS_MSSAGE    = #{rspnsMssage}
+		     , SEND_YN = #{sendYn}
+		 WHERE REG_DATE			 = #{regDate}
+		 AND TELEMSG_NO      = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>
