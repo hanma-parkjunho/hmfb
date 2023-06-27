@@ -1,103 +1,109 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}">
 
 <head></head>
 
 <th:block layout:fragment="content">
 
-				<div class="contents-inner">
-					<!-- TITLE, HISTORY, HELP -->
-					<div class="heading-group">
-						<h2 class="h2">배치기본정보</h2>
-						<div class="history-group">
-							<ul>
-								<li>
-									<a href="javascript:;" class="button-home"><span class="blind">홈</span></a>
-								</li>
-								<li>
-									<a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
-								</li>
-								<li>
-									<a href="javascript:;" class="button-history"><span>배치기본정보</span></a>
-								</li>
-							</ul>
-							<button type="button" class="button-helper"
-								onclick="hibs.popup.open(this,'#helpPopup')"><span>도움말</span></button>
-						</div>
-					</div>
-					<!-- // TITLE, HISTORY, HELP -->
-
-					<!-- SECTION : CONTENT -->
-					<section class="section-group">
-						<div class="table-group data">
-							<table>
-								<colgroup>
-									<col style="width:8%;">
-									<col style="width:19%;">
-									<col style="width:19%;">
-									<col style="width:18%;">
-									<col style="width:18%;">
-									<col style="width:18%;">
-								</colgroup>
-								<thead>
-									<tr>
-										<th>선택</th>
-										<th>작업식별자</th>
-										<th>작업설명</th>
-										<th>작업유형</th>
-										<th>입력데이터</th>
-										<th>실행주기</th>
-									</tr>
-								</thead>
-								<tbody>
-									<th:block  th:if="${ not #arrays.isEmpty(batchJobList)}" th:each="batchJob : ${batchJobList}" >
-									<tr>
-										<td>
-											<div class="check-group">
-												<input type="checkbox" name="batchJobChk" th:id="${batchJob.jobCode}">
-												<label th:for="${batchJob.jobCode}"></label>
-											</div>					
-										</td>
-										<td th:text="${batchJob.jobCode}"></td>
-										<td th:text="${batchJob.jobDesc}"></td>
-										<td th:text="${batchJob.jobType}"></td>
-										<td th:text="${batchJob.inputDataSelector}"></td>
-										<td th:text="${batchJob.cronExpression}"></td>
-									</tr>									
-									</th:block>
-									<th:block  th:if="${#arrays.isEmpty(batchJobList)}" >
-										<tr>
-											<td colspan="7">조회된 데이터가 없습니다.</td>
-										</tr>
-									</th:block>									
-								</tbody>
-							</table>
-						</div>
-						<div class="btn-group flex content-end mgt-52">
-							<button type="button" class="button-ui" name="registerBtn"><span>등록</span></button>
-							<button type="button" class="button-ui line" name="viewDetailBtn"><span>상세조회</span></button>					
-							<button type="button" name=getListBatchJobBtn class="button-ui line"><span>목록조회</span></button>
-						</div>
-					</section>
-					<!-- // SECTION : CONTENT -->
-				</div>
+	<div class="contents-inner">
+		<!-- TITLE, HISTORY, HELP -->
+		<div class="heading-group">
+			<h2 class="h2">배치기본정보</h2>
+			<div class="history-group">
+				<ul>
+					<li><a href="javascript:;" class="button-home"><span
+							class="blind">홈</span></a></li>
+					<li><a href="javascript:;" class="button-history"><span>연계환경관리</span></a>
+					</li>
+					<li><a href="javascript:;" class="button-history"><span>배치기본정보</span></a>
+					</li>
+				</ul>
+				<button type="button" class="button-helper"
+					onclick="hibs.popup.open(this,'#helpPopup')">
+					<span>도움말</span>
+				</button>
 			</div>
 		</div>
-		<!-- // MAIN -->
+		<!-- // TITLE, HISTORY, HELP -->
 
-		<!-- FOOTER -->
-		<footer class="footer">
-		</footer>
-		<!-- // FOOTER -->
+		<!-- SECTION : CONTENT -->
+		<section class="section-group">
+			<div class="table-group data">
+				<table>
+					<colgroup>
+						<col style="width: 8%;">
+						<col style="width: 19%;">
+						<col style="width: 19%;">
+						<col style="width: 18%;">
+						<col style="width: 18%;">
+						<col style="width: 18%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>선택</th>
+							<th>작업식별자</th>
+							<th>작업설명</th>
+							<th>작업유형</th>
+							<th>입력데이터</th>
+							<th>실행주기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${ not #arrays.isEmpty(batchJobList)}"
+							th:each="batchJob : ${batchJobList}">
+							<tr>
+								<td>
+									<div class="check-group">
+										<input type="checkbox" name="batchJobChk"
+											th:id="${batchJob.jobCode}"> <label
+											th:for="${batchJob.jobCode}"></label>
+									</div>
+								</td>
+								<td th:text="${batchJob.jobCode}"></td>
+								<td th:text="${batchJob.jobDesc}"></td>
+								<td th:text="${batchJob.jobType}"></td>
+								<td th:text="${batchJob.inputDataSelector}"></td>
+								<td th:text="${batchJob.cronExpression}"></td>
+							</tr>
+						</th:block>
+						<th:block th:if="${#arrays.isEmpty(batchJobList)}">
+							<tr>
+								<td colspan="7">조회된 데이터가 없습니다.</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-group flex content-end mgt-52">
+				<button type="button" class="button-ui" name="registerBtn">
+					<span>등록</span>
+				</button>
+				<button type="button" class="button-ui line" name="viewDetailBtn">
+					<span>상세조회</span>
+				</button>
+				<button type="button" name=getListBatchJobBtn class="button-ui line">
+					<span>목록조회</span>
+				</button>
+			</div>
+		</section>
+		<!-- // SECTION : CONTENT -->
 	</div>
+<!-- 	</div>
+	</div> -->
+	<!-- // MAIN -->
+
+	<!-- FOOTER -->
+	<!-- <footer class="footer"> </footer> -->
+	<!-- // FOOTER -->
+	<!-- </div> -->
 	<!-- // WRAPPER -->
 
 	<!-- POPUP : 상세조회 -->
-	<div class="popup-group default" id="listSearchPop" role="dialog" aria-labelledby="title-dialog"
-		aria-describedby="desc-txt">
+	<div class="popup-group default" id="listSearchPop" role="dialog"
+		aria-labelledby="title-dialog" aria-describedby="desc-txt">
 		<div class="dim"></div>
 		<div class="popup-content" tabindex="-1">
 			<div class="popup-cover">
@@ -109,89 +115,106 @@
 						<div class="label-group flex">
 							<label for="pw0" class="title">작업식별자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="작업식별자 입력" name="jobCode" id="jobCode" th:value="${batchJob?.jobCode}" readonly	>
+								<input type="text" class="input-ui" placeholder="작업식별자 입력"
+									name="jobCode" id="jobCode" th:value="${batchJob?.jobCode}"
+									readonly>
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw1" class="title">작업설명</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="작업설명 입력" name="jobDesc" id="jobDesc" th:value="${batchJob?.jobDesc}">
+								<input type="text" class="input-ui" placeholder="작업설명 입력"
+									name="jobDesc" id="jobDesc" th:value="${batchJob?.jobDesc}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw2" class="title">커밋건수(1~10000)</label>
 							<div class="input-group">
-								<input type="number" class="input-ui" placeholder="커밋건수 입력" name="commitCount" id="commitCount" th:value="${batchJob?.commitCount}">
+								<input type="number" class="input-ui" placeholder="커밋건수 입력"
+									name="commitCount" id="commitCount"
+									th:value="${batchJob?.commitCount}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw3" class="title">작업유형</label>
 							<div class="input-group">
-                            	<select id="jobType" class="col-5">
+								<select id="jobType" class="col-5">
 									<option value="F2D">F2D</option>
 									<option value="D2F">D2F</option>
 									<option value="D2D">D2D</option>
 									<option value="CTM">CTM</option>
-								</select>								
+								</select>
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw4" class="title">프로그램명</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="프로그램명 입력" name="programName" id="programName" th:value="${batchJob?.programName}">
+								<input type="text" class="input-ui" placeholder="프로그램명 입력"
+									name="programName" id="programName"
+									th:value="${batchJob?.programName}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw5" class="title">입력데이터지시자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력" name="inputDataSelector" id="inputDataSelector" th:value="${batchJob?.inputDataSelector}">
+								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력"
+									name="inputDataSelector" id="inputDataSelector"
+									th:value="${batchJob?.inputDataSelector}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw6" class="title">출력데이터지시자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력" name="outputDataSelector" id="outputDataSelector" th:value="${batchJob?.outputDataSelector}">
+								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력"
+									name="outputDataSelector" id="outputDataSelector"
+									th:value="${batchJob?.outputDataSelector}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw7" class="title">예외정책</label>
 							<div class="input-group">
-                            	<select id="exceptionPolicy" class="col-5">
+								<select id="exceptionPolicy" class="col-5">
 									<option value="N">즉시중지</option>
 									<option value="S">Skippable</option>
-								</select>										
+								</select>
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw8" class="title">실행주기</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="실행주기 입력" name="cronExpression" id="cronExpression" th:value="${batchJob?.cronExpression}">
+								<input type="text" class="input-ui" placeholder="실행주기 입력"
+									name="cronExpression" id="cronExpression"
+									th:value="${batchJob?.cronExpression}">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw9" class="title">사용여부</label>
 							<div class="input-group">
-                            	<select id="useYn" class="col-5">
-                            		<option value="N">N</option>
-									<option value="Y">Y</option>									
-								</select>	
+								<select id="useYn" class="col-5">
+									<option value="N">N</option>
+									<option value="Y">Y</option>
+								</select>
 							</div>
-						</div>											
+						</div>
 
 						<div class="btn-group flex content-center mgt-26">
-							<button type="button" class="button-ui" name="updateBatchJobBtn"><span>저장</span></button>
+							<button type="button" class="button-ui" name="updateBatchJobBtn">
+								<span>저장</span>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+			<button type="button" class="btn btn-close">
+				<span class="blind">팝업닫기</span>
+			</button>
 		</div>
 	</div>
 	<!-- // POPUP : 상세조회 -->
 
 	<!-- POPUP : 등록 -->
-	<div class="popup-group default" id="registrationPop" role="dialog" aria-labelledby="title-dialog"
-		aria-describedby="desc-txt">
+	<div class="popup-group default" id="registrationPop" role="dialog"
+		aria-labelledby="title-dialog" aria-describedby="desc-txt">
 		<div class="dim"></div>
 		<div class="popup-content" tabindex="-1">
 			<div class="popup-cover">
@@ -203,88 +226,100 @@
 						<div class="label-group flex">
 							<label for="pw10" class="title">작업식별자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="작업식별자 입력" name="jobCode" id="jobCode">
+								<input type="text" class="input-ui" placeholder="작업식별자 입력"
+									name="jobCode" id="jobCode">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw11" class="title">작업설명</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="작업설명 입력" name="jobDesc" id="jobDesc">
+								<input type="text" class="input-ui" placeholder="작업설명 입력"
+									name="jobDesc" id="jobDesc">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw12" class="title">커밋건수(1~10000)</label>
 							<div class="input-group">
-								<input type="number" class="input-ui" placeholder="커밋건수 입력" name="commitCount" id="commitCount">
+								<input type="number" class="input-ui" placeholder="커밋건수 입력"
+									name="commitCount" id="commitCount">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw13" class="title">작업유형</label>
 							<div class="input-group">
-                            	<select id="jobType" class="col-5">
+								<select id="jobType" class="col-5">
 									<option value="F2D">F2D</option>
 									<option value="D2F">D2F</option>
 									<option value="D2D">D2D</option>
 									<option value="CTM">CTM</option>
-								</select>								
+								</select>
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw14" class="title">프로그램명</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="프로그램명 입력" name="programName" id="programName">
+								<input type="text" class="input-ui" placeholder="프로그램명 입력"
+									name="programName" id="programName">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw15" class="title">입력데이터지시자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력" name="inputDataSelector" id="inputDataSelector">
+								<input type="text" class="input-ui" placeholder="입력데이터지시자 입력"
+									name="inputDataSelector" id="inputDataSelector">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw16" class="title">출력데이터지시자</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력" name="outputDataSelector" id="outputDataSelector">
+								<input type="text" class="input-ui" placeholder="출력데이터지시자 입력"
+									name="outputDataSelector" id="outputDataSelector">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw17" class="title">예외정책</label>
 							<div class="input-group">
-                            	<select id="exceptionPolicy" class="col-5">
+								<select id="exceptionPolicy" class="col-5">
 									<option value="N">즉시중지</option>
 									<option value="S">Skippable</option>
-								</select>	
+								</select>
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw18" class="title">실행주기</label>
 							<div class="input-group">
-								<input type="text" class="input-ui" placeholder="실행주기 입력" name="cronExpression" id="cronExpression">
+								<input type="text" class="input-ui" placeholder="실행주기 입력"
+									name="cronExpression" id="cronExpression">
 							</div>
 						</div>
 						<div class="label-group flex">
 							<label for="pw19" class="title">사용여부</label>
 							<div class="input-group">
-                            	<select id="useYn" class="col-5">
+								<select id="useYn" class="col-5">
 									<option value="N">N</option>
-									<option value="Y">Y</option>									
-								</select>	
+									<option value="Y">Y</option>
+								</select>
 							</div>
-						</div>			
+						</div>
 						<div class="btn-group flex content-center mgt-26">
-							<button type="button" class="button-ui" name="registerBatchJobBtn"><span>저장</span></button>
+							<button type="button" class="button-ui"
+								name="registerBatchJobBtn">
+								<span>저장</span>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+			<button type="button" class="btn btn-close">
+				<span class="blind">팝업닫기</span>
+			</button>
 		</div>
 	</div>
 	<!-- // POPUP : 등록 -->
 
 	<!-- POPUP : 도움말 -->
-	<div class="popup-group default" id="helpPopup" role="dialog" aria-labelledby="title-dialog"
-		aria-describedby="desc-txt">
+	<div class="popup-group default" id="helpPopup" role="dialog"
+		aria-labelledby="title-dialog" aria-describedby="desc-txt">
 		<div class="dim"></div>
 		<div class="popup-content" tabindex="-1">
 			<div class="popup-cover">
@@ -295,20 +330,23 @@
 					<div class="popup-inner">
 						<p>설명이 있습니다.</p>
 						<div class="btn-group flex content-center mgt-26">
-							<button type="button" class="button-ui line close"><span>닫기</span></button>
+							<button type="button" class="button-ui line close">
+								<span>닫기</span>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn btn-close"><span class="blind">팝업닫기</span></button>
+			<button type="button" class="btn btn-close">
+				<span class="blind">팝업닫기</span>
+			</button>
 		</div>
 	</div>
 	<!-- POPUP : 도움말 -->
-	<form method="post" name="bjListForm" action="/batchJobsInfo">
-	</form>
+	<form method="post" name="bjListForm" action="/batchJobsInfo"></form>
 
-<!-- content 스크립트 추가 -->
-<script th:inline="javascript">
+	<!-- content 스크립트 추가 -->
+	<script th:inline="javascript">
 /*<![CDATA[*/
     
 	$(document).ready(function(){	
@@ -521,7 +559,7 @@
  
 /*]]>*/
 </script>
-	  	
+
 </th:block>
 
 </html>
