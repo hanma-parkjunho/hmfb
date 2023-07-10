@@ -18,34 +18,53 @@ public enum InterfaceMapping {
 	INF_FIRM_14("0500","200","수취인조회",0),
 	INF_FIRM_15("0500","300","해지예상조회",0),
 	INF_FIRM_16("0600","100","거래명세통지",0),
-	INF_FIRM_17("0600","200","거래명세통지결번요청",0);
+	INF_FIRM_17("0600","200","거래명세통지결번요청",0),
+	
+	/* FIMR추가 [s] */
+	INF_FIRM_18("1000","100","업무개시",0),	
+	INF_FIRM_19("1000","200","업무종료",0),
+	
+	
+	INF_FIRM_20("2000","101","당,타행 지급이체(자금이체)",0),
+	
+	
+	INF_FIRM_21("2000", "550", "자동이체 신청",0),
+	INF_FIRM_22("2000", "850", "자동이체 청구",0),
+	INF_FIRM_23("7000","101","지급이체(자금이체) 처리결과조회",0),
+	INF_FIRM_24("6000","101","당,타행 예금주 성명조회",0),
+	INF_FIRM_25("3000","101","타행이체결과 불능분 통지",0),
+	INF_FIRM_26("3000","201","타행이체결과 결번요구",0),
+	INF_FIRM_27("7000","200","모계좌 잔액조회",0),
+	INF_FIRM_28("4000","101","예금거래(교환어음)명세통지",0),
+	INF_FIRM_29("4000","201","예금거래(교환어음)명세 결번요구",0);
+	/* FIMR추가 [e] */
 
-
-private String interfaceId;   // 인터페이스 id
-private String tranId;        // 거래 id
-private String interfaceName; // 인터페이스 명
-private String intfVsno;      // 버전번호
-
-InterfaceMapping(String string, String string2, String string3, int i) {
-	this.interfaceId = string;
-	this.tranId = string2;
-	this.interfaceName = string3;
-	this.intfVsno = Integer.toString(i);
-}
-
-public String getInterfaceId() {
-    return interfaceId;
-}
-
-public String getTranId() {
-    return tranId;
-}
-
-public String getInterfaceName() {
-    return interfaceName;
-}
-
-public String getIntfVsno() {
-    return intfVsno;
-}
+	private String interfaceId;   // 인터페이스 id
+	private String tranId;        // 거래 id
+	private String interfaceName; // 인터페이스 명
+	private String intfVsno;      // 버전번호
+	
+	InterfaceMapping(String string, String string2, String string3, int i) {
+		this.interfaceId = string;
+		this.tranId = string2;
+		this.interfaceName = string3;
+		this.intfVsno = Integer.toString(i);
+	}
+	
+	public String getInterfaceId() {
+	    return interfaceId;
+	}
+	
+	public String getTranId() {
+	    return tranId;		
+	}
+	
+	public String getInterfaceName() {
+	    return interfaceName;
+	}
+	
+	public String getIntfVsno() {
+	    return intfVsno;
+	}
+	
 }
