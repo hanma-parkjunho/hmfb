@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import hmfb.core.constants.InterfaceMapping;
 import hmfb.core.dto.FirmCommonDto;
 import hmfb.core.dto.FirmReturnDto;
+import hmfb.core.dto.StdFirmCommonDto;
+import hmfb.core.dto.StdFirmReturnDto;
 import hmfb.core.dto.TcpHeader;
 import hmfb.core.exception.ErrorCode;
 import hmfb.core.exception.HmfbException;
@@ -226,6 +228,99 @@ public class IntfService {
         return rtnDto;
     }
     
+    /**
+     * 표준 인터페이스 tcp 통신
+     * @param <T>
+     * @param interfceMapping
+     * @param reqObj
+     * @param telemsgNo
+     * @return
+     */
+    public <T> StdFirmReturnDto StdsendTcp(InterfaceMapping interfceMapping, T reqObj, String telemsgNo) {
+        // 거래로그 INPUT
+    	logService.log(interfceMapping.getInterfaceId() + interfceMapping.getTranId() + "_IN", reqObj);
+    	
+    	StdFirmReturnDto rtnDto = new StdFirmReturnDto();
+        
+        // 전체 전문용
+        StringBuilder sendMessage = new StringBuilder();
+        
+        int reqSize = 100; // 공통부 size
+        String reqBodyStr = "";
+        try {
+	        if (reqObj != null) {
+	            BaseMessage reqBaseMessage = (BaseMessage)reqObj;
+	            reqBodyStr = reqBaseMessage.getMessage();
+	            
+	            reqSize += reqBodyStr.getBytes("euc-kr").length;	                            
+	        }
+        } catch (UnsupportedEncodingException e) {
+        	throw new RuntimeException(new HmfbException(ErrorCode.E110, e));
+        } 
+        
+        // Tcp헤더생성
+        TcpHeader tcpHeader = createTcpHeader(reqSize);
+        
+        
+        // 공통헤더생성
+        StdFirmCommonDto commonDto = StdcreateHeaderStr(reqSize, interfceMapping);
+        
+        //전문일련번호
+        commonDto.setTlgmSeqNo(telemsgNo);
+        
+        sendMessage.append(tcpHeader.getMessage());
+        
+        sendMessage.append(commonDto.getMessage());
+        
+        sendMessage.append(reqBodyStr);
+  
+        // 실제 전송
+        try (
+                Socket socket = new Socket(serverIp, serverPort);
+        		PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.forName("euc-kr")), true);
+                InputStream input = socket.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input, Charset.forName("euc-kr")));
+            )  
+        {
+        	writer.println(sendMessage.toString());
+            
+        	/*
+        	String line;
+            String rtnMessage = "";
+            while ((line = reader.readLine()) != null ) {
+                rtnMessage = line;
+            }
+
+
+            byte[] headerData = Arrays.copyOfRange(rtnMessage.getBytes("euc-kr"), 20, 120);
+            // tcp헤더, 공통헤더 역parsing
+            FirmCommonDto rtnHeaderDto = new FirmCommonDto();
+            MessageParserHelper.parseMessage(new String(headerData, "euc-kr"), rtnHeaderDto);
+            
+            if (true) {
+                byte[] bodyData = Arrays.copyOfRange(rtnMessage.getBytes("euc-kr"), 120, rtnMessage.getBytes("euc-kr").length);
+                String resultMessage = new String(bodyData, "euc-kr");
+                BaseMessage rtnObj = parse(resultMessage, interfceMapping);
+                
+                rtnDto.setRtnObj(rtnObj);
+                rtnDto.setCommonDto(rtnHeaderDto);
+            } else {
+                // 오류처리
+            	// TODO : 오류처리
+            }
+            */
+        } catch (UnsupportedEncodingException e) {
+        	throw new RuntimeException(new HmfbException(ErrorCode.E110, e));
+        } catch (IOException e) {        	
+//        	서버 연결 중 오류 
+        	throw new RuntimeException(new HmfbException(ErrorCode.E111, e));
+        } 
+        
+        // 거래로그 Output
+        logService.log(interfceMapping.getInterfaceId() + "_OUT", rtnDto);
+        return rtnDto;
+    }
+    
     // 같은 dto인데 아래 처리가 필요할지??
     /**
      * @param text
@@ -263,15 +358,46 @@ public class IntfService {
     	return firmCommonDto;
     }
     
+    private StdFirmCommonDto StdcreateHeaderStr(int reqSize, InterfaceMapping interfceMapping) {
+    	// TODO : 펌뱅킹ID, 전문일련번호 채번규칙(UNIQ?) IDGEN사용가능여부 판단
+		Date nowDate = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+		
+		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HHmmss");
+
+		StdFirmCommonDto firmCommonDto = new StdFirmCommonDto();
+    	firmCommonDto.setDistinCode("");                             // 식별코드
+    	firmCommonDto.setFirmId(firmId);                             // 펌뱅킹ID
+    	firmCommonDto.setBnkCode("88");                              // 은행코드
+    	firmCommonDto.setTlgmCode(interfceMapping.getInterfaceId()); // 전문코드
+    	firmCommonDto.setBizCode(interfceMapping.getTranId());       // 업무구분
+    	firmCommonDto.setSndRcvDvcd("1");                            // 송신횟수
+    	firmCommonDto.setTlgmSeqNo("000001");                        // 전문번호
+    	firmCommonDto.setTranDt(simpleDateFormat.format(nowDate));   // 거래일자
+    	firmCommonDto.setTranTm(simpleDateFormat1.format(nowDate));  // 거래시간
+    	firmCommonDto.setRecvCode("");                               // 응답코드
+    	firmCommonDto.setIdntfcCode("");                             // 식별코드
+    	firmCommonDto.setSdsRelm("");                                // SDS영역
+    	firmCommonDto.setCstmrRelm("");                              // 고객영역
+    	firmCommonDto.setY2kRelm("Y");                               // Y2K구분
+    	firmCommonDto.setBnkRelm("");                                // 은행영역
+    	
+    	return firmCommonDto;
+    }
+    
     /** TCP 헤더
      * @param reqSize
      * @return
      */
     private TcpHeader createTcpHeader(int reqSize) {
     	TcpHeader header = new TcpHeader();
-    	header.setTotLength(Integer.toString(reqSize));
+    	
+    	// setLegthDvcd IN 인 경우 tcpheader 사이즈를 포함해야 함
+    	int totSize = reqSize + 20;
+    	
+    	header.setTotLength(Integer.toString(totSize));
     	header.setBizDvcd("DHRTCP");
-    	header.setLegthDvcd("EX");
+    	header.setLegthDvcd("IN");
     	return header;
     }
     
