@@ -8,42 +8,44 @@ import lombok.Data;
 /**
  * @author USER
  * 자동이체 신청
+ * 
+ * KJY
+ * 
  */
 @Data
 public class F2000550Dto implements BaseMessage{
-	// 공통부
-	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 9)
-	private String orgCode; // 식별코드1
-	@FixedString(order = 2, type = MessageFieldType.ALPHABET, value = 12)
-	private String companyCode; // 업체코드
-	@FixedString(order = 3, type = MessageFieldType.NUMERIC, value = 2)
-	private String bankCode; // 은행코드
-	@FixedString(order = 4, type = MessageFieldType.ALPHABET, value = 4)
-	private String professCode; // 전문코드
-	@FixedString(order = 5, type = MessageFieldType.ALPHABET, value = 3)
-	private String BusinessSort; // 업무구분
-	@FixedString(order = 6, type = MessageFieldType.NUMERIC, value = 1)
-	private String responseCnt; // 송신횟수
-	@FixedString(order = 7, type = MessageFieldType.NUMERIC, value = 6)
-	private String professNum; // 전문번호
-	@FixedString(order = 8, type = MessageFieldType.NUMERIC, value = 8)
-	private String requestDate; // 전송일자
-	@FixedString(order = 9, type = MessageFieldType.NUMERIC, value = 6)
-	private String requestTime; // 전송시간
+
+	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 1)
+	private String idntfcCode; 			// 식별코드
+	@FixedString(order = 2, type = MessageFieldType.NUMERIC, value = 7)
+	private String processSn; 			// 처리순번
+	@FixedString(order = 3, type = MessageFieldType.ALPHABET, value = 3)
+	private String bankCode; 			// 은행코드
+	@FixedString(order = 4, type = MessageFieldType.ALPHABET, value = 16)
+	private String acnutNo; 			// 계좌번호
+	@FixedString(order = 5, type = MessageFieldType.ALPHABET, value = 1)
+	private String reqstSe; 			// 신청구분
+	@FixedString(order = 6, type = MessageFieldType.ALPHABET, value = 2)
+	private String atmcpayDe; 			// 자동납부일자
+	@FixedString(order = 7, type = MessageFieldType.ALPHABET, value = 7)
+	private String dsrbtr; 				// 은행코드 + 취급점
+	@FixedString(order = 8, type = MessageFieldType.ALPHABET, value = 8)
+	private String reqstDe; 			// 신청일자
+	@FixedString(order = 9, type = MessageFieldType.ALPHABET, value = 1)
+	private String processAt; 			// 처리여부
 	@FixedString(order = 10, type = MessageFieldType.ALPHABET, value = 4)
-	private String replyCode; // 응답코드
-	@FixedString(order = 11, type = MessageFieldType.ALPHABET, value = 9)
-	private String discernCode; // 식별코드2
-	@FixedString(order = 12, type = MessageFieldType.ALPHABET, value = 15)
-	private String sdsArea; // SDS영역
-	@FixedString(order = 13, type = MessageFieldType.ALPHABET, value = 11)
-	private String customerArea; // 고객영역
-	@FixedString(order = 14, type = MessageFieldType.ALPHABET, value = 1)
-	private String Y2KSort; // Y2K구분
-	@FixedString(order = 15, type = MessageFieldType.ALPHABET, value = 9)
-	private String bankArea; // 은행영역
+	private String incpctyCode; 		// 불능코드
+	@FixedString(order = 11, type = MessageFieldType.ALPHABET, value = 1)
+	private String rlnmNoCeckEnnc; 		// 실명번호 체크유무
+	@FixedString(order = 12, type = MessageFieldType.ALPHABET, value = 13)
+	private String rlnmNo; 				// 실명번호
+	@FixedString(order = 13, type = MessageFieldType.ALPHABET, value = 20)
+	private String payerNo; 			// 납부자번호
+	@FixedString(order = 14, type = MessageFieldType.ALPHABET, value = 16)
+	private String cstmrRelm; 			// 고객영역
+	@FixedString(order = 15, type = MessageFieldType.ALPHABET, value = 10)
+	private String insttCode; 			// 기관코드
+	@FixedString(order = 16, type = MessageFieldType.ALPHABET, value = 90)
+	private String filler; 				// 예비영역
 	
-//	개별부?	
-//	@FixedString(order = 16, type = MessageFieldType.ALPHABET, value = 15)
-//	private String pamBanking;
 }

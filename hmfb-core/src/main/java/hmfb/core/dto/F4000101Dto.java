@@ -11,39 +11,46 @@ import lombok.Data;
  */
 @Data
 public class F4000101Dto implements BaseMessage{
-	// 공통부
-	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 9)
-	private String orgCode; // 식별코드1
-	@FixedString(order = 2, type = MessageFieldType.ALPHABET, value = 12)
-	private String companyCode; // 업체코드
-	@FixedString(order = 3, type = MessageFieldType.NUMERIC, value = 2)
-	private String bankCode; // 은행코드
-	@FixedString(order = 4, type = MessageFieldType.ALPHABET, value = 4)
-	private String professCode; // 전문코드
-	@FixedString(order = 5, type = MessageFieldType.ALPHABET, value = 3)
-	private String BusinessSort; // 업무구분
-	@FixedString(order = 6, type = MessageFieldType.NUMERIC, value = 1)
-	private String responseCnt; // 송신횟수
-	@FixedString(order = 7, type = MessageFieldType.NUMERIC, value = 6)
-	private String professNum; // 전문번호
-	@FixedString(order = 8, type = MessageFieldType.NUMERIC, value = 8)
-	private String requestDate; // 전송일자
-	@FixedString(order = 9, type = MessageFieldType.NUMERIC, value = 6)
-	private String requestTime; // 전송시간
-	@FixedString(order = 10, type = MessageFieldType.ALPHABET, value = 4)
-	private String replyCode; // 응답코드
-	@FixedString(order = 11, type = MessageFieldType.ALPHABET, value = 9)
-	private String discernCode; // 식별코드2
-	@FixedString(order = 12, type = MessageFieldType.ALPHABET, value = 15)
-	private String sdsArea; // SDS영역
-	@FixedString(order = 13, type = MessageFieldType.ALPHABET, value = 11)
-	private String customerArea; // 고객영역
-	@FixedString(order = 14, type = MessageFieldType.ALPHABET, value = 1)
-	private String Y2KSort; // Y2K구분
-	@FixedString(order = 15, type = MessageFieldType.ALPHABET, value = 9)
-	private String bankArea; // 은행영역
 	
-//	개별부?	
-//	@FixedString(order = 16, type = MessageFieldType.ALPHABET, value = 15)
-//	private String pamBanking;
+	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 15)
+	private String acnutNo; 		// 계좌번호
+	@FixedString(order = 2, type = MessageFieldType.ALPHABET, value = 7)
+	private String rcpmnyBhf; 		// 입금점
+	@FixedString(order = 3, type = MessageFieldType.ALPHABET, value = 2)
+	private String rcpmnyPymntSe; 	// 입지구분
+	@FixedString(order = 4, type = MessageFieldType.ALPHABET, value = 2)
+	private String delngSe; 		// 거래구분
+	@FixedString(order = 5, type = MessageFieldType.NUMERIC, value = 13)
+	private String amount; 			// 금액
+	@FixedString(order = 6, type = MessageFieldType.NUMERIC, value = 13)
+	private String altrtvAmount; 	// 대체
+	@FixedString(order = 7, type = MessageFieldType.NUMERIC, value = 13)
+	private String etc; 			// 기타
+	@FixedString(order = 8, type = MessageFieldType.ALPHABET, value = 1)
+	private String smbol; 			// SIGN부호
+	@FixedString(order = 9, type = MessageFieldType.NUMERIC, value = 13)
+	private String blce; 			// 잔액
+	@FixedString(order = 10, type = MessageFieldType.ALPHABET, value = 12)
+	private String nm; 				// 성명
+	@FixedString(order = 11, type = MessageFieldType.ALPHABET, value = 10)
+	private String checkBilNo; 		// 수표/어음번호
+	@FixedString(order = 12, type = MessageFieldType.NUMERIC, value = 8)
+	private String elngDe; 			// 거래일자
+	@FixedString(order = 13, type = MessageFieldType.NUMERIC, value = 6)
+	private String elngTime; 		// 거래시간
+	@FixedString(order = 14, type = MessageFieldType.NUMERIC, value = 6)
+	private String sn; 				// 일련번호
+	@FixedString(order = 15, type = MessageFieldType.NUMERIC, value = 6)
+	private String oridelngNo; 		// 원거래번호
+	@FixedString(order = 16, type = MessageFieldType.NUMERIC, value = 8)
+	private String oridelngDe; 		// 원거래일자
+	@FixedString(order = 17, type = MessageFieldType.ALPHABET, value = 16)
+	private String rcpmnyerCode; 	// 입금인코드
+	@FixedString(order = 18, type = MessageFieldType.NUMERIC, value = 13)
+	private String csrcc; 			// 자기앞
+	@FixedString(order = 19, type = MessageFieldType.NUMERIC, value = 13)
+	private String prsnlchk; 		// 가계
+	@FixedString(order = 20, type = MessageFieldType.ALPHABET, value = 23)
+	private String filler; 			// 예비
+	
 }

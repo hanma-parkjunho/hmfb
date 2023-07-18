@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class F6000101Dto implements BaseMessage{
-	// 공통부
+
 	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 9)
 	private String orgCode; // 식별코드1
 	@FixedString(order = 2, type = MessageFieldType.ALPHABET, value = 12)
@@ -43,7 +43,4 @@ public class F6000101Dto implements BaseMessage{
 	@FixedString(order = 15, type = MessageFieldType.ALPHABET, value = 9)
 	private String bankArea; // 은행영역
 	
-//	개별부?	
-//	@FixedString(order = 16, type = MessageFieldType.ALPHABET, value = 15)
-//	private String pamBanking;
 }

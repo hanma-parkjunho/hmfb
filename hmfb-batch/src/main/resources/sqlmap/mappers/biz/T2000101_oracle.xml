@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T2000101">
+	
+	<select id="selectT2000101" parameterType="hmfb.core.dto.T2000101Dto" resultType="hmfb.core.dto.T2000101Dto">
+    <![CDATA[    
+		SELECT 
+		     TELEMSG_NO					/* 전문번호 */
+		     , PYMNT_ACNUT				/* 지급계좌 */
+		     , PASSWORD					/* 비밀번호 */
+		     , REVW_SMBOL				/* 복기부호 */
+		     , PYMNT_AMOUNT				/* 지급금액 */
+		     , SMBOL					/* 부호 */
+		     , BLCE             		/* 잔액 */
+		     , BANK_CODE      			/* 은행코드 */
+		     , RCPMNY_ACNUT             /* 입금계좌 */
+		     , FEE       				/* 수 수 료 */
+		     , CMS_CODE           		/* CMS 코드 */
+		     , RCPMNY_ACNUT_PRNTXT      /* 입금계좌인자내용 */
+		     , RLNM_NO          		/* 실명번호 */
+		     , DPSTR_NM       			/* 예금주명 */
+		     , CPTAL_CHARCT     		/* 자금성격 */
+		     , FILLER1          		/* 예비1 */
+		     , FILLER2    				/* 예비2 */
+		     , FILLER3    				/* 예비3 */
+		     , FILLER4          		/* 예비4 */
+		     , FILLER5        			/* 예비5 */
+		     , RSPNS_CODE				/* 응답코드 */
+		     , RSPNS_MSSAGE     		/* 응답메세지 */
+		     , SEND_CODE				/* 	*/
+		  FROM T2000101
+		  WHERE 1=1
+	]]>    	 
+    </select>
+    
+	<insert id="insertT2000101" parameterType="hmfb.core.dto.T2000101Dto">
+    <![CDATA[
+		INSERT /* */
+		  INTO T2000101
+		       (
+		      TELEMSG_NO                /* 전문번호 */
+		     , PYMNT_ACNUT              /* 지급계좌 */
+		     , PASSWORD                 /* 비밀번호 */
+		     , REVW_SMBOL            	/* 복기부호 */
+		     , PYMNT_AMOUNT             /* 지급금액 */
+		     , SMBOL      				/* 부호 */
+		     , BLCE             		/* 잔액 */
+		     , BANK_CODE      			/* 은행코드 */
+		     , RCPMNY_ACNUT             /* 입금계좌 */
+		     , FEE       				/* 수수료 */
+		     , CMS_CODE           		/* CMS코드 */
+		     , RCPMNY_ACNUT_PRNTXT      /* 입금계좌인자내용 */
+		     , RLNM_NO          		/* 실명번호 */
+		     , DPSTR_NM       			/* 예금주명 */
+		     , CPTAL_CHARCT     		/* 자금성격 */
+		     , FILLER1          		/* 예비1 */
+		     , FILLER2    				/* 예비2 */
+		     , FILLER3    				/* 예비3 */
+		     , FILLER4          		/* 예비4 */
+		     , FILLER5        			/* 예비5 */
+		     , RSPNS_CODE				/* 응답코드 */
+		     , RSPNS_MSSAGE     		/* 응답메세지 */
+		     , SEND_CODE     			/* 전송상태 */
+		       )
+		VALUES (
+			#{telemsgNo}
+			,#{pymntAcnut}
+			,#{password}
+			,#{revwSmbol}
+			,#{pymntAmount}
+			,#{smbol}
+			,#{blce}
+			,#{bankCode}
+			,#{rcpmnyAcnut}
+			,#{fee}
+			,#{cmsCode}
+			,#{rcpmnyAcnutPrntxt}
+			,#{rlnmNo}
+			,#{dpstrNm}
+			,#{cptalCharct}
+			,#{filler1}
+			,#{filler2}
+			,#{filler3}
+			,#{filler4}
+			,#{filler5}
+			,#{rspnsCode}
+			,#{rspnsMssage}
+			,#{sendCode}
+	       )
+	]]>    	 
+    </insert>
+    
+    <update id="updateT2000101" parameterType="hmfb.core.dto.T2000101Dto">
+    <![CDATA[    
+         UPDATE /* */
+		      T2000101 
+		  SET SEND_CODE              = #{sendCode}
+		WHERE TELEMSG_NO             = #{telemsgNo}
+	]]>
+    </update>
+    
+    <!-- <update id="updateT2000101" parameterType="hmfb.core.dto.T2000101Dto">
+    <![CDATA[    
+         UPDATE /* */
+		      T2000101 
+		  SET AGREM_SN               = #{agremSn}
+		    , PMS_ID                 = #{pmsId}
+		    , AGREM_INSTT_ID         = #{agremInsttId}
+		    , WCT_ACNUTNO            = #{wctAcnutno}
+		    , WCT_ACNUT1_BANK_CODE   = #{wctAcnut1BankCode}
+		    , WCT_ACNUT1_NO          = #{wctAcnut1No}
+		    , WCT_ACNUT2_BANK_CODE   = #{wctAcnut2BankCode}
+		    , WCT_ACNUT2_NO          = #{wctAcnut2No}
+		    , SPCLTY_INSTT_BIZRNO    = #{spcltyInsttBizrno}
+		    , SPCLTY_INSTT_NM        = #{spcltyInsttNm}
+		    , AGREM_INSTT1_BIZRNO    = #{agremInstt1Bizrno}
+		    , AGREM_INSTT1_NM        = #{agremInstt1Nm}
+		    , AGREM_INSTT2_BIZRNO    = #{agremInstt2Bizrno}
+		    , AGREM_INSTT2_NM        = #{agremInstt2Nm}
+		    , GVRN_DNT_AMOUNT        = #{gvrnDntAmount}
+		    , LOCGOV_BND_CASH_AMOUNT = #{locgovBndCashAmount}
+		    , PRVATE_BND_CASH_AMOUNT = #{prvateBndCashAmount}
+		    , AGREM_LMT_AMOUNT       = #{agremLmtAmount}
+		    , GVRN_DNT_RCPMNY_DE     = #{gvrnDntRcpmnyDe}
+		    , LOCGOV_BND_RCPMNY_DE   = #{locgovBndRcpmnyDe}
+		    , PRVATE_BND_RCPMNY_DE   = #{prvateBndRcpmnyDe}
+		    , TASK_ID                = #{taskId}
+		    , TASK_NM                = #{taskNm}
+		    , BSNS_CL_CODE           = #{bsnsClCode}
+		    , BSNS_CL_NM             = #{bsnsClNm}
+		    , SEND_YN                = #{sendYn}
+		    , RSPNS_CODE             = #{rspnsCode}
+		    , RSPNS_MSSAGE           = #{rspnsMssage}
+		WHERE REG_DATE               = #{regDate}
+		  AND TELEMSG_NO             = #{telemsgNo}
+	]]>
+    </update> -->
+        
+</mapper>

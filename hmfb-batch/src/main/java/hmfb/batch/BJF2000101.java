@@ -7,9 +7,8 @@ import java.time.format.DateTimeFormatter;
 import hmfb.batch.service.F2000101Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F2000101Dto;
-import hmfb.core.dto.FileIOMetaDTO;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T2100101Dto;
+import hmfb.core.dto.T2000101Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -31,7 +30,7 @@ public class BJF2000101 implements IChunkBatchJob {
 	public boolean isExecutable(BatchJobContext ctx) throws HmfbException {
 		
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".isExecutable 실행");
+			log.debug("[ 업무로그 BJF2000101 ]"+getClass().getSimpleName()+".isExecutable 실행");
 		}
 		
 		DayOfWeek day = LocalDate.now().getDayOfWeek();
@@ -41,8 +40,8 @@ public class BJF2000101 implements IChunkBatchJob {
 	
 	public void preProcess(BatchJobContext ctx) throws HmfbException {
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".preProcess 실행");
-			log.debug("[업무로그]"+ctx.getInputDataSelector());
+			log.debug("[업무로그asdasd]"+getClass().getSimpleName()+".preProcess 실행");
+			log.debug("[업무로그asdasd]" + ctx.getInputDataSelector());
 		}
 //		DB 조회 조건을 입력
 		String ndt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -50,9 +49,9 @@ public class BJF2000101 implements IChunkBatchJob {
 		ctx.putCondition("sendYn", "N");
 		
 		// 파일 IO 주입
-		FileIOMetaDTO ioMeta = new FileIOMetaDTO();
-		ioMeta.setOutputAttributeNames(new String[]
-		{"accountNo", "productCode", "cifNo" , "balance"});
+//		FileIOMetaDTO ioMeta = new FileIOMetaDTO();
+//		ioMeta.setOutputAttributeNames(new String[]
+//		{"accountNo", "productCode", "cifNo" , "balance"});
 	}
 	
 	/**
@@ -60,41 +59,30 @@ public class BJF2000101 implements IChunkBatchJob {
 	 */
 	public void postProcess(BatchJobContext ctx) throws HmfbException {
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".postProcess 실행");
+			log.debug("[업무로그asdasdsadadasdasd]"+getClass().getSimpleName()+".postProcess 실행");
 		}
 	}
 	/**
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	
-	
 	@Override
-	public T2100101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T2000101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T2100101Dto input = (T2100101Dto)param;
-		T2100101Dto output = new T2100101Dto();
+		T2000101Dto input = (T2000101Dto) param;
+		T2000101Dto output = new T2000101Dto();
 		
 		F2000101Dto inFirmDto = new F2000101Dto();
-		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		if(log.isDebugEnabled()) {
-			log.debug(inFirmDto+"inFirmDto 값 확인 ");
-		}
-					
-		FirmReturnDto returnDto = F2000101Service.getService(F2000101Service.class).f2000101Service(inFirmDto, input.getTelemsgNo());
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-//			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("들어옴");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
+		F2000101Service.getService(F2000101Service.class).f2000101Service(inFirmDto, input.getTelemsgNo());
 		
-		BatchDao.getDao().update("T2000101.updateT2000101", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F2000101 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
+		output.setSendCode("2");
+		output.setTelemsgNo(input.getTelemsgNo());
+
+		BatchDao.getDao().update("T2000101.updateT2000101", output);
+		
+		
 //		D2D 일 경우 dummy 를 리턴. 
-		return output;		
+		return output;
 	}
 }

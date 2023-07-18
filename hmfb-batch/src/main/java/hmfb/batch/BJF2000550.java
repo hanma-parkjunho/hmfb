@@ -8,7 +8,7 @@ import hmfb.batch.service.F2000550Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F2000550Dto;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T2100550Dto;
+import hmfb.core.dto.T2000550Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -30,65 +30,63 @@ public class BJF2000550 implements IChunkBatchJob {
 	public boolean isExecutable(BatchJobContext ctx) throws HmfbException {
 		
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".isExecutable 실행");
+			log.debug("[업무로그]" + getClass().getSimpleName() + ".isExecutable 실행");
 		}
 		
 		DayOfWeek day = LocalDate.now().getDayOfWeek();
-//		일요일엔 정상 종료 리턴. (배치를 수행시키지 않는다. 상태는 FAILED 가 아닌 COMPLETED)
+		// 일요일엔 정상 종료 리턴. (배치를 수행시키지 않는다. 상태는 FAILED 가 아닌 COMPLETED)
 		return (day.equals(DayOfWeek.SUNDAY)) ? false : true;
+		
 	}
 	
 	public void preProcess(BatchJobContext ctx) throws HmfbException {
+		
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".preProcess 실행");
+			log.debug("[업무로그]"+getClass().getSimpleName() + ".preProcess 실행");
 			log.debug("[업무로그]"+ctx.getInputDataSelector());
 		}
-//		DB 조회 조건을 입력
+		
+		// DB 조회 조건을 입력
 		String ndt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		ctx.putCondition("regDate", ndt);
 		ctx.putCondition("sendYn", "N");
 		
 	}
+	
 	/**
 	 * 생략 가능 
 	 */
 	public void postProcess(BatchJobContext ctx) throws HmfbException {
+		
 		if(log.isDebugEnabled()) {
-			log.debug("[업무로그]"+getClass().getSimpleName()+".postProcess 실행");
+			log.debug("[업무로그]"+getClass().getSimpleName() + ".postProcess 실행");
 		}
+		
 	}
+	
 	/**
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T2100550Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T2000550Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T2100550Dto input = (T2100550Dto)param;
-		T2100550Dto output = new T2100550Dto();
+		T2000550Dto input = (T2000550Dto) param;
+		T2000550Dto output = new T2000550Dto();
 		
-		F2000550Dto inFirmDto = new F2000550Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F2000550Service.getService(F2000550Service.class).f2000550Service(inFirmDto, input.getTelemsgNo());
-		F2000550Dto outFirmDto = (F2000550Dto) returnDto.getRtnObj();
+		F2000550Dto inFirmDto = new F2000550Dto(); // inFirmDto 배열만듬
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
+//		FirmReturnDto returnDto = F2000550Service.getService(F2000550Service.class).f2000550Service( inFirmDto, input.getTelemsgNo() );
+		F2000550Service.getService(F2000550Service.class).f2000550Service(inFirmDto, input.getTelemsgNo());
 		
-		BatchDao.getDao().update("T2000550.updateT2000550", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F2000550 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
-		return output;		
+		/*F2000850Dto outFirmDto = (F2000850Dto) returnDto.getRtnObj();*/
+		
+		BatchDao.getDao().update("T2000550.updateT2000550", output); 
+		
+		output.setSendCode("2");
+		output.setTelemsgNo(input.getTelemsgNo());
+		
+//		D2D 일 경우 dummy 를 리턴.
+		return output;
+		
 	}
 }
