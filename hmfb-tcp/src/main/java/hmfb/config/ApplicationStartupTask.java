@@ -17,7 +17,11 @@ public class ApplicationStartupTask implements ApplicationListener<ApplicationRe
 //    private final NettyServerSocket nettyServerSocket;
 //    private final EcoServer ecoServer;
     
-    @Autowired
+	@Autowired
+    @Qualifier("StdfirmServer")
+    NettyServer StdfirmServer;
+	
+	@Autowired
     @Qualifier("firmServer")
     NettyServer firmServer;
     @Autowired
@@ -29,6 +33,13 @@ public class ApplicationStartupTask implements ApplicationListener<ApplicationRe
 		// TODO Auto-generated method stub
 		//nettyServerSocket.start();
 //		ecoServer.start();
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				StdfirmServer.start();
+			}
+		}).start();
 		
 		new Thread(new Runnable() {			
 			@Override
