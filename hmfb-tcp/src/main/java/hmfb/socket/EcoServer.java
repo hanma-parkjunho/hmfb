@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import hmfb.handler.FirmServerHandler;
+import hmfb.handler.StdFirmServerHandler;
 import hmfb.handler.VirtualServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -27,6 +28,18 @@ public class EcoServer {
     
     @Value("${hmfb.socket.server.port-virtual}")
     private int port_virtual;
+    
+    /*
+     *  표준 인터페이스용 firm 등록함 20230719, 사용하는 포트만 사용하도록 수정은 필요해 보임
+     */
+    @Value("${hmfb.socket.server.port-Stdfirm}")
+    private int port_Stdfirm;
+    
+    @Autowired
+    StdFirmServerHandler StdfirmServerHandler;
+    /*
+     * standard end 
+     */
     
     @Autowired
     FirmServerHandler firmServerHandler;
@@ -77,20 +90,41 @@ public class EcoServer {
 	
 	        //b1.bind(port_firm).sync();
 	        
+	        /*
+	         * standard start
+	         */
+	        ServerBootstrap b2 = new ServerBootstrap();
+	        b2.group(bossGroup, workerGroup)
+	         .channel(NioServerSocketChannel.class)
+	         .childHandler(new ChannelInitializer<SocketChannel>() {
+	            @Override
+	            public void initChannel(SocketChannel ch) {
+	                ChannelPipeline p = ch.pipeline();
+	                p.addLast(new LoggingHandler(LogLevel.DEBUG));
+                	//p.addLast(new VirtualServerHandler());
+                	p.addLast(StdfirmServerHandler);
+	            }
+	        });
+	        /*
+	         * end
+	         */
+	        
 
 	        ChannelFuture f1;
 	        ChannelFuture f2;
+	        ChannelFuture f3; // standard
 
         	
 	        // 펌뱅킹 port 바인딩
 	        f1 = b.bind(port_firm).sync();
         	// 가상계좌 port 바인딩
 	        f2 = b1.bind(port_virtual).sync();
+	        // 표준 펌뱅킹 port 바인딩
+	        f3 = b1.bind(port_Stdfirm).sync(); // standard
 	       
-	        // 아래 closeFutuer는 하나만 실행됨.
-	        // TODO : 두개 다 실행될 수 있는 방법 확인 필요. (찾아봐도 방법이 없음.)
         	f1.channel().closeFuture().sync();
 	        f2.channel().closeFuture().sync();
+	        f3.channel().closeFuture().sync(); // standard
 	        
 	    } catch (Exception e) {
 	    	e.printStackTrace();
