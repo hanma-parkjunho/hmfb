@@ -15,7 +15,7 @@ public class F7000200Dto implements BaseMessage{
 	@FixedString(order = 1, type = MessageFieldType.ALPHABET, value = 15)
 	private String inqireAcnutNo; 	// 조회계좌번호
 	@FixedString(order = 2, type = MessageFieldType.NUMERIC, value = 13)
-	private String overdftLmt; 		// 대월한도
+	private String ovrdftLmt; 		// 대월한도
 	@FixedString(order = 3, type = MessageFieldType.ALPHABET, value = 1)
 	private String blceSmbol; 		// 잔액부호
 	@FixedString(order = 4, type = MessageFieldType.NUMERIC, value = 13)

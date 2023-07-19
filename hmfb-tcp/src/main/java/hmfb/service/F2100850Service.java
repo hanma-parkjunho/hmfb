@@ -3,25 +3,45 @@ package hmfb.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hmfb.core.dto.F6000101Dto;
-import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T6100101Dto;
-import hmfb.core.service.BaseService;
+import hmfb.core.dto.F2100850Dto;
+import hmfb.core.dto.StdFirmCommonDto;
+import hmfb.core.dto.StdFirmReturnDto;
+import hmfb.core.dto.T2100850Dto;
+import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	당,타행예금주성명조회 수신
+ *	자동이체 청구수신
  */
-public class F6000101Service implements BaseService {
+public class F2100850Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
     @Override
-    public void process(FirmReturnDto dto) {
+    public void process(StdFirmReturnDto dto) {
     	
-    	F6000101Dto receiveDto = (F6000101Dto)dto.getRtnObj();
+    	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
+    	F2100850Dto receiveDto = (F2100850Dto) dto.getRtnObj();
+    	T2100850Dto input = new T2100850Dto();
+    	
+    	input.setSmbol(receiveDto.getSmbol());
+    	input.setBlce(receiveDto.getBlce());
+    	input.setFee(receiveDto.getFee());
+    	
+    	input.setRspnsCode(commonDto.getRecvCode());
+    	input.setRecvDt(commonDto.getTranDt());
+    	input.setRecvTm(commonDto.getTranTm());
+    	
+    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
+    	
+        TcpDao.getDao().update("T2100850.updateT2100850", input);
+    	
+    	CLOG.info("2100850Service >>>> 자동이체청구 [[ 수신 ]] "+ receiveDto.getMessage());
+    	
+    	/*
+    	F2000850Dto receiveDto = (F2000850Dto)dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
-    	T6100101Dto input = new T6100101Dto();
+    	T2100850Dto input = new T2100850Dto();
     	
     	input.setOrgCode(receiveDto.getOrgCode()); 				// 식별코드
     	input.setCompanyCode(receiveDto.getCompanyCode()); 		// 업체코드
@@ -39,12 +59,13 @@ public class F6000101Service implements BaseService {
     	input.setY2KSort(receiveDto.getY2KSort()); 				// Y2K구분
     	input.setBankArea(receiveDto.getBankArea()); 			// 은행영역
     	
-		TcpDao.getDao().insert("T6100101.insertT6100101", input);
+		TcpDao.getDao().insert("T2000850.insertT2000850", input);
 		
     	dto.getCommonDto().setSndRcvDvcd("S");					// setSndRcvDvcd()
         dto.getCommonDto().setRecvCode("0000");
         
-        CLOG.info("Service F6000101 호출됨..!"+receiveDto.getMessage());
+        CLOG.info("Service F2000850 호출됨..!"+receiveDto.getMessage());
+        */
         
     }
 }

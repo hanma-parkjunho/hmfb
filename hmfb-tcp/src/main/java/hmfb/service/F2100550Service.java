@@ -3,25 +3,50 @@ package hmfb.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hmfb.core.dto.F3000201Dto;
+import hmfb.core.dto.F2000550Dto;
+import hmfb.core.dto.F2100101Dto;
+import hmfb.core.dto.F2100550Dto;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T3100201Dto;
+import hmfb.core.dto.StdFirmCommonDto;
+import hmfb.core.dto.StdFirmReturnDto;
+import hmfb.core.dto.T2100101Dto;
+import hmfb.core.dto.T2100550Dto;
 import hmfb.core.service.BaseService;
+import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	당타행이체결과 결번요구 수신
+ *	자동이체신청 수신
  */
-public class F3000201Service implements BaseService {
+public class F2100550Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
     @Override
-    public void process(FirmReturnDto dto) {
+    public void process(StdFirmReturnDto dto) {
     	
-    	F3000201Dto receiveDto = (F3000201Dto)dto.getRtnObj();
+    	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
+    	F2100550Dto receiveDto = (F2100550Dto) dto.getRtnObj();
+    	T2100550Dto input = new T2100550Dto();
+    	
+    	input.setDsrbtr(receiveDto.getDsrbtr());
+    	input.setProcessAt(receiveDto.getProcessAt());
+    	input.setIncpctyCode(receiveDto.getIncpctyCode());
+    	
+    	input.setRspnsCode(commonDto.getRecvCode());
+    	input.setRecvDt(commonDto.getTranDt());
+    	input.setRecvTm(commonDto.getTranTm());
+    	
+    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
+    	
+        TcpDao.getDao().update("T2100550.updateT2100550", input);
+    	
+    	CLOG.info("2100550Service >>>> 자동이체신청 [[ 수신 ]] "+ receiveDto.getMessage());
+    	
+    	/*
+    	F2100550Dto receiveDto = (F2100550Dto) dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
-    	T3100201Dto input = new T3100201Dto();
+    	T2100550Dto input = new T2100550Dto();
     	
     	input.setOrgCode(receiveDto.getOrgCode()); 				// 식별코드
     	input.setCompanyCode(receiveDto.getCompanyCode()); 		// 업체코드
@@ -39,12 +64,13 @@ public class F3000201Service implements BaseService {
     	input.setY2KSort(receiveDto.getY2KSort()); 				// Y2K구분
     	input.setBankArea(receiveDto.getBankArea()); 			// 은행영역
     	
-		TcpDao.getDao().insert("T3000200.insertT3000200", input);
+		TcpDao.getDao().insert("T2000550.insertT2000550", input);
 		
     	dto.getCommonDto().setSndRcvDvcd("S");					// setSndRcvDvcd()
         dto.getCommonDto().setRecvCode("0000");
         
-        CLOG.info("Service F3000200 호출됨..!"+receiveDto.getMessage());
+        CLOG.info("Service F2000550 호출됨..!"+receiveDto.getMessage());
+        */
         
     }
 }

@@ -35,9 +35,9 @@ public class F4000101Dto implements BaseMessage{
 	@FixedString(order = 11, type = MessageFieldType.ALPHABET, value = 10)
 	private String checkBilNo; 		// 수표/어음번호
 	@FixedString(order = 12, type = MessageFieldType.NUMERIC, value = 8)
-	private String elngDe; 			// 거래일자
+	private String delngDe; 			// 거래일자
 	@FixedString(order = 13, type = MessageFieldType.NUMERIC, value = 6)
-	private String elngTime; 		// 거래시간
+	private String delngTime; 		// 거래시간
 	@FixedString(order = 14, type = MessageFieldType.NUMERIC, value = 6)
 	private String sn; 				// 일련번호
 	@FixedString(order = 15, type = MessageFieldType.NUMERIC, value = 6)

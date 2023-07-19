@@ -4,20 +4,53 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hmfb.core.dto.F3000101Dto;
-import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T3100101Dto;
-import hmfb.core.service.BaseService;
+import hmfb.core.dto.StdFirmCommonDto;
+import hmfb.core.dto.StdFirmReturnDto;
+import hmfb.core.dto.T3000101Dto;
+import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	당,타행예금주성명조회 수신
+ *	타행이체불능분 통지 수신
+ *  타행이체불능분 통지는 은행 -> 기관 순으로 인터페이스가 진행하게 되어 기관에서 응답한다
  */
-public class F3000101Service implements BaseService {
+public class F3000101Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
     @Override
-    public void process(FirmReturnDto dto) {
+    public void process(StdFirmReturnDto dto) {
     	
+    	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
+    	F3000101Dto receiveDto = (F3000101Dto) dto.getRtnObj();
+    	T3000101Dto input = new T3000101Dto();
+    	
+    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
+    	input.setOritelemsgNo(receiveDto.getOritelemsgNo());
+    	input.setPymntAcnut(receiveDto.getPymntAcnut());
+    	input.setBankCode(receiveDto.getBankCode());
+    	input.setRcpmnyAcnut(receiveDto.getRcpmnyAcnut());
+    	input.setAmount(receiveDto.getAmount());
+    	input.setNrmltAmount(receiveDto.getNrmltAmount());
+    	input.setIncpctyAmount(receiveDto.getIncpctyAmount());
+    	input.setSubcnt(receiveDto.getSubcnt());
+    	input.setSubseq(receiveDto.getSubseq());
+    	input.setDiffbankProcessNo(receiveDto.getDiffbankProcessNo());
+    	input.setRcpmnyIncpctyAm(receiveDto.getRcpmnyIncpctyAm());
+    	input.setDiffbankProcessCode(receiveDto.getDiffbankProcessCode());
+    	input.setSendCode("");
+    	input.setSendDt("");
+    	input.setSendTm("");
+    	input.setRspnsCode(commonDto.getRecvCode());
+    	input.setRspnsMssage("");
+    	input.setRecvDt(commonDto.getTranDt());
+    	input.setRecvTm(commonDto.getTranTm());
+    	
+        TcpDao.getDao().insert("T3000101.insertT3000101", input);
+    	
+    	CLOG.info("3000101Service >>>> 타행이제결과 불능분 통지 [[ 수신 ]] "+ receiveDto.getMessage());
+    	
+    	
+    	/*
     	F3000101Dto receiveDto = (F3000101Dto)dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
@@ -45,6 +78,7 @@ public class F3000101Service implements BaseService {
         dto.getCommonDto().setRecvCode("0000");
         
         CLOG.info("Service F3000101 호출됨..!"+receiveDto.getMessage());
+        */
         
     }
 }

@@ -3,21 +3,47 @@ package hmfb.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hmfb.core.dto.F7000101Dto;
-import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T7100101Dto;
-import hmfb.core.service.BaseService;
+import hmfb.core.dto.F7100151Dto;
+import hmfb.core.dto.StdFirmCommonDto;
+import hmfb.core.dto.StdFirmReturnDto;
+import hmfb.core.dto.T7100151Dto;
+import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	당,타행예금주성명조회 수신
+ *	자동이체 처리결과조회 수신
  */
-public class F7000101Service implements BaseService {
+public class F7100151Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
     @Override
-    public void process(FirmReturnDto dto) {
+    public void process(StdFirmReturnDto dto) {
     	
+    	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
+    	F7100151Dto receiveDto = (F7100151Dto) dto.getRtnObj();
+    	T7100151Dto input = new T7100151Dto();
+    	
+    	input.setPymntAcnut(receiveDto.getPymntAcnut());
+    	input.setBankCode(receiveDto.getBankCode());
+    	input.setRcpmnyAcnut(receiveDto.getRcpmnyAcnut());
+    	input.setAmount(receiveDto.getAmount());
+    	input.setNrmltAmount(receiveDto.getNrmltAmount());
+    	input.setIncpctyAmount(receiveDto.getIncpctyAmount());
+    	input.setFee(receiveDto.getFee());
+    	input.setTransfrTime(receiveDto.getTransfrTime());
+    	input.setProcessResult(receiveDto.getProcessResult());
+    	
+    	input.setRspnsCode(commonDto.getRecvCode());
+    	input.setRecvDt(commonDto.getTranDt());
+    	input.setRecvTm(commonDto.getTranTm());
+    	
+    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
+    	
+        TcpDao.getDao().update("T7100151.updateT7100151", input);
+    	
+    	CLOG.info("7100151Service >>>> 자동이체처리결과조회 [[ 수신 ]] "+ receiveDto.getMessage());
+    	
+    	/*
     	F7000101Dto receiveDto = (F7000101Dto)dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
@@ -45,6 +71,7 @@ public class F7000101Service implements BaseService {
         dto.getCommonDto().setRecvCode("0000");
         
         CLOG.info("Service F7000101 호출됨..!"+receiveDto.getMessage());
+        */
         
     }
 }

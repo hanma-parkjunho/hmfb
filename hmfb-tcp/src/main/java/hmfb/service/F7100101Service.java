@@ -3,17 +3,16 @@ package hmfb.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hmfb.core.dto.F4000101Dto;
+import hmfb.core.dto.F7100101Dto;
 import hmfb.core.dto.StdFirmCommonDto;
 import hmfb.core.dto.StdFirmReturnDto;
-import hmfb.core.dto.T4000101Dto;
+import hmfb.core.dto.T7100101Dto;
 import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	예금거래명세 통지 수신
- *  예금거래명세 통지는 은행 -> 기관 순으로 인터페이스가 진행하게 되어 기관에서 응답한다
+ *	지급이체 처리결과조회 수신
  */
-public class F4000101Service implements StdBaseService {
+public class F7100101Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
@@ -21,46 +20,34 @@ public class F4000101Service implements StdBaseService {
     public void process(StdFirmReturnDto dto) {
     	
     	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
-    	F4000101Dto receiveDto = (F4000101Dto) dto.getRtnObj();
-    	T4000101Dto input = new T4000101Dto();
+    	F7100101Dto receiveDto = (F7100101Dto) dto.getRtnObj();
+    	T7100101Dto input = new T7100101Dto();
     	
-    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
-    	input.setAcnutNo(receiveDto.getAcnutNo());
-    	input.setRcpmnyBhf(receiveDto.getRcpmnyBhf());
-    	input.setRcpmnyPymntSe(receiveDto.getRcpmnyPymntSe());
-    	input.setDelngSe(receiveDto.getDelngSe());
+    	input.setPymntAcnut(receiveDto.getPymntAcnut());
+    	input.setBankCode(receiveDto.getBankCode());
+    	input.setRcpmnyAcnut(receiveDto.getRcpmnyAcnut());
     	input.setAmount(receiveDto.getAmount());
-    	input.setAltrtvAmount(receiveDto.getAltrtvAmount());
-    	input.setEtc(receiveDto.getEtc());
-    	input.setSmbol(receiveDto.getSmbol());
-    	input.setBlce(receiveDto.getBlce());
-    	input.setNm(receiveDto.getNm());
-    	input.setCheckBilNo(receiveDto.getCheckBilNo());
-    	input.setDelngDe(receiveDto.getDelngDe());
-    	input.setDelngTime(receiveDto.getDelngTime());
-    	input.setSn(receiveDto.getSn());
-    	input.setOridelngNo(receiveDto.getOridelngNo());
-    	input.setOridelngDe(receiveDto.getOridelngDe());
-    	input.setRcpmnyerCode(receiveDto.getRcpmnyerCode());
-    	input.setCsrcc(receiveDto.getCsrcc());
-    	input.setPrsnlchk(receiveDto.getPrsnlchk());
-    	input.setSendCode("");
-    	input.setSendDt("");
-    	input.setSendTm("");
+    	input.setNrmltAmount(receiveDto.getNrmltAmount());
+    	input.setIncpctyAmount(receiveDto.getIncpctyAmount());
+    	input.setFee(receiveDto.getFee());
+    	input.setTransfrTime(receiveDto.getTransfrTime());
+    	input.setProcessResult(receiveDto.getProcessResult());
+    	
     	input.setRspnsCode(commonDto.getRecvCode());
-    	input.setRspnsMssage("");
     	input.setRecvDt(commonDto.getTranDt());
     	input.setRecvTm(commonDto.getTranTm());
     	
-        TcpDao.getDao().insert("T4000101.insertT4000101", input);
+    	input.setTelemsgNo(commonDto.getTlgmSeqNo());
     	
-    	CLOG.info("4000101Service >>>> 예금거래명세 통지 [[ 수신 ]] "+ receiveDto.getMessage());
+        TcpDao.getDao().update("T7100101.updateT7100101", input);
+    	
+    	CLOG.info("7100101Service >>>> 지급이체처리결과조회 [[ 수신 ]] "+ receiveDto.getMessage());
     	
     	/*
-    	F4000101Dto receiveDto = (F4000101Dto)dto.getRtnObj();
+    	F7000101Dto receiveDto = (F7000101Dto)dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
-    	T4100101Dto input = new T4100101Dto();
+    	T7100101Dto input = new T7100101Dto();
     	
     	input.setOrgCode(receiveDto.getOrgCode()); 				// 식별코드
     	input.setCompanyCode(receiveDto.getCompanyCode()); 		// 업체코드
@@ -78,12 +65,12 @@ public class F4000101Service implements StdBaseService {
     	input.setY2KSort(receiveDto.getY2KSort()); 				// Y2K구분
     	input.setBankArea(receiveDto.getBankArea()); 			// 은행영역
     	
-		TcpDao.getDao().insert("T4000101.insertT4000101", input);
+		TcpDao.getDao().insert("T7000101.insertT7000101", input);
 		
     	dto.getCommonDto().setSndRcvDvcd("S");					// setSndRcvDvcd()
         dto.getCommonDto().setRecvCode("0000");
         
-        CLOG.info("Service F4000101 호출됨..!"+receiveDto.getMessage());
+        CLOG.info("Service F7000101 호출됨..!"+receiveDto.getMessage());
         */
         
     }

@@ -4,16 +4,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hmfb.core.dto.F4000101Dto;
+import hmfb.core.dto.F4000201Dto;
+import hmfb.core.dto.F4100201Dto;
+import hmfb.core.dto.FirmReturnDto;
 import hmfb.core.dto.StdFirmCommonDto;
 import hmfb.core.dto.StdFirmReturnDto;
 import hmfb.core.dto.T4000101Dto;
+import hmfb.core.dto.T4000201Dto;
+import hmfb.core.dto.T4100201Dto;
+import hmfb.core.service.BaseService;
 import hmfb.core.service.StdBaseService;
 import hmfb.db.TcpDao;
 /**
- *	예금거래명세 통지 수신
- *  예금거래명세 통지는 은행 -> 기관 순으로 인터페이스가 진행하게 되어 기관에서 응답한다
+ *	당,타행예금주성명조회 수신
  */
-public class F4000101Service implements StdBaseService {
+public class F4100201Service implements StdBaseService {
 	
     private static final Logger CLOG = LoggerFactory.getLogger("CLOGGER");
     
@@ -21,8 +26,8 @@ public class F4000101Service implements StdBaseService {
     public void process(StdFirmReturnDto dto) {
     	
     	StdFirmCommonDto commonDto = (StdFirmCommonDto) dto.getCommonDto();
-    	F4000101Dto receiveDto = (F4000101Dto) dto.getRtnObj();
-    	T4000101Dto input = new T4000101Dto();
+    	F4100201Dto receiveDto = (F4100201Dto) dto.getRtnObj();
+    	T4100201Dto input = new T4100201Dto();
     	
     	input.setTelemsgNo(commonDto.getTlgmSeqNo());
     	input.setAcnutNo(receiveDto.getAcnutNo());
@@ -54,13 +59,13 @@ public class F4000101Service implements StdBaseService {
     	
         TcpDao.getDao().insert("T4000101.insertT4000101", input);
     	
-    	CLOG.info("4000101Service >>>> 예금거래명세 통지 [[ 수신 ]] "+ receiveDto.getMessage());
+    	CLOG.info("4100201Service >>>> 예금거래명세 결번요구 [[ 수신 ]] "+ receiveDto.getMessage());
     	
     	/*
-    	F4000101Dto receiveDto = (F4000101Dto)dto.getRtnObj();
+    	F4000201Dto receiveDto = (F4000201Dto)dto.getRtnObj();
     	
     	// 배열을 만들어서 넣는다. dto에 
-    	T4100101Dto input = new T4100101Dto();
+    	T4000201Dto input = new T4000201Dto();
     	
     	input.setOrgCode(receiveDto.getOrgCode()); 				// 식별코드
     	input.setCompanyCode(receiveDto.getCompanyCode()); 		// 업체코드
@@ -78,12 +83,12 @@ public class F4000101Service implements StdBaseService {
     	input.setY2KSort(receiveDto.getY2KSort()); 				// Y2K구분
     	input.setBankArea(receiveDto.getBankArea()); 			// 은행영역
     	
-		TcpDao.getDao().insert("T4000101.insertT4000101", input);
+		TcpDao.getDao().insert("T4000201.insertT4000201", input);
 		
     	dto.getCommonDto().setSndRcvDvcd("S");					// setSndRcvDvcd()
         dto.getCommonDto().setRecvCode("0000");
         
-        CLOG.info("Service F4000101 호출됨..!"+receiveDto.getMessage());
+        CLOG.info("Service F4000201 호출됨..!"+receiveDto.getMessage());
         */
         
     }
