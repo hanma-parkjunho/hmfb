@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import hmfb.core.constants.InterfaceMapping;
 import hmfb.core.dto.F2000550Dto;
-import hmfb.core.dto.FirmReturnDto;
+import hmfb.core.dto.StdFirmReturnDto;
 import hmfb.core.service.IntfService;
 import hmfb.framework.batch.biz.AbstractBatchService;
 
@@ -19,9 +19,9 @@ public class F2000550Service extends AbstractBatchService {
      * @return
      * @throws Exception
      */
-    public FirmReturnDto f2000550Service (F2000550Dto dto, String telemsgNo) {
+    public StdFirmReturnDto f2000550Service (F2000550Dto dto, String telemsgNo) {
     	// 송신 호출
-    	FirmReturnDto rtnDto = intfService.sendTcp(InterfaceMapping.INF_FIRM_21, dto, telemsgNo);
+    	StdFirmReturnDto rtnDto = intfService.StdsendTcp(InterfaceMapping.INF_FIRM_21, dto, telemsgNo);
         
         return rtnDto;
     }
