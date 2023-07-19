@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import hmfb.handler.FirmServerHandler;
+import hmfb.handler.StdFirmServerHandler;
 import hmfb.handler.VirtualServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -24,11 +25,23 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 public class NettyServerConfig {
 	
-    @Value("${hmfb.socket.server.port-firm}")
+	/*
+	 * 표준 펌뱅킹 포트
+	 */
+	@Value("${hmfb.socket.server.port-Stdfirm}")
+    private int port_Stdfirm;
+	
+	@Value("${hmfb.socket.server.port-firm}")
     private int port_firm;
     
     @Value("${hmfb.socket.server.port-virtual}")
     private int port_virtual;
+    
+    /*
+	 * 표준 펌뱅킹 handler
+	 */
+    @Autowired
+    StdFirmServerHandler StdfirmServerHandler;
     
     @Autowired
     FirmServerHandler firmServerHandler;
@@ -38,6 +51,14 @@ public class NettyServerConfig {
     
     EventLoopGroup bossGroup = null;
     EventLoopGroup workerGroup = null;
+    
+    /*
+	 * 표준 펌뱅킹 StdfirmServer
+	 */
+    @Bean
+    public NettyServer StdfirmServer() {
+    	return new NettyServer(port_Stdfirm, StdfirmServerHandler);    	
+    }
     
     @Bean
     public NettyServer firmServer() {
