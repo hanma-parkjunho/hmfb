@@ -7,7 +7,7 @@ import hmfb.batch.service.F1000100Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F1000100Dto;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T1100100Dto;
+import hmfb.core.dto.T1000100Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -52,25 +52,35 @@ public class BJF1000100 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T1100100Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T1000100Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T1100100Dto input = (T1100100Dto) param;
-		T1100100Dto output = new T1100100Dto();
+		T1000100Dto input = (T1000100Dto) param;
+		T1000100Dto output = new T1000100Dto();
 		
 		F1000100Dto inFirmDto = new F1000100Dto();
 		
+		F1000100Service.getService(F1000100Service.class).f1000100Service(inFirmDto, input.getTelemsgNo());
+
+		output.setJobDe(input.getJobDe());
+		output.setJobSe(input.getJobSe());
+		output.setTelemsgNo(input.getTelemsgNo());
 		
+		// 전송 완료 처리 쿼리 실행
+		BatchDao.getDao().update("T1000100.updateT1000100", output);
+
 		
-		
+
+		/*
 		if (log.isDebugEnabled()) {
 			log.debug(" inFirmDto >>>>> ");
 			log.debug(" 전문 응답 내용 <<<<< :"+inFirmDto);
 		}
 		
-		FirmReturnDto returnDto = F1000100Service.getService(F1000100Service.class).f1000100Service(inFirmDto);
-		F1000100Dto outFirmDto = (F1000100Dto) returnDto.getRtnObj();
+		//FirmReturnDto returnDto = F1000100Service.getService(F1000100Service.class).f1000100Service(inFirmDto);
+		//F1000100Dto outFirmDto = (F1000100Dto) returnDto.getRtnObj();
 		
 		// 받기
+		
 		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
 			
 		} else {
@@ -82,7 +92,8 @@ public class BJF1000100 implements IChunkBatchJob {
 			log.debug("F1000100 전문 응답 처리 완료");
 			log.debug("전문 응답 내용:"+returnDto);
 		}
-//		D2D 일 경우 dummy 를 리턴. 
+//		D2D 일 경우 dummy 를 리턴.
+        */
 		return output;		
 	}
 
