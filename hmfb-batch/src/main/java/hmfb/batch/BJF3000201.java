@@ -8,6 +8,7 @@ import hmfb.batch.service.F3000201Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F3000201Dto;
 import hmfb.core.dto.FirmReturnDto;
+import hmfb.core.dto.T3000201Dto;
 import hmfb.core.dto.T3100201Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
@@ -61,34 +62,16 @@ public class BJF3000201 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T3100201Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T3000201Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T3100201Dto input = (T3100201Dto)param;
-		T3100201Dto output = new T3100201Dto();
+		T3000201Dto input = (T3000201Dto) param;
+		T3000201Dto output = new T3000201Dto();
 		
 		F3000201Dto inFirmDto = new F3000201Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F3000201Service.getService(F3000201Service.class).f3000201Service(inFirmDto, input.getTelemsgNo());
-		F3000201Dto outFirmDto = (F3000201Dto) returnDto.getRtnObj();
-		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
-		
-		BatchDao.getDao().update("T3000200.updateT3000200", output);
-		if (log.isDebugEnabled()) {
-			log.debug("F3000200 전문 응답 처리 완료");
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
+
+		F3000201Service.getService(F3000201Service.class).f3000201Service(inFirmDto, input.getTelemsgNo());
+
+		// D2D 일 경우 dummy 를 리턴. 
 		return output;		
 	}
 }

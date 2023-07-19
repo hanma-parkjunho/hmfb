@@ -76,7 +76,7 @@ public class BJF2000101 implements IChunkBatchJob {
 		
 		F2000101Service.getService(F2000101Service.class).f2000101Service(inFirmDto, input.getTelemsgNo());
 		
-		output.setSendCode("2");
+		output.setSendCode("02");
 		output.setTelemsgNo(input.getTelemsgNo());
 
 		BatchDao.getDao().update("T2000101.updateT2000101", output);

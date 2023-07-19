@@ -75,15 +75,12 @@ public class BJF2000550 implements IChunkBatchJob {
 		
 		F2000550Dto inFirmDto = new F2000550Dto(); // inFirmDto 배열만듬
 		
-//		FirmReturnDto returnDto = F2000550Service.getService(F2000550Service.class).f2000550Service( inFirmDto, input.getTelemsgNo() );
 		F2000550Service.getService(F2000550Service.class).f2000550Service(inFirmDto, input.getTelemsgNo());
 		
-		/*F2000850Dto outFirmDto = (F2000850Dto) returnDto.getRtnObj();*/
-		
-		BatchDao.getDao().update("T2000550.updateT2000550", output); 
-		
-		output.setSendCode("2");
+		output.setSendCode("02");
 		output.setTelemsgNo(input.getTelemsgNo());
+		
+		BatchDao.getDao().update("T2000550.updateT2000550", output);
 		
 //		D2D 일 경우 dummy 를 리턴.
 		return output;

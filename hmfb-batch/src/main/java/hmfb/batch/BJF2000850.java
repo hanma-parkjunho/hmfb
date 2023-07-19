@@ -9,6 +9,7 @@ import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F2000101Dto;
 import hmfb.core.dto.F2000850Dto;
 import hmfb.core.dto.FirmReturnDto;
+import hmfb.core.dto.T2000850Dto;
 import hmfb.core.dto.T2100850Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
@@ -62,34 +63,21 @@ public class BJF2000850 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T2100850Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T2000850Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T2100850Dto input = (T2100850Dto)param;
-		T2100850Dto output = new T2100850Dto();
+		T2000850Dto input = (T2000850Dto)param;
+		T2000850Dto output = new T2000850Dto();
 		
 		F2000850Dto inFirmDto = new F2000850Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F2000850Service.getService(F2000850Service.class).f2000850Service(inFirmDto, input.getTelemsgNo());
-		F2000850Dto outFirmDto = (F2000850Dto) returnDto.getRtnObj();
+
+		F2000850Service.getService(F2000850Service.class).f2000850Service(inFirmDto, input.getTelemsgNo());
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
+		output.setSendCode("02");
+		output.setTelemsgNo(input.getTelemsgNo());
 		
-		BatchDao.getDao().update("T2000850.updateT2000850", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F2000850 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
+		BatchDao.getDao().update("T2000850.updateT2000850", output);
+
+		// D2D 일 경우 dummy 를 리턴. 
 		return output;		
 	}
 }

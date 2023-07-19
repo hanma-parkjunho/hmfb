@@ -67,28 +67,10 @@ public class BJF4000201 implements IChunkBatchJob {
 		T4000201Dto output = new T4000201Dto();
 		
 		F4000201Dto inFirmDto = new F4000201Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F4000201Service.getService(F4000201Service.class).f4000201Service(inFirmDto, input.getTelemsgNo());
-		F4000201Dto outFirmDto = (F4000201Dto) returnDto.getRtnObj();
-		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
-		
-		BatchDao.getDao().update("T4000201.updateT4000201", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F4000201 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
+
+		F4000201Service.getService(F4000201Service.class).f4000201Service(inFirmDto, input.getTelemsgNo());
+
+		// D2D 일 경우 dummy 를 리턴. 
 		return output;		
 	}
 }

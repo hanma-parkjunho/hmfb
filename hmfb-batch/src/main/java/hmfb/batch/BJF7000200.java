@@ -67,28 +67,15 @@ public class BJF7000200 implements IChunkBatchJob {
 		T7000200Dto output = new T7000200Dto();
 		
 		F7000200Dto inFirmDto = new F7000200Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F7000200Service.getService(F7000200Service.class).f7000200Service(inFirmDto, input.getTelemsgNo());
-		F7000200Dto outFirmDto = (F7000200Dto) returnDto.getRtnObj();
+
+		F7000200Service.getService(F7000200Service.class).f7000200Service(inFirmDto, input.getTelemsgNo());
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
+		output.setSendCode("02");
+		output.setTelemsgNo(input.getTelemsgNo());
 		
-		BatchDao.getDao().update("T7000200.updateT7000200", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F7000200 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
+		BatchDao.getDao().update("T7000200.updateT7000200", output);
+
+		// D2D 일 경우 dummy 를 리턴. 
 		return output;		
 	}
 }

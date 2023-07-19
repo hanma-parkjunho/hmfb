@@ -7,8 +7,7 @@ import java.time.format.DateTimeFormatter;
 import hmfb.batch.service.F6000101Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F6000101Dto;
-import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T6100101Dto;
+import hmfb.core.dto.T6000101Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -61,34 +60,21 @@ public class BJF6000101 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T6100101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T6000101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T6100101Dto input = (T6100101Dto)param;
-		T6100101Dto output = new T6100101Dto();
+		T6000101Dto input = (T6000101Dto)param;
+		T6000101Dto output = new T6000101Dto();
 		
 		F6000101Dto inFirmDto = new F6000101Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F6000101Service.getService(F6000101Service.class).f6000101Service(inFirmDto, input.getTelemsgNo());
-		F6000101Dto outFirmDto = (F6000101Dto) returnDto.getRtnObj();
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
+        F6000101Service.getService(F6000101Service.class).f6000101Service(inFirmDto, input.getTelemsgNo());
+        
+        output.setSendCode("02");
+		output.setTelemsgNo(input.getTelemsgNo());
 		
-		BatchDao.getDao().update("T6000101.updateT6000101", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F6000101 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
+		BatchDao.getDao().update("T6000101.updateT6000101", output);
+
+        // D2D 일 경우 dummy 를 리턴. 
 		return output;		
 	}
 }

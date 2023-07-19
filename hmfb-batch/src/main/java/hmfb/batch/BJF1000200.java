@@ -7,7 +7,8 @@ import hmfb.batch.service.F1000100Service;
 import hmfb.core.dto.BatchJobContext;
 import hmfb.core.dto.F1000100Dto;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T1100100Dto;
+import hmfb.core.dto.StdFirmReturnDto;
+import hmfb.core.dto.T1000100Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -52,16 +53,16 @@ public class BJF1000200 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T1100100Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T1000100Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T1100100Dto input = (T1100100Dto) param;
-		T1100100Dto output = new T1100100Dto();
+		T1000100Dto input = (T1000100Dto) param;
+		T1000100Dto output = new T1000100Dto();
 		
 		F1000100Dto inFirmDto = new F1000100Dto();
 		
 		
 		
-		FirmReturnDto returnDto = F1000100Service.getService(F1000100Service.class).f1000100Service(inFirmDto);
+		StdFirmReturnDto returnDto = F1000100Service.getService(F1000100Service.class).f1000100Service(inFirmDto, "");
 		F1000100Dto outFirmDto = (F1000100Dto) returnDto.getRtnObj();
 		
 		// 받기

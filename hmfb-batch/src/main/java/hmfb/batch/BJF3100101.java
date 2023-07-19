@@ -4,11 +4,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import hmfb.batch.service.F4000101Service;
+import hmfb.batch.service.F3000101Service;
+import hmfb.batch.service.F3100101Service;
 import hmfb.core.dto.BatchJobContext;
-import hmfb.core.dto.F4000101Dto;
+import hmfb.core.dto.F3000101Dto;
+import hmfb.core.dto.F3100101Dto;
 import hmfb.core.dto.FirmReturnDto;
-import hmfb.core.dto.T4100101Dto;
+import hmfb.core.dto.T3100101Dto;
 import hmfb.core.exception.HmfbException;
 import hmfb.framework.batch.biz.IChunkBatchJob;
 import hmfb.framework.batch.db.BatchDao;
@@ -19,13 +21,13 @@ import lombok.extern.log4j.Log4j2;
  * ------------------------------------
  * 배치 유형      : D2D
  * INPUT 데이터  : TDEP10001.selectAccountListByCondition
- * OUTPUT     : 수취인 조회 인터페이스  
+ * OUTPUT     : 타행이체 결과 불능분 통지  
  *  
  * @author KDK
  *
  */
 @Log4j2
-public class BJF4000101 implements IChunkBatchJob {
+public class BJF3100101 implements IChunkBatchJob {
 	
 	public boolean isExecutable(BatchJobContext ctx) throws HmfbException {
 		
@@ -61,34 +63,21 @@ public class BJF4000101 implements IChunkBatchJob {
 	 *  생략 가능 : 생략 시 itemReader 에서 읽은 객체를 itemWriter 로 bypass.
 	 */
 	@Override
-	public T4100101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
+	public T3100101Dto process(Object param, BatchJobContext ctx) throws HmfbException {
 		
-		T4100101Dto input = (T4100101Dto)param;
-		T4100101Dto output = new T4100101Dto();
+		T3100101Dto input = (T3100101Dto) param;
+		T3100101Dto output = new T3100101Dto();
 		
-		F4000101Dto inFirmDto = new F4000101Dto();
-//		inFirmDto.setTelemsgNo(input.getTelemsgNo());
-		inFirmDto.setOrgCode(input.getOrgCode());							// 식별코드1
-		inFirmDto.setCompanyCode(input.getCompanyCode());					// 업체코드
-		inFirmDto.setBankCode(input.getBankCode());							// 은행코드
-//		inFirmDto.setDelngAmount(input.getDelngAmount().toString());
-//		inFirmDto.setDpstrNm(input.getDpstrNm());
-		FirmReturnDto returnDto = F4000101Service.getService(F4000101Service.class).f4000101Service(inFirmDto, input.getTelemsgNo());
-		F4000101Dto outFirmDto = (F4000101Dto) returnDto.getRtnObj();
+		F3100101Dto inFirmDto = new F3100101Dto();
+
+		F3100101Service.getService(F3100101Service.class).f3100101Service(inFirmDto, input.getTelemsgNo());
+
+		output.setRecvCode("02");
+		output.setTelemsgNo(input.getTelemsgNo());
 		
-		if("0000".equals(returnDto.getCommonDto().getRecvCode())) {
-			output.setProfessCode(outFirmDto.getProfessCode());				// 수취인
-			output.setRspnsMssage("");
-		} else {
-			output.setRspnsMssage("ERROR");
-		}
-		
-		BatchDao.getDao().update("T4000101.updateT4000101", output);		// 
-		if (log.isDebugEnabled()) {
-			log.debug("F4000101 전문 응답 처리 완료");								// 
-			log.debug("전문 응답 내용:" + returnDto);
-		}
-//		D2D 일 경우 dummy 를 리턴. 
-		return output;		
+		BatchDao.getDao().update("T3100101.updateT3100101", output);
+        
+		// D2D 일 경우 dummy 를 리턴.
+		return output;
 	}
 }
