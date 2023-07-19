@@ -25,8 +25,9 @@ hmfb:
     dbLog : Y
   socket:
     server:
-      port-firm: 8881
+      port-firm: 8882
       port-virtual: 8891
+      port-Stdfirm: 8880
   firm:
     id: FIRMID01
   db:
@@ -37,5 +38,7 @@ hmfb:
     password: ENC(Khp/PGi2aMyJrhoMDaG/YlqQ+AoVPkL/)
     always-init: false
   target:
-    server: ENC(gpWwVnfl+SHabA7KW/pUnG3lNfvo7w2h)
-    port: ENC(2jpEN13IwqVTkqUMXXlN+A==)
+#    server: ENC(gpWwVnfl+SHabA7KW/pUnG3lNfvo7w2h)
+#    port: ENC(2jpEN13IwqVTkqUMXXlN+A==)
+    server: ENC(eUrNDzIT5zsk4FHzFXe3t0abpTnvu6aV)
+    port: ENC(Z5DZR8/0HamZJ4GKtSVb/A==)
