@@ -18,23 +18,28 @@ public class T2000850Dto implements BaseMessage{
 	private static final long serialVersionUID = 1L;
 	
 	// serialVersionUID 
-	private String regDate;
 	private String telemsgNo;
-	private String orgCode; 		// 식별코드
-	private String companyCode; 	// 업체코드
-	private String bankCode; 		// 은행코드
-	private String professCode; 	// 전문코드
-	private String BusinessSort; 	// 업무구분
-	private String responseCnt; 	// 송신횟수
-	private String professNum; 		// 전문번호
-	private String requestDate; 	// 전송일자
-	private String requestTime; 	// 전송시간
-	private String replyCode; 		// 응답코드
-	private String discernCode; 	// 식별코드2
-	private String sdsArea; 		// SDS영역
-	private String customerArea; 	// 고객영역
-	private String Y2KSort; 		// Y2K구분
-	private String bankArea; 		// 은행영역
-	private String rspnsMssage; 	// 에러
+	private String pymntAcnut;
+	private String password;
+	private String revwSmbol;
+	private String pymntAmount;
+	private String smbol;
+	private String blce;
+	private String bankCode;
+	private String rcpmnyAcnut;
+	private String fee;
+	private String defrayAcnutPrntxt;
+	private String rlnmNo;
+	private String unused;
+	private String insttCode;
+	private String payerNo;
+	private String chrgeKnd;
+	private String payHopeDe;
+	private String rcpmnyerNo;
+	private String csrccAmount;
+	private String bndeEntrpsNo;
+	private String partDefrayAt;
+	
+	private String sendCode; 		// 전송여부
 	
 }

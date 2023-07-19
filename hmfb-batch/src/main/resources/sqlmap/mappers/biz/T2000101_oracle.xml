@@ -18,32 +18,24 @@
 	
 	<select id="selectT2000101" parameterType="hmfb.core.dto.T2000101Dto" resultType="hmfb.core.dto.T2000101Dto">
     <![CDATA[    
-		SELECT 
-		     TELEMSG_NO					/* 전문번호 */
-		     , PYMNT_ACNUT				/* 지급계좌 */
-		     , PASSWORD					/* 비밀번호 */
-		     , REVW_SMBOL				/* 복기부호 */
-		     , PYMNT_AMOUNT				/* 지급금액 */
-		     , SMBOL					/* 부호 */
-		     , BLCE             		/* 잔액 */
-		     , BANK_CODE      			/* 은행코드 */
-		     , RCPMNY_ACNUT             /* 입금계좌 */
-		     , FEE       				/* 수 수 료 */
-		     , CMS_CODE           		/* CMS 코드 */
-		     , RCPMNY_ACNUT_PRNTXT      /* 입금계좌인자내용 */
-		     , RLNM_NO          		/* 실명번호 */
-		     , DPSTR_NM       			/* 예금주명 */
-		     , CPTAL_CHARCT     		/* 자금성격 */
-		     , FILLER1          		/* 예비1 */
-		     , FILLER2    				/* 예비2 */
-		     , FILLER3    				/* 예비3 */
-		     , FILLER4          		/* 예비4 */
-		     , FILLER5        			/* 예비5 */
-		     , RSPNS_CODE				/* 응답코드 */
-		     , RSPNS_MSSAGE     		/* 응답메세지 */
-		     , SEND_CODE				/* 	*/
+        SELECT TELEMSG_NO					/* 전문번호 */
+               , PYMNT_ACNUT				/* 지급계좌 */
+               , PASSWORD					/* 비밀번호 */
+               , REVW_SMBOL				/* 복기부호 */
+               , PYMNT_AMOUNT				/* 지급금액 */
+               , SMBOL					/* 부호 */
+               , BLCE             		/* 잔액 */
+               , BANK_CODE      			/* 은행코드 */
+               , RCPMNY_ACNUT             /* 입금계좌 */
+               , FEE       				/* 수 수 료 */
+               , CMS_CODE           		/* CMS 코드 */
+               , RCPMNY_ACNUT_PRNTXT      /* 입금계좌인자내용 */
+               , RLNM_NO          		/* 실명번호 */
+               , DPSTR_NM       			/* 예금주명 */
+               , CPTAL_CHARCT     		/* 자금성격 */
 		  FROM T2000101
-		  WHERE 1=1
+         WHERE 1=1
+           AND SEND_CODE = '01'
 	]]>    	 
     </select>
     

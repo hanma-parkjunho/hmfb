@@ -33,12 +33,6 @@ public class T2000101Dto implements BaseMessage{
 	private String dpstrNm; 			// 예금주명
 	private String cptalCharct; 		// 자금성격
 	
-	private String filler1; 			// 예비1
-	private String filler2; 			// 예비2
-	private String filler3; 			// 예비3
-	private String filler4; 			// 예비4
-	private String filler5; 			// 예비5	
-	
 	/* 테이블에 추가안함 [s] */
 	private String sendCode;			// 전송여부
 	private String sendDt;				// 전송날짜

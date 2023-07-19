@@ -42,6 +42,7 @@ public class T3000101Dto implements BaseMessage{
 	private String rspnsMssage;			// 응답메세지
 	
 	/* 테이블에 추가안함 [s] */
+	private String recvCode;            //
 	private String recvDt;				// 수신날짜
 	private String recvTm;				// 수신시간
 	/* 테이블에 추가안함 [e] */

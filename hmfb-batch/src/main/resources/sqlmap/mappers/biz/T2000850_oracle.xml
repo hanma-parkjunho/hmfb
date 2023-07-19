@@ -14,37 +14,34 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="T2000550">
+<mapper namespace="T2000850">
 	
-	<select id="selectT2000550" parameterType="hmfb.core.dto.T2000550Dto" resultType="hmfb.core.dto.T2000550Dto">
+	<select id="selectT2000850" parameterType="hmfb.core.dto.T2000850Dto" resultType="hmfb.core.dto.T2000850Dto">
     <![CDATA[    
-		SELECT /* */
-			TELEMSG_NO
-			,IDNTFC_CODE 
-			,PROCESS_SN 
-			,BANK_CODE
-			,ACNUT_NO
-			,REQST_SE 
-			,ATMCPAY_DE
-			,DSRBTR
-			,REQST_DE 
-			,PROCESS_AT
-			,INCPCTY_CODE
-			,RLNM_NO_CECK_ENNC
-			,RLNM_NO 
-			,PAYER_NO
-			,CSTMR_RELM
-			,INSTT_CODE
-			,FILLER1 
-			,FILLER2
-			,FILLER3
-			,FILLER4 
-			,FILLER5 
-			,RSPNS_CODE 
-			,RSPNS_MSSAGE 
-			,SEND_CODE
-		  FROM T2000550
-		 WHERE 1=1
+        SELECT TELEMSG_NO
+               , PYMNT_ACNUT
+               , PASSWORD
+               , REVW_SMBOL
+               , PYMNT_AMOUNT
+               , SMBOL
+               , BLCE
+               , BANK_CODE
+               , RCPMNY_ACNUT
+               , FEE
+               , DEFRAY_ACNUT_PRNTXT
+               , RLNM_NO
+               , UNUSED
+               , INSTT_CODE
+               , PAYER_NO
+               , CHRGE_KND
+               , PAY_HOPE_DE
+               , RCPMNYER_NO
+               , CSRCC_AMOUNT
+               , BNDE_ENTRPS_NO
+               , PART_DEFRAY_AT
+          FROM T2000850
+         WHERE 1=1
+           AND SEND_CODE = '01'
 	]]>    	 
     </select>
     
@@ -107,12 +104,11 @@
 	]]>    	 
     </insert>
     
-    <update id="updateT2000550" parameterType="hmfb.core.dto.T2000550Dto">
+    <update id="updateT2000850" parameterType="hmfb.core.dto.T2000850Dto">
     <![CDATA[    
-    	UPDATE /* */
-		       T2000550 
-		  SET SEND_CODE              = #{sendCode}
-		WHERE TELEMSG_NO             = #{telemsgNo}
+        UPDATE T2000850 
+           SET SEND_CODE  = #{sendCode}
+         WHERE TELEMSG_NO = #{telemsgNo}
 	]]>
     </update>
     
