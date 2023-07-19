@@ -7,37 +7,23 @@ import lombok.Setter;
 
 /**
  * @author USER
- * 업무개시
+ * 당타행예금주성명조회
  */
 @Data
 @Getter
 @Setter
-public class T4000201Dto implements BaseMessage{
+public class T6100101Dto implements BaseMessage{
 	
 	// AbstractDTO 
 	private static final long serialVersionUID = 1L;
 	
 	// serialVersionUID 
-	private String telemsgNo;
-	private String acnutNo;
-	private String rcpmnyBhf;
-	private String rcpmnyPymntSe;
-	private String delngSe;
-	private String amount;
-	private String altrtvAmount;
-	private String etc;
-	private String smbol;
-	private String blce;
-	private String nm;
-	private String checkBilNo;
-	private String delngDe;
-	private String delngTime;
-	private String sn;
-	private String oridelngNo;
-	private String oridelngDe;
-	private String rcpmnyerCode;
-	private String csrcc;
-	private String prsnlchk;
+	private String telemsgNo;      // 전문번호   
+	private String inqireAcnutNo;  // 조회계좌번호
+	private String rlnmNo;	       // 실명번호   
+	private String dpstrNm;	       // 예금주명   
+	private String bankCode;       // 은행코드   
+	private String rlnmCmpr;       // 실명비교   
 	
 	/* 테이블에 추가안함 [s] */
 	private String sendCode;			// 전송여부

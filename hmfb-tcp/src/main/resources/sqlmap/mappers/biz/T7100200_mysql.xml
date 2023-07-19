@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2021 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T7100200">
+	
+	<update id="updateT7100200" parameterType="hmfb.core.dto.T7100200Dto">
+    <![CDATA[    
+			UPDATE
+		       T7000200 
+		   SET OVRDFT_LMT = #{ovrdftLmt}
+               , BLCE_SMBOL = #{blceSmbol}
+               , NOW_BLCE = #{nowBlce}
+               , BLCE_CASH = #{blceCash}
+               , BLCE_PRSNLCHK = #{blcePrsnlchk}
+               , ETC_BHF_AM = #{etcBhfAm}
+               , DRT_POSBL_SMBOL = #{drtPosblSmbol}
+               , DRT_POSBL_AMOUNT = #{drtPosblAmount}
+               , SEND_CODE = '03'
+               , RSPNS_CODE = #{rspnsCode}
+               , RECV_DT = #{recvDt}
+               , RECV_TM = #{recvTm}
+         WHERE TELEMSG_NO = #{telemsgNo}
+           AND INQIRE_ACNUT_NO = #{inqireAcntuNo}
+	]]>    	 
+    </update>
+        
+</mapper>

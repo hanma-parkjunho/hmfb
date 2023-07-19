@@ -12,32 +12,25 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class T4000201Dto implements BaseMessage{
+public class T3100201Dto implements BaseMessage{
 	
 	// AbstractDTO 
 	private static final long serialVersionUID = 1L;
 	
 	// serialVersionUID 
-	private String telemsgNo;
-	private String acnutNo;
-	private String rcpmnyBhf;
-	private String rcpmnyPymntSe;
-	private String delngSe;
-	private String amount;
-	private String altrtvAmount;
-	private String etc;
-	private String smbol;
-	private String blce;
-	private String nm;
-	private String checkBilNo;
-	private String delngDe;
-	private String delngTime;
-	private String sn;
-	private String oridelngNo;
-	private String oridelngDe;
-	private String rcpmnyerCode;
-	private String csrcc;
-	private String prsnlchk;
+	private String telemsgNo;             // 전문번호   
+	private String oritelemsgNo;	      // 원전문번호 
+	private String pymntAcnut;	      // 지급계좌   
+	private String bankCode;	      // 은행코드   
+	private String rcpmnyAcnut;	      // 입금계좌   
+	private String amount;		      // 금    액  
+	private String nrmltAmount;	      // 정상금액   
+	private String incpctyAmount;	      // 불능금액   
+	private String subcnt;		      // SUB-CNT  
+	private String subseq;		      // SUB-SEQ  
+	private String diffbankProcessNo;     // 타행처리번호
+	private String rcpmnyIncpctyAm;	      // 입금불능액 
+	private String diffbankProcessCode;   // 타행처리코드
 	
 	/* 테이블에 추가안함 [s] */
 	private String sendCode;			// 전송여부

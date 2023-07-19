@@ -12,7 +12,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class T4000201Dto implements BaseMessage{
+public class T4100201Dto implements BaseMessage{
 	
 	// AbstractDTO 
 	private static final long serialVersionUID = 1L;

@@ -18,23 +18,39 @@ public class T4000101Dto implements BaseMessage{
 	private static final long serialVersionUID = 1L;
 	
 	// serialVersionUID 
-	private String regDate;
-	private String telemsgNo;
-	private String orgCode; 		// 식별코드
-	private String companyCode; 	// 업체코드
-	private String bankCode; 		// 은행코드
-	private String professCode; 	// 전문코드
-	private String BusinessSort; 	// 업무구분
-	private String responseCnt; 	// 송신횟수
-	private String professNum; 		// 전문번호
-	private String requestDate; 	// 전송일자
-	private String requestTime; 	// 전송시간
-	private String replyCode; 		// 응답코드
-	private String discernCode; 	// 식별코드2
-	private String sdsArea; 		// SDS영역
-	private String customerArea; 	// 고객영역
-	private String Y2KSort; 		// Y2K구분
-	private String bankArea; 		// 은행영역
-	private String rspnsMssage; 	// 에러
+	private String telemsgNo;        // 전문번호    
+	private String acnutNo;		 // 계좌번호    
+	private String rcpmnyBhf;	 // 입 금 점   
+	private String rcpmnyPymntSe;	 // 입지구분    
+	private String delngSe;		 // 거래구분    
+	private String amount;		 // 금    액   
+	private String altrtvAmount;	 // 대    체   
+	private String etc;		 // 기    타   
+	private String smbol;		 // SIGN부호   
+	private String blce;		 // 잔    액   
+	private String nm;		 // 성    명   
+	private String checkBilNo;	 // 수표/어음번호
+	private String delngDe;		 // 거래일자    
+	private String delngTime;	 // 거래시간    
+	private String sn;		 // 일련번호    
+	private String oridelngNo;	 // 원거래번호  
+	private String oridelngDe;	 // 원거래일자  
+	private String rcpmnyerCode;	 // 입금인코드  
+	private String csrcc;		 // 자 기 앞   
+	private String prsnlchk;	 // 가    계
 	
+	/* 테이블에 추가안함 [s] */
+	private String sendCode;			// 전송여부
+	private String sendDt;				// 전송날짜
+	private String sendTm;				// 전송시간
+	/* 테이블에 추가안함  [e] */
+	
+	private String rspnsCode;			// 응답코드
+	private String rspnsMssage;			// 응답메세지
+	
+	/* 테이블에 추가안함 [s] */
+	private String recvDt;				// 수신날짜
+	private String recvTm;				// 수신시간
+	/* 테이블에 추가안함 [e] */
+
 }
