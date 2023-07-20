@@ -107,7 +107,7 @@ public class NettyServerConfig {
 		        
 		    } catch (Exception e) {	    	
 		    	log.error("", e);
-		    	shutdown();
+		    	//shutdown();  // 처리 중 exception 발생하더라도 shutdown이 되지 않도록 막음
 		    	throw new RuntimeException(e);
 		    }
 		}
