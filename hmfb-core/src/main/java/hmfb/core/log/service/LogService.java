@@ -170,5 +170,14 @@ public class LogService {
 	public void log(ErrorCode errorCode, Exception ex) {
 		this.log("", errorCode, ex);
 	}
+	
+	/**
+	 * 로그에 남기고 싶은데 방법 좀.....ㄷㄷㄷ
+	 * @param errorCode
+	 * @param msg
+	 */
+	public void log(ErrorCode errorCode, String msg) {
+		System.out.println(msg);
+	}
 
 }
